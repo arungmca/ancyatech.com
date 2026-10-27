@@ -5,7 +5,16 @@
   "observability": {
     "enabled": true
   },
+  // Required by `wrangler preview` (the block may be empty). Harmless for
+  // `wrangler deploy`, which ignores it.
+  "previews": {},
   "assets": {
     "directory": "."
-  }
+  },
+  // Bind both hostnames to this Worker. Cloudflare creates the DNS records and
+  // certificates on deploy; the hostnames must not have conflicting records.
+  "routes": [
+    { "pattern": "ancyatech.com", "custom_domain": true },
+    { "pattern": "www.ancyatech.com", "custom_domain": true }
+  ]
 }

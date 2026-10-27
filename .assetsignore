@@ -1,0 +1,21 @@
+# Files in this repository that must never be published as site assets.
+# Used by Wrangler when assets.directory points at the repository root.
+# Syntax is the same as .gitignore; .assetsignore itself is always excluded.
+.git
+.gitignore
+.github
+.claude
+.vscode
+.idea
+**/.DS_Store
+
+node_modules
+**/node_modules
+
+README.md
+LICENSE
+wrangler.jsonc
+wrangler.toml
+package.json
+package-lock.json
+scripts
