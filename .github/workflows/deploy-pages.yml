@@ -1,0 +1,166 @@
+name: Deploy to GitHub Pages
+
+# Production deployment. `main` is always gated on the full CI suite, which is
+# invoked as a reusable workflow so PRs and production share one definition.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Allow one deployment at a time; never cancel a deployment that is in flight.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+env:
+  # Keep in sync with the canonical host used by index.html / sitemap.xml.
+  # Override with a repository variable named PAGES_CUSTOM_DOMAIN.
+  CUSTOM_DOMAIN: ${{ vars.PAGES_CUSTOM_DOMAIN != '' && vars.PAGES_CUSTOM_DOMAIN || 'ancyatech.com' }}
+
+jobs:
+  ci:
+    name: CI
+    uses: ./.github/workflows/ci.yml
+    permissions:
+      contents: read
+
+  build-site:
+    name: Build Pages artifact
+    needs: ci
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download Angular build output
+        if: needs.ci.outputs.site_mode == 'angular'
+        uses: actions/download-artifact@v4
+        with:
+          name: frontend-dist
+          path: _build
+
+      - name: Stage site
+        env:
+          SITE_MODE: ${{ needs.ci.outputs.site_mode }}
+        run: |
+          set -euo pipefail
+          rm -rf _site
+          mkdir -p _site
+
+          copy_root_files() {
+            for f in robots.txt sitemap.xml og-image.png logo.png favicon.ico favicon.svg; do
+              if [ -f "$f" ]; then cp "$f" _site/; fi
+            done
+          }
+
+          if [ "$SITE_MODE" = "angular" ]; then
+            # Angular emits dist/<project>/browser in v17+. Fall back to the
+            # directory that actually contains index.html for other layouts.
+            src="$(find _build -maxdepth 3 -type d -name browser -print -quit || true)"
+            if [ -z "$src" ]; then
+              index_file="$(find _build -maxdepth 5 -type f -name index.html -print -quit || true)"
+              if [ -n "$index_file" ]; then
+                src="$(dirname "$index_file")"
+              fi
+            fi
+            case "$src" in
+              _build/*) ;;
+              *) echo "::error::Angular build output not found under _build."; exit 1 ;;
+            esac
+            if [ ! -d "$src" ]; then
+              echo "::error::Could not locate the Angular build output under _build."
+              find _build -maxdepth 4 -type d || true
+              exit 1
+            fi
+            echo "Using Angular output: $src"
+            cp -R "$src"/. _site/
+            copy_root_files
+          elif [ "$SITE_MODE" = "static" ]; then
+            rsync -a \
+              --exclude='.git' \
+              --exclude='.github' \
+              --exclude='.claude' \
+              --exclude='node_modules' \
+              --exclude='frontend' \
+              --exclude='backend' \
+              --exclude='_build' \
+              --exclude='_site' \
+              --exclude='dist' \
+              --exclude='*.md' \
+              --exclude='.gitignore' \
+              ./ _site/
+          else
+            echo "::error::Nothing to deploy: no Angular app and no index.html at the repository root."
+            exit 1
+          fi
+
+          # GitHub Pages must not run Jekyll over the artifact.
+          touch _site/.nojekyll
+
+          # SPA deep links (Angular) 404 on Pages without a fallback document.
+          if [ ! -f _site/404.html ] && [ -f _site/index.html ]; then
+            cp _site/index.html _site/404.html
+          fi
+
+          if [ ! -f _site/index.html ]; then
+            echo "::error::Staged site has no index.html."
+            exit 1
+          fi
+
+          # Custom domain + build provenance, useful when debugging a deploy.
+          printf '%s\n' "$CUSTOM_DOMAIN" > _site/CNAME
+          node -e '
+            const fs = require("node:fs");
+            fs.writeFileSync("_site/version.json", JSON.stringify({
+              commit: process.env.GITHUB_SHA,
+              ref: process.env.GITHUB_REF_NAME,
+              runId: process.env.GITHUB_RUN_ID,
+              deployedAt: new Date().toISOString(),
+              siteMode: process.env.SITE_MODE
+            }, null, 2) + "\n");
+          '
+          echo "### Staged site" >> "$GITHUB_STEP_SUMMARY"
+          du -sh _site >> "$GITHUB_STEP_SUMMARY"
+          find _site -maxdepth 1 -type f | sort >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    name: Deploy
+    needs: build-site
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      # Fail with an actionable message rather than the opaque error emitted by
+      # deploy-pages when the repository still builds Pages from a branch.
+      - name: Verify Pages deployment source
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          build_type="$(gh api "repos/${GITHUB_REPOSITORY}/pages" --jq '.build_type' 2>/dev/null || echo unknown)"
+          echo "Pages build_type: $build_type"
+          case "$build_type" in
+            workflow) ;;
+            legacy)
+              echo "::error::GitHub Pages builds from a branch. Set Settings → Pages → Build and deployment → Source to 'GitHub Actions'."
+              exit 1
+              ;;
+            *)
+              echo "::warning::Could not read the Pages configuration. Ensure Settings → Pages → Source is 'GitHub Actions'."
+              ;;
+          esac
+
+      - id: deployment
+        uses: actions/deploy-pages@v4
