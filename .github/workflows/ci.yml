@@ -1,7 +1,7 @@
 name: CI
 
-# Runs on every pull request, and is called by the Pages deployment workflow so
-# that nothing reaches production without passing the same checks.
+# Runs on every pull request, and is called by the Cloudflare deployment
+# workflow so that nothing reaches production without passing the same checks.
 on:
   pull_request:
     branches: [main]

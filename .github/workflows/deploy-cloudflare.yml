@@ -1,0 +1,70 @@
+name: Deploy to Cloudflare
+
+# Production deployment to Cloudflare Workers (static assets). `main` is always
+# gated on the full CI suite, which is invoked as a reusable workflow so PRs
+# and production share one definition.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Allow one deployment at a time; never cancel a deployment that is in flight.
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  ci:
+    name: CI
+    uses: ./.github/workflows/ci.yml
+    permissions:
+      contents: read
+
+  deploy:
+    name: Deploy Worker
+    needs: ci
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download Angular build output
+        if: needs.ci.outputs.site_mode == 'angular'
+        uses: actions/download-artifact@v4
+        with:
+          name: frontend-dist
+          path: _build
+
+      - name: Stage site
+        env:
+          SITE_MODE: ${{ needs.ci.outputs.site_mode }}
+        run: ./.github/scripts/stage-site.sh
+
+      - name: Check Cloudflare credentials
+        env:
+          CF_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CF_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          missing=0
+          if [ -z "$CF_API_TOKEN" ]; then
+            echo "::error::Missing secret CLOUDFLARE_API_TOKEN. Create a token with Workers Scripts:Edit, Workers Routes:Edit, Zone:Read and DNS:Edit for the ancyatech.com zone."
+            missing=1
+          fi
+          if [ -z "$CF_ACCOUNT_ID" ]; then
+            echo "::error::Missing secret CLOUDFLARE_ACCOUNT_ID. Find it in the Cloudflare dashboard sidebar or run 'npx wrangler whoami'."
+            missing=1
+          fi
+          exit "$missing"
+
+      - name: Deploy with Wrangler
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          # Pin the major so a new Wrangler release cannot break the deploy.
+          wranglerVersion: '4'
+          command: deploy
