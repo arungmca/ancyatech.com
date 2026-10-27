@@ -45,7 +45,7 @@ jobs:
       backend_java_dir: ${{ steps.detect.outputs.backend_java_dir }}
       java_build: ${{ steps.detect.outputs.java_build }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - id: detect
         uses: ./.github/actions/detect
 
@@ -59,8 +59,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: ${{ env.NODE_VERSION }}
       - name: Validate HTML, robots.txt and sitemap.xml
@@ -79,11 +79,11 @@ jobs:
       run:
         working-directory: ${{ needs.detect.outputs.frontend_dir }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Set up Node (cached)
         if: needs.detect.outputs.frontend_lockfile == 'true'
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: npm
@@ -91,7 +91,7 @@ jobs:
 
       - name: Set up Node
         if: needs.detect.outputs.frontend_lockfile != 'true'
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: ${{ env.NODE_VERSION }}
 
@@ -129,7 +129,7 @@ jobs:
         run: npm run build
 
       - name: Upload build output
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: frontend-dist
           path: ${{ needs.detect.outputs.frontend_dir }}/dist
@@ -149,11 +149,11 @@ jobs:
       run:
         working-directory: ${{ needs.detect.outputs.backend_node_dir }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Set up Node (cached)
         if: needs.detect.outputs.backend_node_lockfile == 'true'
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: npm
@@ -161,7 +161,7 @@ jobs:
 
       - name: Set up Node
         if: needs.detect.outputs.backend_node_lockfile != 'true'
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: ${{ env.NODE_VERSION }}
 
@@ -204,9 +204,9 @@ jobs:
       run:
         working-directory: ${{ needs.detect.outputs.backend_java_dir }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v6
         with:
           distribution: temurin
           java-version: ${{ env.JAVA_VERSION }}
