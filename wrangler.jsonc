@@ -1,0 +1,21 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "ancyatech",
+  "compatibility_date": "2026-10-27",
+
+  // The CI pipeline stages the publishable site here: the hand-written static
+  // files today, the Angular build output once frontend/ exists.
+  "assets": {
+    "directory": "./_site",
+    // Angular client-side routes resolve to index.html. For strict 404s on
+    // the static site, change this to "404-page" and stage a 404.html.
+    "not_found_handling": "single-page-application"
+  },
+
+  // Custom domains are created and their DNS records/certificates managed by
+  // Cloudflare on `wrangler deploy` — do not add GitHub Pages A records.
+  "routes": [
+    { "pattern": "ancyatech.com", "custom_domain": true },
+    { "pattern": "www.ancyatech.com", "custom_domain": true }
+  ]
+}

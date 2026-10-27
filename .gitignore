@@ -32,6 +32,9 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# Cloudflare Wrangler local state
+.wrangler/
+
 # GitHub Pages staging output (produced by the deploy workflow)
 _site/
 
