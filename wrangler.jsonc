@@ -8,6 +8,11 @@
   // Required by `wrangler preview` (the block may be empty). Harmless for
   // `wrangler deploy`, which ignores it.
   "previews": {},
+  // Give each Preview its own URL:
+  //   https://<preview-name>-<worker>.<subdomain>.workers.dev
+  // Alternative: add "previews_enabled": true to a custom_domain route to get
+  //   https://<preview-name>.ancyatech.com
+  "preview_urls": true,
   "assets": {
     "directory": "."
   },
