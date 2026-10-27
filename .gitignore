@@ -42,3 +42,6 @@ _site/
 .DS_Store
 .idea/
 .vscode/
+
+.dev.vars*
+!.dev.vars.example
