@@ -1,0 +1,256 @@
+name: CI
+
+# Runs on every pull request, and is called by the Pages deployment workflow so
+# that nothing reaches production without passing the same checks.
+on:
+  pull_request:
+    branches: [main]
+  workflow_call:
+    outputs:
+      site_mode:
+        description: '"angular", "static" or "none"'
+        value: ${{ jobs.detect.outputs.site_mode }}
+      frontend_dir:
+        description: Directory of the Angular app (or "." for the static site)
+        value: ${{ jobs.detect.outputs.frontend_dir }}
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Cancel superseded pull-request runs, but never cancel a run that is
+# deploying (pull_request is the only event that sets this to true).
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+env:
+  NODE_VERSION: '22'
+  JAVA_VERSION: '21'
+
+jobs:
+  # ---------------------------------------------------------------------------
+  # Layout detection — every other job keys off these outputs, so adding an
+  # Angular app or a backend automatically enables its checks.
+  # ---------------------------------------------------------------------------
+  detect:
+    name: Detect layout
+    runs-on: ubuntu-latest
+    outputs:
+      site_mode: ${{ steps.detect.outputs.site_mode }}
+      frontend_dir: ${{ steps.detect.outputs.frontend_dir }}
+      frontend_lockfile: ${{ steps.detect.outputs.frontend_lockfile }}
+      backend_node_dir: ${{ steps.detect.outputs.backend_node_dir }}
+      backend_node_lockfile: ${{ steps.detect.outputs.backend_node_lockfile }}
+      backend_java_dir: ${{ steps.detect.outputs.backend_java_dir }}
+      java_build: ${{ steps.detect.outputs.java_build }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: detect
+        uses: ./.github/actions/detect
+
+  # ---------------------------------------------------------------------------
+  # Static site (current state): structure, SEO metadata, JSON-LD, local refs.
+  # ---------------------------------------------------------------------------
+  static-checks:
+    name: Static site checks
+    needs: detect
+    if: needs.detect.outputs.site_mode == 'static'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Validate HTML, robots.txt and sitemap.xml
+        run: node .github/scripts/check-static-site.mjs
+
+  # ---------------------------------------------------------------------------
+  # Angular frontend (future): lint, unit tests, production build.
+  # ---------------------------------------------------------------------------
+  frontend:
+    name: Frontend (Angular)
+    needs: detect
+    if: needs.detect.outputs.site_mode == 'angular'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    defaults:
+      run:
+        working-directory: ${{ needs.detect.outputs.frontend_dir }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node (cached)
+        if: needs.detect.outputs.frontend_lockfile == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: ${{ needs.detect.outputs.frontend_dir }}/package-lock.json
+
+      - name: Set up Node
+        if: needs.detect.outputs.frontend_lockfile != 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install dependencies
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci --no-audit --no-fund
+          else
+            npm install --no-audit --no-fund
+          fi
+
+      - name: Lint
+        run: npm run lint --if-present
+
+      - name: Unit tests
+        run: |
+          # Prefer an explicit CI script. Otherwise force the Angular test
+          # builder into single-run mode so the job cannot hang on a watcher;
+          # other runners (vitest, jest) are left to honour CI=true themselves.
+          script() {
+            node -e "process.exit((require('./package.json').scripts ?? {})['$1'] ? 0 : 1)"
+          }
+          is_ng_test() {
+            node -e "process.exit(/^ng\\s+test/.test((require('./package.json').scripts ?? {}).test ?? '') ? 0 : 1)"
+          }
+          if script test:ci; then
+            npm run test:ci
+          elif is_ng_test; then
+            CI=true npm test -- --watch=false --no-progress
+          else
+            CI=true npm test --if-present
+          fi
+
+      - name: Production build
+        run: npm run build
+
+      - name: Upload build output
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-dist
+          path: ${{ needs.detect.outputs.frontend_dir }}/dist
+          if-no-files-found: error
+          retention-days: 7
+
+  # ---------------------------------------------------------------------------
+  # Node backend (future): lint, tests, build, optional container image.
+  # ---------------------------------------------------------------------------
+  backend-node:
+    name: Backend (Node)
+    needs: detect
+    if: needs.detect.outputs.backend_node_dir != ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: ${{ needs.detect.outputs.backend_node_dir }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node (cached)
+        if: needs.detect.outputs.backend_node_lockfile == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: ${{ needs.detect.outputs.backend_node_dir }}/package-lock.json
+
+      - name: Set up Node
+        if: needs.detect.outputs.backend_node_lockfile != 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install dependencies
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci --no-audit --no-fund
+          else
+            npm install --no-audit --no-fund
+          fi
+
+      - name: Lint
+        run: npm run lint --if-present
+
+      - name: Type check
+        run: npm run typecheck --if-present
+
+      - name: Tests
+        env:
+          CI: 'true'
+        run: npm test --if-present
+
+      - name: Build
+        run: npm run build --if-present
+
+      - name: Build container image
+        if: hashFiles(format('{0}/Dockerfile', needs.detect.outputs.backend_node_dir)) != ''
+        run: docker build -t backend-node:ci .
+
+  # ---------------------------------------------------------------------------
+  # Java backend (future): Maven or Gradle, detected automatically.
+  # ---------------------------------------------------------------------------
+  backend-java:
+    name: Backend (Java)
+    needs: detect
+    if: needs.detect.outputs.backend_java_dir != ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: ${{ needs.detect.outputs.backend_java_dir }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: ${{ env.JAVA_VERSION }}
+          cache: ${{ needs.detect.outputs.java_build }}
+
+      - name: Build and test (Maven)
+        if: needs.detect.outputs.java_build == 'maven'
+        run: mvn -B -ntp verify
+
+      - name: Build and test (Gradle)
+        if: needs.detect.outputs.java_build == 'gradle'
+        run: |
+          if [ -f gradlew ]; then
+            chmod +x gradlew
+            ./gradlew build --no-daemon
+          else
+            gradle build --no-daemon
+          fi
+
+      - name: Build container image
+        if: hashFiles(format('{0}/Dockerfile', needs.detect.outputs.backend_java_dir)) != ''
+        run: docker build -t backend-java:ci .
+
+  # ---------------------------------------------------------------------------
+  # Single required check for branch protection, so adding a new buildable
+  # part does not mean reconfiguring the protected-branch rules.
+  # ---------------------------------------------------------------------------
+  ci-success:
+    name: CI Success
+    if: always()
+    needs: [detect, static-checks, frontend, backend-node, backend-java]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify all jobs succeeded or were skipped
+        env:
+          RESULTS: ${{ join(needs.*.result, ' ') }}
+        run: |
+          echo "Job results: $RESULTS"
+          for result in $RESULTS; do
+            case "$result" in
+              failure|cancelled)
+                echo "::error::A required CI job did not succeed."
+                exit 1
+                ;;
+            esac
+          done
+          echo "All required jobs passed."
