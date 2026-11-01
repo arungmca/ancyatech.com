@@ -24,7 +24,7 @@ jobs:
           grep -i "</body>" index.html || echo "No </body> closing tag found"
           echo "=== SEO checks ==="
           echo "- Checking meta description..."
-          grep -i "meta description" index.html && echo "  PASS: meta description found" || echo "  FAIL: meta description missing"
+          grep -i 'name="description"' index.html && echo "  PASS: meta description found" || echo "  FAIL: meta description missing"
           echo "- Checking viewport meta tag..."
           grep -i "viewport" index.html && echo "  PASS: viewport tag found" || echo "  FAIL: viewport tag missing"
           echo "- Checking og:title..."
