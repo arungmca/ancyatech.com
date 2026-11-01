@@ -45,3 +45,9 @@ _site/
 
 .dev.vars*
 !.dev.vars.example
+
+
+# AI
+.omp
+.claude
+.kiro
