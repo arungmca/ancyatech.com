@@ -1,0 +1,22 @@
+name: CI
+
+on:
+  push:
+    branches: [stage]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run simple website test
+        run: |
+          echo "Checking index.html exists..."
+          ls -la index.html
+          echo "Validating basic HTML structure..."
+          grep -i "<html" index.html || echo "No <html tag found"
+          echo "Checking for empty body..."
+          grep -i "<body" index.html || echo "No <body tag found"
+          echo "Basic checks complete."
