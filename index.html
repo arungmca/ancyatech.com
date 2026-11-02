@@ -3552,7 +3552,7 @@ h1[tabindex="-1"]:focus,h2[tabindex="-1"]:focus,main:focus{outline:none}
     });
       // Load Google Analytics only after consent
       if (choice === 'accepted') {
-        var gaId = 'G-FLMXGH7WHJ';
+        var gaId = 'G-FLMXGH7WHJ'; // TODO: replace with real GA4 ID
         var ga = document.createElement('script');
         ga.async = true;
         ga.src = 'https://www.google-analytics.com/gtag/js';
@@ -3560,10 +3560,15 @@ h1[tabindex="-1"]:focus,h2[tabindex="-1"]:focus,main:focus{outline:none}
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
+          // Consent mode: grant storage for analytics
+          gtag('set', {'storage': 'granted'});
           gtag('config', gaId);
         };
         document.head.appendChild(ga);
       } else if (choice === 'rejected') {
+        // Consent mode: deny storage for analytics
+        // GA will be in consent mode without granted storage
+        // Do not call gtag('config') - GA will respect the denied storage setting
         // Optionally, you could attempt to remove existing GA cookies here
         // or just leave the decision to the user's browser
       }
