@@ -1755,66 +1755,325 @@ h1[tabindex="-1"]:focus, h2[tabindex="-1"]:focus, main:focus { outline: none }
           io.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-    reveals.forEach(function(el) { io.observe(el); });
-  } else {
-    reveals.forEach(function(el) { el.classList.add('is-visible'); });
+    }, { threshold: 0.12, rootMargin: '0px 0px -36px 0px' });
+    revealEls.forEach(function (el) { observer.observe(el); });
   }
 
-  // ---- Active nav link on scroll ----
-  var sections = document.querySelectorAll('section[id], main > section[id]');
-  var navLinks = document.querySelectorAll('.nav-list a[data-nav]');
-  if ('IntersectionObserver' in window && sections.length) {
-    var navIO = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry) {
-        if (entry.isIntersecting) {
-          var id = entry.target.id;
-          navLinks.forEach(function(link) {
-            link.removeAttribute('aria-current');
-            if (link.getAttribute('data-nav') === id) {
-              link.setAttribute('aria-current', 'page');
-            }
-          });
-        }
-      });
-    }, { threshold: 0.3 });
-    sections.forEach(function(s) { navIO.observe(s); });
+  /* ---------------- Routing ---------------- */
+  var initialLoad = true;
+  var currentView = null;
+
+  function closeNav() {
+    if (!header.classList.contains('nav-open')) return;
+    header.classList.remove('nav-open');
+    navToggle.setAttribute('aria-expanded', 'false');
+    navToggle.setAttribute('aria-label', 'Open navigation menu');
+    document.body.style.overflow = '';
   }
 
-  // ---- Contact form ----
-  var form = document.getElementById('contact-form');
-  var success = document.getElementById('form-success');
-  if (form) {
-    form.addEventListener('submit', function(e) {
-      e.preventDefault();
-      var honeypot = document.getElementById('cf-website');
-      if (honeypot && honeypot.value) return; // bot
+  function safeReplaceHash(hash) {
+    try { history.replaceState(null, '', hash); } catch (err) { window.location.hash = hash; }
+  }
 
-      // Basic validation
-      var name = document.getElementById('cf-name');
-      var email = document.getElementById('cf-email');
-      var message = document.getElementById('cf-message');
-      var valid = true;
-      [name, email, message].forEach(function(field) {
-        if (!field.value.trim()) {
-          field.style.borderColor = '#ef4444';
-          valid = false;
-        } else {
-          field.style.borderColor = '';
-        }
-      });
-      if (email.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
-        email.style.borderColor = '#ef4444';
-        valid = false;
+  function setActiveNav(route) {
+    var navRoute = route === 'post' ? 'blog' : route;
+    $$('.nav-list a[data-nav]').forEach(function (link) {
+      if (link.classList.contains('btn')) return;
+      if (link.getAttribute('data-nav') === navRoute) {
+        link.setAttribute('aria-current', 'page');
+      } else {
+        link.removeAttribute('aria-current');
       }
-      if (!valid) return;
-
-      form.hidden = true;
-      success.hidden = false;
-      success.scrollIntoView({ behavior: 'smooth', block: 'center' });
     });
   }
 
+  function setPost(slug) {
+    var post = POSTS[slug];
+    if (!post) { return false; }
+    $('#post-category').textContent = post.category;
+    $('#post-title').textContent = post.title;
+    $('#post-lede').textContent = post.lede;
+    var dateEl = $('#post-date');
+    dateEl.textContent = post.dateLabel;
+    dateEl.setAttribute('datetime', post.date);
+    $('#post-read').textContent = post.read;
+    $('#post-art-use').setAttribute('href', post.symbol);
+    $('#post-art-svg').setAttribute('aria-label', post.artLabel);
+    $$('.prose[data-post]').forEach(function (article) {
+      article.hidden = article.getAttribute('data-post') !== slug;
+    });
+    return true;
+  }
+
+  function showView(name, param, shouldFocus) {
+    var target = null;
+    if (name === 'post') {
+      if (!setPost(param)) {
+        safeReplaceHash('#blog');
+        name = 'blog';
+        param = null;
+      }
+    }
+    target = views.find(function (v) { return v.dataset.view === name; });
+    if (!target) { name = 'home'; target = views.find(function (v) { return v.dataset.view === 'home'; }); }
+
+    views.forEach(function (v) { v.hidden = v !== target; });
+    target.hidden = false;
+    currentView = name;
+    setActiveNav(name);
+
+    var meta = (name === 'post' && POSTS[param]) ? { title: POSTS[param].title + ' — ANCYA Journal', desc: POSTS[param].lede } : VIEW_META[name];
+    if (meta) { updateDocumentMeta(meta.title, meta.desc); }
+
+    closeNav();
+
+    if (!initialLoad) {
+      window.scrollTo(0, 0);
+      if (shouldFocus !== false) {
+        var heading = target.querySelector('h1');
+        if (heading) {
+          heading.setAttribute('tabindex', '-1');
+          heading.focus({ preventScroll: true });
+        }
+      }
+    }
+    initialLoad = false;
+  }
+
+  function parseRoute() {
+    var raw = window.location.hash.replace(/^#/, '');
+    if (!raw) { return { name: 'home', param: null }; }
+    var parts = raw.split('/');
+    var name = parts[0];
+    var param = parts.slice(1).join('/');
+    if (name === 'blog' && param) { return { name: 'post', param: param }; }
+    if (routeNames.indexOf(name) === -1) { return { name: 'home', param: null }; }
+    return { name: name, param: null };
+  }
+
+  function route() {
+    var parsed = parseRoute();
+    showView(parsed.name, parsed.param, true);
+  }
+
+  window.addEventListener('hashchange', route);
+
+  /* ---------------- Mobile nav ---------------- */
+  navToggle.addEventListener('click', function () {
+    var open = header.classList.toggle('nav-open');
+    navToggle.setAttribute('aria-expanded', String(open));
+    navToggle.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
+    document.body.style.overflow = open ? 'hidden' : '';
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && header.classList.contains('nav-open')) {
+      closeNav();
+      navToggle.focus();
+    }
+  });
+
+  $$('.nav-list a').forEach(function (link) {
+    link.addEventListener('click', closeNav);
+  });
+
+  window.addEventListener('resize', function () {
+    if (window.innerWidth > 860) { closeNav(); }
+  });
+
+  /* ---------------- Header shadow ---------------- */
+  function onScroll() {
+    header.classList.toggle('is-scrolled', window.scrollY > 8);
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  /* ---------------- Smooth in-page anchors (legal TOC) ---------------- */
+  document.addEventListener('click', function (e) {
+    var link = e.target.closest('[data-scroll]');
+    if (!link) { return; }
+    var id = link.getAttribute('href');
+    if (!id || id.charAt(0) !== '#') { return; }
+    var target = document.getElementById(id.slice(1));
+    if (!target) { return; }
+    e.preventDefault();
+    target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+    target.setAttribute('tabindex', '-1');
+    target.focus({ preventScroll: true });
+  });
+
+  /* ---------------- Contact form ---------------- */
+  var form = $('#project-form');
+  var formError = $('#form-error');
+  var success = $('#form-success');
+
+  if (form) {
+    var fields = { name: $('#name'), email: $('#email'), message: $('#message') };
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var name = fields.name.value.trim();
+      var email = fields.email.value.trim();
+      var message = fields.message.value.trim();
+      var honeypot = $('#website').value;
+      var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
+
+      if (honeypot) {
+        form.hidden = true;
+        success.hidden = false;
+        return;
+      }
+      var nameBad = !name;
+      var emailBad = !emailOk;
+      var messageBad = message.length < 5;
+      fields.name.setAttribute('aria-invalid', String(nameBad));
+      fields.email.setAttribute('aria-invalid', String(emailBad));
+      fields.message.setAttribute('aria-invalid', String(messageBad));
+
+      if (nameBad || emailBad || messageBad) {
+        formError.hidden = false;
+        if (nameBad) { fields.name.focus(); }
+        else if (emailBad) { fields.email.focus(); }
+        else { fields.message.focus(); }
+        return;
+      }
+      formError.hidden = true;
+      form.hidden = true;
+      success.hidden = false;
+      $('#success-title').textContent = 'Thanks, ' + name.split(' ')[0] + ' — message received.';
+      success.setAttribute('tabindex', '-1');
+      success.focus();
+    });
+  }
+
+  /* ---------------- Cookie consent ---------------- */
+  var COOKIE_KEY = 'ancya_cookie_consent';
+  var banner = $('#cookie-banner');
+  var consentStatus = $('#consent-status');
+
+  function readConsent() {
+    try { return window.localStorage.getItem(COOKIE_KEY); } catch (err) { return null; }
+  }
+
+  function storeConsent(value) {
+    try { window.localStorage.setItem(COOKIE_KEY, JSON.stringify({ choice: value, date: new Date().toISOString() })); } catch (err) { /* storage unavailable */ }
+  }
+
+  function openBanner(focusIt) {
+    if (!banner) { return; }
+    banner.hidden = false;
+    if (focusIt) {
+      var first = banner.querySelector('button');
+      if (first) { first.focus(); }
+    }
+  }
+
+  function closeBanner()
+      // Load Google Analytics only after consent
+      if (choice === 'accepted') {
+        var gaId = 'G-FLMXGH7WHJ'; // TODO: replace with real GA4 ID
+        var ga = document.createElement('script');
+        ga.async = true;
+        ga.src = 'https://www.google-analytics.com/gtag/js';
+        ga.onload = function() {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          // Consent mode: grant storage for analytics AND ad consent types
+          gtag('set', {'storage': 'granted', 'ad_user_data': 'granted', 'ad_personalization': 'granted', 'ad_storage': 'granted'});
+          gtag('config', gaId,
+            'ad_user_data': 'granted',
+            'ad_personalization': 'granted',
+            'ad_storage': 'granted'
+          );
+        };
+        document.head.appendChild(ga);
+      } else if (choice === 'rejected') {
+        // Consent mode: deny storage for analytics
+        // GA will be in consent mode without granted storage
+        // Do not call gtag('config') - GA will respect the denied storage setting
+        // Optionally, you could attempt to remove existing GA cookies here
+        // or just leave the decision to the user's browser
+      }
+
+ {
+    if (!banner) { return; }
+    banner.hidden = true;
+  }
+
+  if (banner) {
+    if (!readConsent()) {
+      window.setTimeout(function () { openBanner(false); }, reduceMotion ? 0 : 900);
+    }
+    $$('[data-consent]', banner).forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var choice = btn.getAttribute('data-consent');
+        storeConsent(choice);
+        if (consentStatus) {
+          consentStatus.textContent = choice === 'accepted'
+            ? 'Cookie preferences saved. Optional analytics accepted.'
+            : 'Cookie preferences saved. Optional analytics rejected.';
+        }
+        closeBanner();
+      // Load Google Analytics only after consent
+      if (choice === 'accepted') {
+        var gaId = 'G-FLMXGH7WHJ'; // TODO: replace with real GA4 ID
+        var ga = document.createElement('script');
+        ga.async = true;
+        ga.src = 'https://www.google-analytics.com/gtag/js';
+        ga.onload = function() {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          // Consent mode: grant storage for analytics AND ad consent types
+          gtag('set', {'storage': 'granted', 'ad_user_data': 'granted', 'ad_personalization': 'granted', 'ad_storage': 'granted'});
+          gtag('config', gaId,
+            'ad_user_data': 'granted',
+            'ad_personalization': 'granted',
+            'ad_storage': 'granted'
+          );
+        };
+        document.head.appendChild(ga);
+      } else if (choice === 'rejected') {
+        // Consent mode: deny storage for analytics
+        // GA will be in consent mode without granted storage
+        // Do not call gtag('config') - GA will respect the denied storage setting
+        // Optionally, you could attempt to remove existing GA cookies here
+        // or just leave the decision to the user's browser
+      }
+
+    });
+          gtag('js', new Date());
+          // Consent mode: grant storage for analytics
+          gtag('set', {'storage': 'granted'});
+          gtag('config', gaId);
+        };
+        document.head.appendChild(ga);
+      } else if (choice === 'rejected') {
+        // Consent mode: deny storage for analytics
+        // GA will be in consent mode without granted storage
+        // Do not call gtag('config') - GA will respect the denied storage setting
+        // Optionally, you could attempt to remove existing GA cookies here
+        // or just leave the decision to the user's browser
+      }
+  }
+
+  var cookieSettings = $('#open-cookie-settings');
+  if (cookieSettings) {
+    cookieSettings.addEventListener('click', function () {
+      try { window.localStorage.removeItem(COOKIE_KEY); } catch (err) { /* ignore */ }
+      openBanner(true);
+    });
+  }
+
+  /* ---------------- Initial route ---------------- */
+  route();
+
+  /* If a deep link points at a post, make sure the hash is canonical. */
+  if (window.location.hash.indexOf('#blog/') === 0) {
+    var slug = window.location.hash.slice(6);
+    if (!POSTS[slug]) { safeReplaceHash('#blog'); route(); }
+  }
 })();
 
 // Cookie banner + Google Consent Mode v2 is handled by assets/js/consent.js (shared with legal pages)
