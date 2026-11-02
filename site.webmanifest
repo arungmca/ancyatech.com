@@ -1,0 +1,20 @@
+{
+  "short_name": "ANCYA",
+  "name": "ANCYA — Websites that feel hand-crafted, perform like machines",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "logo/name-in-color-logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "logo/name-in-color-logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
