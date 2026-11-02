@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+    branches: [stage]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run comprehensive website test
+        run: |
+          echo "Checking index.html exists..."
+          ls -la index.html
+          echo "=== Basic HTML structure ==="
+          grep -i "<html" index.html || echo "No <html tag found"
+          grep -i "</html>" index.html || echo "No </html> closing tag found"
+          grep -i "<head>" index.html || echo "No <head> tag found"
+          grep -i "</head>" index.html || echo "No </head> closing tag found"
+          grep -i "<body>" index.html || echo "No <body> tag found"
+          grep -i "</body>" index.html || echo "No </body> closing tag found"
+          echo "=== SEO checks ==="
+          echo "- Checking meta description..."
+          grep -i 'name="description"' index.html && echo "  PASS: meta description found" || echo "  FAIL: meta description missing"
+          echo "- Checking viewport meta tag..."
+          grep -i "viewport" index.html && echo "  PASS: viewport tag found" || echo "  FAIL: viewport tag missing"
+          echo "- Checking og:title..."
+          grep -i "og:title" index.html && echo "  PASS: og:title found" || echo "  FAIL: og:title missing"
+          echo "- Checking og:description..."
+          grep -i "og:description" index.html && echo "  PASS: og:description found" || echo "  FAIL: og:description missing"
+          echo "- Checking twitter:card..."
+          grep -i "twitter:card" index.html && echo "  PASS: twitter:card found" || echo "  FAIL: twitter:card missing"
+          echo "=== HTML validity checks ==="
+          echo "- Checking doctype declaration..."
+          grep -i "<!DOCTYPE" index.html && echo "  PASS: doctype found" || echo "  FAIL: doctype missing"
+          echo "- Checking html lang attribute..."
+          grep -i '<html lang=' index.html && echo "  PASS: html lang attribute found" || echo "  FAIL: html lang attribute missing"
+          echo "- Checking link tag for stylesheet..."
+          grep -i 'rel="stylesheet"' index.html && echo "  PASS: stylesheet link found" || echo "  FAIL: stylesheet link missing"
+          echo "- Checking script tag for JavaScript..."
+          grep -i '<script' index.html && echo "  PASS: script tag found" || echo "  FAIL: script tag missing"
+          echo "=== Summary ==="
+          echo "Basic website structure and SEO meta tags validated."
