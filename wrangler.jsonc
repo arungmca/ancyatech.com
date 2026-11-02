@@ -5,11 +5,7 @@
   "observability": {
     "enabled": true
   },
-  // Required by `wrangler preview` (the block may be empty). Harmless for
-  // `wrangler deploy`, which ignores it.
-  "previews": {
-      "enabled": true
-  },
+  "previews": {},
   // Give each Preview its own URL:
   //   https://<preview-name>-<worker>.<subdomain>.workers.dev
   // Alternative: add "previews_enabled": true to a custom_domain route to get

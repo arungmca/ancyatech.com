@@ -43,7 +43,7 @@
       "name": "ANCYA",
       "alternateName": "ANCYA Studio",
       "url": "https://ancyatech.com/",
-      "logo": "https://ancyatech.com/logo.png",
+      "logo": "https://ancyatech.com/logo/name-in-color-logo.png",
       "description": "A web design and development studio building hand-crafted, high-performing websites for ambitious small and mid-size businesses.",
       "email": "hello@ancyatech.com",
       "telephone": "+1-415-555-0142",
@@ -373,7 +373,7 @@ h1[tabindex="-1"]:focus,h2[tabindex="-1"]:focus,main:focus{outline:none}
   font-family:var(--font-display);font-weight:800;font-size:1.22rem;letter-spacing:.14em;
 }
 .brand:hover{color:var(--ink)}
-.brand-mark{width:36px;height:36px;flex:none;transform:rotate(-3deg);transition:transform .25s var(--ease)}
+.brand-mark{width:auto;height:auto;flex:none;transform:rotate(-3deg);transition:transform .25s var(--ease)}
 .brand:hover .brand-mark{transform:rotate(4deg) scale(1.04)}
 .brand-name{line-height:1}
 .brand-dot{color:var(--fern);margin-left:-.42rem;font-size:1.7rem;line-height:0}
@@ -1060,12 +1060,8 @@ h1[tabindex="-1"]:focus,h2[tabindex="-1"]:focus,main:focus{outline:none}
 <header class="site-header" id="site-header">
   <div class="container header-inner">
     <a class="brand" href="#home" aria-label="ANCYA — home">
-      <svg class="brand-mark" viewBox="0 0 256 256" role="img" aria-label="ANCYA prism mark">
-        <path fill="url(#brandGrad)" fill-rule="evenodd" d="M74 28H182A46 46 0 0 1 228 74V182A46 46 0 0 1 182 228H74A46 46 0 0 1 28 182V74A46 46 0 0 1 74 28ZM86 68H170A18 18 0 0 1 188 86V170A18 18 0 0 1 170 188H86A18 18 0 0 1 68 170V86A18 18 0 0 1 86 68Z"/>
-        <path fill="#1f2733" fill-opacity=".13" d="M214.53 41.47A46 46 0 0 1 228 74L228 182A46 46 0 0 1 214.53 214.53L182.73 182.73A18 18 0 0 0 188 170L188 86A18 18 0 0 1 182.73 73.27Z"/>
-        <path fill="#1f2733" fill-opacity=".22" d="M41.47 214.53A46 46 0 0 0 74 228L182 228A46 46 0 0 0 214.53 214.53L182.73 182.73A18 18 0 0 1 170 188L86 188A18 18 0 0 1 73.27 182.73Z"/>
-      </svg>
-      <span class="brand-name">ANCYA</span><span class="brand-dot" aria-hidden="true">.</span>
+<img class="brand-mark" src="logo/name-in-color-logo.png" alt="ANCYA" style="width:auto;height:auto;flex:none;transform:rotate(-3deg);transition:transform .25s var(--ease)">
+      <span class="brand-dot" aria-hidden="true">.</span>
     </a>
 
     <nav class="primary-nav" id="primary-nav" aria-label="Primary">
@@ -3051,12 +3047,8 @@ h1[tabindex="-1"]:focus,h2[tabindex="-1"]:focus,main:focus{outline:none}
     <div class="footer-top">
       <div class="footer-brand">
         <a class="brand" href="#home" aria-label="ANCYA — home">
-          <svg class="brand-mark" viewBox="0 0 256 256" role="img" aria-label="ANCYA prism mark">
-            <path fill="url(#brandGrad)" fill-rule="evenodd" d="M74 28H182A46 46 0 0 1 228 74V182A46 46 0 0 1 182 228H74A46 46 0 0 1 28 182V74A46 46 0 0 1 74 28ZM86 68H170A18 18 0 0 1 188 86V170A18 18 0 0 1 170 188H86A18 18 0 0 1 68 170V86A18 18 0 0 1 86 68Z"/>
-            <path fill="#1f2733" fill-opacity=".13" d="M214.53 41.47A46 46 0 0 1 228 74L228 182A46 46 0 0 1 214.53 214.53L182.73 182.73A18 18 0 0 0 188 170L188 86A18 18 0 0 1 182.73 73.27Z"/>
-            <path fill="#1f2733" fill-opacity=".22" d="M41.47 214.53A46 46 0 0 0 74 228L182 228A46 46 0 0 0 214.53 214.53L182.73 182.73A18 18 0 0 1 170 188L86 188A18 18 0 0 1 73.27 182.73Z"/>
-          </svg>
-          <span class="brand-name">ANCYA</span><span class="brand-dot" aria-hidden="true">.</span>
+          <img class="brand-mark" src="logo/name-in-color-logo.png" alt="ANCYA" style="width:auto;height:auto;flex:none;transform:rotate(-3deg);transition:transform .25s var(--ease)">
+          <span class="brand-dot" aria-hidden="true">.</span>
         </a>
         <p>A small web studio building hand-crafted, high-performing websites for businesses that care how they look online.</p>
         <div class="social-row" style="margin-top:1rem">
@@ -3114,6 +3106,7 @@ h1[tabindex="-1"]:focus,h2[tabindex="-1"]:focus,main:focus{outline:none}
       <p class="footer-hand" style="margin:0">Made with care in Portland, OR.</p>
     </div>
   </div>
+</div>
 </footer>
 
 <!-- Cookie consent -->
@@ -3559,7 +3552,6 @@ h1[tabindex="-1"]:focus,h2[tabindex="-1"]:focus,main:focus{outline:none}
     });
       // Load Google Analytics only after consent
       if (choice === 'accepted') {
-        // Replace GA_MEASUREMENT_ID with your Google Analytics measurement ID
         var gaId = 'G-FLMXGH7WHJ';
         var ga = document.createElement('script');
         ga.async = true;
