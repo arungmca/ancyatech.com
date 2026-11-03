@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 jobs:
-  test:
+  CI:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -42,5 +42,19 @@ jobs:
           grep -i 'rel="stylesheet"' index.html && echo "  PASS: stylesheet link found" || echo "  FAIL: stylesheet link missing"
           echo "- Checking script tag for JavaScript..."
           grep -i '<script' index.html && echo "  PASS: script tag found" || echo "  FAIL: script tag missing"
+          echo "=== Legal pages check ==="
+          for f in privacy-policy.html terms-of-service.html cookie-policy.html; do
+            if [ -f "$f" ]; then
+              echo "  PASS: $f exists"
+            else
+              echo "  FAIL: $f missing"
+            fi
+          done
+          echo "=== Sitemap check ==="
+          if grep -q "<loc>" sitemap.xml; then
+            echo "  PASS: sitemap.xml has URL entries"
+          else
+            echo "  FAIL: sitemap.xml has no URL entries"
+          fi
           echo "=== Summary ==="
           echo "Basic website structure and SEO meta tags validated."
