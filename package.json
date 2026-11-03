@@ -1,4 +1,12 @@
 {
+  "name": "ancyatech-com",
+  "private": true,
+  "scripts": {
+    "dev": "wrangler dev",
+    "preview": "python3 -m http.server 8080 --directory public",
+    "check": "python3 scripts/check_links.py",
+    "deploy": "wrangler deploy"
+  },
   "devDependencies": {
     "wrangler": "^4.154.0"
   }

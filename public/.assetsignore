@@ -1,0 +1,3 @@
+# Never upload these from the deployed assets directory.
+**/.DS_Store
+**/*.map

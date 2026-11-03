@@ -12,7 +12,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="assets/favicons/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicons/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="assets/favicons/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
+<link rel="manifest" href="site.webmanifest">
 
 <!-- Open Graph / Twitter -->
 <meta property="og:type" content="website">
@@ -124,720 +124,9 @@
   gtag('config', 'G-FLMXGH7WHJ', { 'anonymize_ip': true });
 </script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-FLMXGH7WHJ"></script>
-<style>
-/* ==========================================================================
-   ANCYA design system
-   Sapphire Blue + Kinetic Swoop gradient + atmospheric depth.
-   Brand palette is fixed: Sapphire, Cobalt, Coral, Amber, Porcelain.
-   ========================================================================== */
+<link rel="stylesheet" href="assets/css/main.css?v=20261103">
+<!-- Design system reference for developers: styleguide.html — not linked publicly. -->
 
-:root {
-  /* Brand palette */
-  --sapphire: #0B519C;
-  --sapphire-deep: #082A61;
-  --sapphire-vibrant: #1456AC;
-  --sapphire-glow: #195BB8;
-  --sapphire-50: #EFF6FF;
-  --sapphire-100: #DBEAFE;
-  --sapphire-200: #BFDBFE;
-  --sapphire-300: #93C5FD;
-  --sapphire-400: #60A5FA;
-  --sapphire-500: #3B82F6;
-  --sapphire-600: #1D4ED8;
-  --sapphire-800: #0E3D7B;
-  --sapphire-900: #082A61;
-  --sapphire-950: #051A3E;
-
-  --swoop-coral: #FC5332;
-  --swoop-mid: #FE7234;
-  --swoop-amber: #FFA537;
-
-  --ink: #0B132B;
-  --body: #475569;
-  --muted: #94A3B8;
-
-  --canvas: #F8FAFC;
-  --surface: #FFFFFF;
-  --surface-elev: #F1F5F9;
-  --border-subtle: #E2E8F0;
-  --border-strong: #CBD5E1;
-
-  /* Dark theme */
-  --dark-root: #070A12;
-  --dark-surface: #0B0F1C;
-  --dark-surface-2: #11182A;
-  --dark-surface-3: #18223B;
-  --dark-border: #1E2B4A;
-  --dark-border-strong: #2A3B66;
-  --dark-text: #F8FAFC;
-  --dark-text-2: #94A3B8;
-  --dark-text-muted: #64748B;
-
-  /* Official gradients */
-  --gradient-swoop: linear-gradient(90deg, #FC5332 0%, #FE7234 45%, #FFA537 100%);
-  --gradient-cta: linear-gradient(135deg, #FC5332 0%, #FE7234 50%, #FFA537 100%);
-  --gradient-hero: radial-gradient(circle at 50% 40%, #195BB8 0%, #114995 30%, #0E3D7B 60%, #082A61 85%, #051A3E 100%);
-
-  /* Type */
-  --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-
-  /* Layout */
-  --maxw: 1200px;
-  --gutter: clamp(20px, 5vw, 40px);
-  --section-y: clamp(72px, 9vw, 128px);
-  --header-h: 72px;
-
-  /* Shape + shadow */
-  --r-card: 16px;
-  --r-pill: 9999px;
-  --r-sm: 12px;
-  --shadow-sm: 0 1px 2px rgba(11,19,43,.06);
-  --shadow-md: 0 4px 24px -6px rgba(11,19,43,.10);
-  --shadow-lg: 0 12px 40px -8px rgba(11,19,43,.14);
-  --shadow-swoop: 0 10px 30px -8px rgba(252,83,50,.35);
-  --ease: cubic-bezier(.22,.61,.36,1);
-}
-
-/* ---------- Reset / base ---------- */
-*,*::before,*::after { box-sizing: border-box }
-html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth }
-body {
-  margin: 0;
-  background: var(--canvas);
-  color: var(--body);
-  font-family: var(--font-sans);
-  font-size: 1rem;
-  line-height: 1.65;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-  overflow-x: hidden;
-}
-img, svg { max-width: 100%; display: block }
-svg { display: block }
-h1,h2,h3,h4 {
-  margin: 0 0 .55em;
-  font-weight: 700;
-  line-height: 1.15;
-  letter-spacing: -.025em;
-  color: var(--ink);
-  text-wrap: balance;
-}
-h1 { font-size: clamp(2.4rem, 5.5vw, 4rem); font-weight: 800; letter-spacing: -.035em }
-h2 { font-size: clamp(1.75rem, 3.5vw, 2.6rem); letter-spacing: -.03em }
-h3 { font-size: clamp(1.15rem, 1.6vw, 1.4rem); font-weight: 600 }
-h4 { font-size: 1.05rem; font-weight: 600; line-height: 1.35 }
-p { margin: 0 0 1.1em }
-p:last-child { margin-bottom: 0 }
-a { color: var(--sapphire); text-decoration-thickness: 1.5px; text-underline-offset: 3px; transition: color .2s var(--ease) }
-a:hover { color: var(--sapphire-deep) }
-strong { color: var(--ink); font-weight: 600 }
-ul,ol { margin: 0 0 1.2em; padding-left: 1.2em }
-li { margin-bottom: .35em }
-::selection { background: var(--sapphire-200); color: var(--ink) }
-:focus-visible { outline: 3px solid var(--sapphire-500); outline-offset: 3px; border-radius: 6px }
-h1[tabindex="-1"]:focus, h2[tabindex="-1"]:focus, main:focus { outline: none }
-[hidden] { display: none !important }
-
-.skip-link {
-  position: fixed; top: 10px; left: 10px; z-index: 200;
-  padding: .75rem 1.1rem; background: var(--sapphire-deep); color: #fff;
-  border-radius: 10px; transform: translateY(-160%); transition: transform .2s var(--ease);
-  font-weight: 600; text-decoration: none;
-}
-.skip-link:focus { transform: none; color: #fff }
-
-.container { width: min(100% - (var(--gutter) * 2), var(--maxw)); margin-inline: auto }
-.visually-hidden {
-  position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px;
-  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
-}
-
-/* ---------- Typography helpers ---------- */
-.eyebrow {
-  display: inline-flex; align-items: center; gap: .5rem;
-  margin: 0 0 1rem;
-  font-size: .75rem; font-weight: 700;
-  letter-spacing: .12em; text-transform: uppercase; color: var(--sapphire);
-}
-.eyebrow--light { color: var(--sapphire-300) }
-.eyebrow::before {
-  content: ""; width: 8px; height: 8px; border-radius: 50%;
-  background: var(--gradient-swoop); flex: none;
-}
-.lead {
-  font-size: clamp(1.05rem, 1.4vw, 1.2rem); line-height: 1.6; color: var(--body); max-width: 60ch;
-}
-.lead--light { color: var(--dark-text-2) }
-.gradient-text {
-  background: var(--gradient-swoop);
-  -webkit-background-clip: text; background-clip: text;
-  -webkit-text-fill-color: transparent; color: transparent;
-}
-.section-head { margin-bottom: clamp(36px, 4.5vw, 56px); max-width: 720px }
-.section-head.is-centered { margin-inline: auto; text-align: center }
-.section-head p { color: var(--body); max-width: 62ch; margin-top: .8rem }
-
-/* ---------- Buttons ---------- */
-.btn {
-  display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
-  min-height: 48px; padding: .85rem 1.5rem;
-  font-family: var(--font-sans); font-size: .95rem; font-weight: 600; line-height: 1;
-  text-decoration: none; cursor: pointer; border: none; border-radius: 12px;
-  transition: transform .18s var(--ease), box-shadow .18s var(--ease), filter .18s var(--ease), background-color .18s var(--ease);
-}
-.btn svg { width: 18px; height: 18px; flex: none }
-.btn:active { transform: scale(.98) }
-
-.btn-primary {
-  background: var(--gradient-cta); color: #fff;
-  box-shadow: var(--shadow-swoop);
-}
-.btn-primary:hover { filter: brightness(1.08); transform: translateY(-1px); color: #fff }
-
-.btn-secondary {
-  background: rgba(11,81,156,.10); color: var(--sapphire);
-  border: 1px solid rgba(11,81,156,.25);
-}
-.btn-secondary:hover { background: rgba(11,81,156,.18); color: var(--sapphire) }
-
-.btn-ghost {
-  background: transparent; color: var(--dark-text-2);
-  border: 1px solid var(--dark-border-strong);
-}
-.btn-ghost:hover { background: var(--dark-surface-2); color: #fff }
-
-.btn-outline {
-  background: var(--surface); color: var(--ink);
-  border: 1px solid var(--border-strong);
-  box-shadow: var(--shadow-sm);
-}
-.btn-outline:hover { border-color: var(--sapphire-300); color: var(--sapphire) }
-
-.btn-lg { min-height: 54px; padding: 1rem 1.8rem; font-size: 1rem }
-.btn-sm { min-height: 40px; padding: .6rem 1rem; font-size: .88rem }
-.btn-block { width: 100% }
-
-.btn-link {
-  display: inline-flex; align-items: center; gap: .4rem;
-  font-weight: 600; font-size: .9rem; color: var(--sapphire); text-decoration: none;
-}
-.btn-link svg { width: 16px; height: 16px; transition: transform .2s var(--ease) }
-.btn-link:hover svg { transform: translateX(3px) }
-
-/* ---------- Header / nav ---------- */
-.site-header {
-  position: sticky; top: 0; z-index: 70;
-  background: rgba(248,250,252,.85);
-  -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--border-subtle);
-  transition: box-shadow .25s var(--ease), background-color .25s var(--ease);
-}
-.site-header.is-scrolled { box-shadow: var(--shadow-md) }
-.header-inner {
-  display: flex; align-items: center; gap: 18px; min-height: var(--header-h);
-}
-.brand {
-  display: flex; align-items: center; gap: .5rem;
-  margin-right: auto; text-decoration: none;
-}
-.brand img, .brand svg { height: 36px; width: auto; flex: none }
-.brand-name { font-weight: 800; font-size: 1.1rem; letter-spacing: -.02em; color: var(--ink) }
-
-.primary-nav { display: flex; align-items: center }
-.nav-list { display: flex; align-items: center; gap: 4px; margin: 0; padding: 0; list-style: none }
-.nav-list li { margin: 0 }
-.nav-list a {
-  display: inline-flex; align-items: center;
-  min-height: 40px; padding: .4rem .8rem;
-  font-size: .9rem; font-weight: 500; color: var(--body); text-decoration: none;
-  border-radius: 8px; transition: color .2s var(--ease), background-color .2s var(--ease);
-}
-.nav-list a:not(.btn):hover { color: var(--sapphire); background: var(--sapphire-50) }
-.nav-list a[aria-current="page"] { color: var(--sapphire); font-weight: 600 }
-.nav-list .nav-cta { margin-left: 8px }
-
-.nav-toggle {
-  display: none; align-items: center; justify-content: center;
-  width: 44px; height: 44px; padding: 0; background: var(--surface);
-  border: 1px solid var(--border-strong); border-radius: 10px;
-  color: var(--ink); cursor: pointer;
-}
-.nav-toggle svg { width: 22px; height: 22px }
-.nav-toggle .icon-close { display: none }
-.nav-open .nav-toggle .icon-close { display: block }
-.nav-open .nav-toggle .icon-menu { display: none }
-
-/* ---------- Sections ---------- */
-.section { padding-block: var(--section-y) }
-.section--tight { padding-block: clamp(48px, 6vw, 80px) }
-.band { background: var(--canvas) }
-.band-white { background: var(--surface) }
-.band-dark {
-  background: var(--dark-root);
-  color: var(--dark-text-2);
-}
-.band-dark h2, .band-dark h3, .band-dark h4 { color: var(--dark-text) }
-.band-dark p { color: var(--dark-text-2) }
-
-.grid { display: grid; gap: clamp(16px, 2vw, 24px) }
-.grid-2 { grid-template-columns: repeat(2, minmax(0,1fr)) }
-.grid-3 { grid-template-columns: repeat(3, minmax(0,1fr)) }
-.grid-4 { grid-template-columns: repeat(4, minmax(0,1fr)) }
-
-/* ---------- Cards ---------- */
-.card {
-  position: relative;
-  padding: clamp(22px, 2.5vw, 32px);
-  background: var(--surface);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--r-card);
-  box-shadow: var(--shadow-sm);
-  transition: transform .25s var(--ease), box-shadow .25s var(--ease), border-color .25s var(--ease);
-}
-.card--lift:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: var(--sapphire-200) }
-.card p { color: var(--body) }
-.card p:last-child { margin-bottom: 0 }
-.icon-tile {
-  display: inline-flex; align-items: center; justify-content: center;
-  width: 52px; height: 52px; margin-bottom: 1.1rem;
-  border-radius: 14px;
-  background: var(--sapphire-50); border: 1px solid var(--sapphire-100);
-  color: var(--sapphire);
-}
-.icon-tile svg { width: 26px; height: 26px }
-.card--lift:hover .icon-tile { background: var(--sapphire-100) }
-.icon-tile--swoop {
-  background: linear-gradient(135deg, rgba(252,83,50,.1), rgba(255,165,55,.1));
-  border-color: rgba(252,83,50,.2); color: var(--swoop-coral);
-}
-.tag {
-  display: inline-flex; align-items: center; gap: .3rem;
-  padding: .3rem .65rem; font-size: .72rem; font-weight: 600; letter-spacing: .04em;
-  color: var(--sapphire); background: var(--sapphire-50); border: 1px solid var(--sapphire-100);
-  border-radius: var(--r-pill); text-transform: uppercase;
-}
-.tag--swoop { color: var(--swoop-coral); background: rgba(252,83,50,.06); border-color: rgba(252,83,50,.15) }
-.tag--dark { color: var(--sapphire-300); background: var(--dark-surface-2); border-color: var(--dark-border) }
-
-/* ---------- Hero ---------- */
-.hero {
-  position: relative; overflow: hidden;
-  background: var(--gradient-hero);
-  padding-block: clamp(80px, 10vw, 140px) clamp(64px, 8vw, 100px);
-}
-.hero::before {
-  content: ""; position: absolute; inset: 0; pointer-events: none;
-  background-image: radial-gradient(rgba(255,255,255,.05) 1px, transparent 1px);
-  background-size: 28px 28px;
-  -webkit-mask-image: radial-gradient(ellipse 60% 60% at 50% 30%, #000 10%, transparent 75%);
-  mask-image: radial-gradient(ellipse 60% 60% at 50% 30%, #000 10%, transparent 75%);
-}
-/* Ambient glow orbs */
-.hero::after {
-  content: ""; position: absolute; top: -20%; left: 50%; transform: translateX(-50%);
-  width: 700px; height: 400px;
-  background: radial-gradient(ellipse, rgba(252,83,50,.15), transparent 70%);
-  pointer-events: none; filter: blur(80px);
-}
-.hero-inner {
-  position: relative; z-index: 1;
-  display: grid; grid-template-columns: minmax(0,1.1fr) minmax(0,.9fr);
-  gap: clamp(32px, 5vw, 72px); align-items: center;
-}
-.hero h1 { color: #fff; margin-bottom: .6em }
-.hero h1 .gradient-text { font-weight: 800 }
-.hero .lead { color: var(--dark-text-2); max-width: 38rem; margin-bottom: 2rem }
-.hero-actions { display: flex; flex-wrap: wrap; gap: 14px; align-items: center }
-.hero-trust { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--dark-border) }
-.hero-trust-label { font-size: .72rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--dark-text-muted); margin-bottom: .8rem }
-.hero-trust-row { display: flex; flex-wrap: wrap; gap: .6rem 1.5rem; align-items: center }
-.wordmark {
-  display: inline-flex; align-items: center; gap: .4rem;
-  font-weight: 600; font-size: .95rem; color: var(--dark-text-2); white-space: nowrap;
-}
-.wordmark svg { width: 18px; height: 18px; color: var(--sapphire-400) }
-
-/* Hero art */
-.hero-art { position: relative }
-.hero-art-card {
-  background: var(--dark-surface);
-  border: 1px solid var(--dark-border);
-  border-radius: 20px; padding: 24px; overflow: hidden;
-  position: relative;
-}
-.hero-art-card::before {
-  content: ""; position: absolute; inset: 0;
-  background: linear-gradient(135deg, rgba(11,81,156,.15), transparent 50%, rgba(252,83,50,.08));
-  pointer-events: none; border-radius: 20px;
-}
-.hero-art-card svg { position: relative; z-index: 1; width: 100%; height: auto }
-.hero-badge {
-  position: absolute; top: -12px; right: 16px; z-index: 2;
-  display: inline-flex; align-items: center; gap: .4rem;
-  padding: .4rem .85rem; font-size: .78rem; font-weight: 600;
-  background: var(--gradient-cta); color: #fff;
-  border-radius: var(--r-pill); box-shadow: var(--shadow-swoop);
-}
-
-/* ---------- Stats bar ---------- */
-.stats-bar {
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
-  background: var(--border-subtle);
-  border-radius: var(--r-card); overflow: hidden;
-  box-shadow: var(--shadow-md); margin-top: -40px; position: relative; z-index: 10;
-}
-.stat { background: var(--surface); padding: clamp(20px,2.5vw,32px); text-align: center }
-.stat-num {
-  font-size: clamp(1.8rem,3vw,2.4rem); font-weight: 800; letter-spacing: -.03em;
-  background: var(--gradient-swoop);
-  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
-}
-.stat-label { font-size: .82rem; font-weight: 500; color: var(--muted); margin-top: .25rem }
-
-/* ---------- Process ---------- */
-.process-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: clamp(14px,2vw,24px) }
-.step { position: relative; padding: 0 }
-.step-num {
-  display: inline-flex; align-items: center; justify-content: center;
-  width: 40px; height: 40px; margin-bottom: 1rem;
-  font-size: 1.1rem; font-weight: 700; color: #fff;
-  background: var(--gradient-cta); border-radius: 12px;
-}
-.step h3 { font-size: 1.1rem; margin-bottom: .35rem }
-.step p { font-size: .92rem; color: var(--muted); margin-bottom: 0 }
-.step-line {
-  position: absolute; top: 20px; left: calc(100% - 12px); width: 24px; height: 2px;
-  background: var(--border-strong); border-radius: 1px;
-}
-.step:last-child .step-line { display: none }
-
-/* ---------- Work / case studies ---------- */
-.case-card { padding: 0; overflow: hidden; display: flex; flex-direction: column }
-.case-visual {
-  position: relative; display: flex; align-items: center; justify-content: center;
-  min-height: 200px; padding: 24px;
-  background: linear-gradient(135deg, var(--sapphire-50), var(--surface-elev));
-  border-bottom: 1px solid var(--border-subtle);
-}
-.case-visual svg { width: min(100%,260px); height: auto }
-.case-body { display: flex; flex-direction: column; flex: 1; padding: clamp(20px,2.4vw,28px) }
-.case-industry { font-size: .72rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--sapphire); margin-bottom: .5rem }
-.case-card h3 { font-size: 1.2rem; margin-bottom: .4rem }
-.case-card p { font-size: .9rem; color: var(--muted); margin-bottom: 0 }
-.case-result {
-  display: flex; align-items: center; gap: .6rem; margin-top: 1.2rem; padding-top: 1rem;
-  border-top: 1px solid var(--border-subtle);
-}
-.case-metric { font-size: 1.3rem; font-weight: 800; color: var(--ink); letter-spacing: -.02em; line-height: 1 }
-.case-metric-label { font-size: .78rem; color: var(--muted); line-height: 1.25 }
-.case-arrow {
-  display: inline-flex; align-items: center; justify-content: center;
-  width: 36px; height: 36px; margin-left: auto;
-  color: var(--sapphire); background: var(--sapphire-50); border: 1px solid var(--sapphire-100);
-  border-radius: 50%; transition: transform .2s var(--ease), background-color .2s var(--ease);
-}
-.case-arrow svg { width: 16px; height: 16px }
-.case-card:hover .case-arrow { transform: translateX(2px); background: var(--gradient-cta); color: #fff; border-color: transparent }
-
-/* ---------- Testimonial ---------- */
-.quote-card {
-  position: relative; overflow: hidden;
-  padding: clamp(32px,4vw,48px);
-  background: var(--dark-surface); border: 1px solid var(--dark-border);
-  border-radius: 24px;
-}
-.quote-card::before {
-  content: ""; position: absolute; top: -40px; right: -40px;
-  width: 200px; height: 200px;
-  background: radial-gradient(circle, rgba(252,83,50,.12), transparent 70%);
-  pointer-events: none;
-}
-.quote-mark { width: 48px; height: 40px; color: var(--swoop-coral); flex: none; margin-bottom: 1.2rem }
-.quote-text {
-  font-size: clamp(1.2rem,2.2vw,1.65rem); font-weight: 500; line-height: 1.45; letter-spacing: -.015em;
-  color: var(--dark-text); margin-bottom: 1.5rem; max-width: 60ch; text-wrap: pretty;
-}
-.quote-person { display: flex; align-items: center; gap: .85rem }
-.quote-avatar {
-  width: 52px; height: 52px; flex: none; border-radius: 50%;
-  background: var(--gradient-cta); display: flex; align-items: center; justify-content: center;
-  color: #fff; font-weight: 700; font-size: 1.2rem;
-}
-.quote-name { font-weight: 600; color: var(--dark-text); font-size: .95rem; line-height: 1.2 }
-.quote-role { font-size: .83rem; color: var(--dark-text-2) }
-.quote-stars { display: flex; gap: 2px; margin-bottom: 1.2rem }
-.quote-stars svg { width: 20px; height: 20px; color: var(--swoop-amber) }
-
-/* ---------- Pricing ---------- */
-.pricing-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: clamp(14px,1.8vw,24px); align-items: stretch }
-.price-card {
-  display: flex; flex-direction: column; padding: clamp(24px,2.5vw,32px);
-  background: var(--surface); border: 1px solid var(--border-subtle); border-radius: var(--r-card);
-  box-shadow: var(--shadow-sm); position: relative; transition: transform .25s var(--ease), box-shadow .25s var(--ease);
-}
-.price-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md) }
-.price-card.is-popular {
-  border: 2px solid var(--sapphire);
-  box-shadow: 0 12px 40px -8px rgba(11,81,156,.25);
-}
-.price-badge {
-  position: absolute; top: -13px; left: 50%; transform: translateX(-50%);
-  padding: .35rem .85rem; font-size: .72rem; font-weight: 700; letter-spacing: .04em;
-  color: #fff; background: var(--gradient-cta); border-radius: var(--r-pill); box-shadow: var(--shadow-swoop);
-  white-space: nowrap;
-}
-.price-name { font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--sapphire); margin-bottom: .6rem }
-.price-amount { display: flex; align-items: baseline; gap: .3rem; margin-bottom: .3rem }
-.price-figure { font-size: clamp(1.7rem,2.8vw,2.2rem); font-weight: 800; color: var(--ink); letter-spacing: -.03em; line-height: 1 }
-.price-unit { font-size: .82rem; color: var(--muted); font-weight: 500 }
-.price-desc { font-size: .85rem; color: var(--muted); margin-bottom: 1.2rem; min-height: 2.5em }
-.price-features { list-style: none; padding: 0; margin: 0 0 1.4rem; display: grid; gap: .55rem }
-.price-features li { display: flex; gap: .5rem; font-size: .85rem; margin: 0; color: var(--body) }
-.price-features svg { width: 16px; height: 16px; color: var(--sapphire); flex: none; margin-top: .2rem }
-.price-card .btn { margin-top: auto }
-.price-note { font-size: .8rem; color: var(--muted); margin-top: 1.6rem; text-align: center }
-
-.care-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--border-subtle); border-radius: var(--r-card); overflow: hidden; box-shadow: var(--shadow-sm) }
-.care-item { background: var(--surface); padding: clamp(20px,2.4vw,28px) }
-.care-name { font-weight: 600; color: var(--ink); margin-bottom: .3rem }
-.care-price { font-size: 1.1rem; font-weight: 700; color: var(--sapphire); margin-bottom: .4rem }
-.care-desc { font-size: .85rem; color: var(--muted) }
-
-/* FAQ */
-.faq { max-width: 760px; margin-inline: auto }
-.faq-item {
-  background: var(--surface); border: 1px solid var(--border-subtle); border-radius: var(--r-sm);
-  margin-bottom: 12px; overflow: hidden; transition: border-color .2s var(--ease);
-}
-.faq-item[open] { border-color: var(--sapphire-200) }
-.faq-item summary {
-  display: flex; align-items: center; gap: .8rem; list-style: none; cursor: pointer;
-  padding: 18px 22px; font-weight: 600; font-size: .98rem; color: var(--ink);
-}
-.faq-item summary::-webkit-details-marker { display: none }
-.faq-item summary::after {
-  content: ""; margin-left: auto; width: 12px; height: 12px; flex: none;
-  border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted);
-  transform: rotate(45deg); transition: transform .2s var(--ease);
-}
-.faq-item[open] summary::after { transform: rotate(-135deg) }
-.faq-answer { padding: 0 22px 20px; color: var(--body); font-size: .93rem }
-
-/* ---------- Blog cards ---------- */
-.post-card { padding: 0; overflow: hidden; display: flex; flex-direction: column }
-.post-visual {
-  display: flex; align-items: center; justify-content: center; min-height: 160px; padding: 20px;
-  background: linear-gradient(135deg, var(--sapphire-50), var(--surface-elev));
-  border-bottom: 1px solid var(--border-subtle);
-}
-.post-visual svg { width: min(100%,220px); height: auto }
-.post-body { display: flex; flex-direction: column; flex: 1; padding: clamp(18px,2.2vw,24px) }
-.post-body h3 { font-size: 1.05rem; line-height: 1.35; margin-bottom: .45rem }
-.post-body h3 a { color: var(--ink); text-decoration: none }
-.post-body h3 a:hover { color: var(--sapphire) }
-.post-body .excerpt { font-size: .88rem; color: var(--muted); margin-bottom: .9rem }
-.post-body .meta { margin-top: auto; font-size: .78rem; color: var(--muted); display: flex; gap: .5rem; align-items: center; flex-wrap: wrap }
-
-/* ---------- CTA band ---------- */
-.cta-band {
-  position: relative; overflow: hidden;
-  padding-block: clamp(56px,7vw,88px);
-  background: var(--dark-root);
-}
-.cta-band::before {
-  content: ""; position: absolute; top: -40%; left: 10%;
-  width: 500px; height: 400px;
-  background: radial-gradient(circle, rgba(252,83,50,.15), transparent 70%);
-  filter: blur(80px); pointer-events: none;
-}
-.cta-band::after {
-  content: ""; position: absolute; bottom: -30%; right: 5%;
-  width: 400px; height: 400px;
-  background: radial-gradient(circle, rgba(11,81,156,.25), transparent 70%);
-  filter: blur(80px); pointer-events: none;
-}
-.cta-inner {
-  position: relative; z-index: 1; text-align: center; max-width: 640px; margin-inline: auto;
-}
-.cta-inner h2 { color: #fff; margin-bottom: .6rem }
-.cta-inner p { color: var(--dark-text-2); font-size: 1.1rem; margin-bottom: 2rem }
-.cta-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap }
-
-/* ---------- Contact ---------- */
-.contact-grid { display: grid; grid-template-columns: minmax(0,1.1fr) minmax(0,.9fr); gap: clamp(28px,4vw,52px); align-items: start }
-.form-card { padding: clamp(28px,3.5vw,40px); background: var(--surface); border: 1px solid var(--border-subtle); border-radius: var(--r-card); box-shadow: var(--shadow-md) }
-.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px }
-.field { margin-bottom: 0 }
-.field--full { grid-column: 1 / -1 }
-.field label { display: block; font-size: .82rem; font-weight: 600; color: var(--ink); margin-bottom: .4rem }
-.field label .optional { font-weight: 400; color: var(--muted) }
-.field input, .field select, .field textarea {
-  width: 100%; min-height: 48px; padding: .7rem .9rem;
-  font-family: var(--font-sans); font-size: .95rem; color: var(--ink);
-  background: var(--surface); border: 1px solid var(--border-strong);
-  border-radius: 10px; transition: border-color .18s, box-shadow .18s;
-}
-.field textarea { min-height: 130px; resize: vertical }
-.field select {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  padding-right: 2.5rem;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394A3B8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right .9rem center;
-  background-size: 16px;
-  cursor: pointer;
-}
-.field input::placeholder, .field textarea::placeholder { color: var(--muted) }
-.field input:focus, .field select:focus, .field textarea:focus {
-  outline: none; border-color: var(--sapphire-500);
-  box-shadow: 0 0 0 3px rgba(11,81,156,.15);
-}
-.form-note { font-size: .8rem; color: var(--muted); margin-top: 1rem }
-.form-success {
-  padding: clamp(28px,3.5vw,40px); text-align: center;
-  background: var(--sapphire-50); border: 1px solid var(--sapphire-200); border-radius: var(--r-card);
-}
-.form-success svg { width: 52px; height: 52px; margin: 0 auto 1rem; color: var(--sapphire) }
-.form-success h3 { font-size: 1.3rem; margin-bottom: .4rem }
-.honeypot { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden }
-
-.contact-details { display: grid; gap: 14px }
-.contact-item { display: flex; gap: 1rem; align-items: flex-start; padding: 22px 24px; background: var(--surface); border: 1px solid var(--border-subtle); border-radius: var(--r-card) }
-.contact-item .icon-tile { width: 44px; height: 44px; margin-bottom: 0; flex: none }
-.contact-item .icon-tile svg { width: 22px; height: 22px }
-.contact-item h3 { font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: .2rem; font-weight: 600 }
-.contact-item p, .contact-item a { font-size: .95rem; margin-bottom: 0; color: var(--ink); font-weight: 500; text-decoration: none }
-.contact-item a:hover { color: var(--sapphire) }
-.social-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 1rem }
-.social-btn {
-  display: inline-flex; align-items: center; justify-content: center;
-  width: 44px; height: 44px; color: var(--sapphire); background: var(--sapphire-50);
-  border: 1px solid var(--sapphire-100); border-radius: 12px;
-  transition: transform .18s var(--ease), background-color .18s, color .18s;
-}
-.social-btn svg { width: 20px; height: 20px }
-.social-btn:hover { transform: translateY(-2px); background: var(--gradient-cta); color: #fff; border-color: transparent }
-
-/* ---------- Footer ---------- */
-.site-footer {
-  background: var(--dark-root); color: var(--dark-text-2);
-  padding-block: clamp(48px,6vw,72px) 28px;
-}
-.site-footer .brand svg { filter: brightness(0) invert(1) }
-.footer-top { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: clamp(24px,3.5vw,48px); margin-bottom: 2.4rem }
-.footer-brand p { font-size: .9rem; color: var(--dark-text-2); max-width: 32ch; margin-top: 1rem }
-.footer-col h3 { font-size: .76rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--dark-text-muted); margin-bottom: .85rem }
-.footer-col ul { list-style: none; margin: 0; padding: 0 }
-.footer-col li { margin-bottom: .4rem }
-.footer-col a { color: var(--dark-text-2); text-decoration: none; font-size: .9rem; transition: color .2s var(--ease) }
-.footer-col a:hover { color: #fff }
-.footer-bottom {
-  display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;
-  padding-top: 1.5rem; border-top: 1px solid var(--dark-border);
-  font-size: .82rem; color: var(--dark-text-muted);
-}
-.footer-legal { display: flex; gap: 1.1rem; flex-wrap: wrap }
-.footer-legal a { color: var(--dark-text-muted); text-decoration: none }
-.footer-legal a:hover { color: #fff }
-
-/* ---------- Cookie banner ---------- */
-.cookie-banner {
-  position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%);
-  z-index: 120; width: min(calc(100% - 28px), 720px);
-  padding: 18px 20px; background: var(--surface);
-  border: 1px solid var(--border-strong); border-radius: 16px;
-  box-shadow: var(--shadow-lg);
-  display: flex; align-items: center; gap: 18px; flex-wrap: wrap;
-}
-.cookie-banner p { font-size: .85rem; color: var(--body); margin: 0; flex: 1 1 320px }
-.cookie-banner p strong { color: var(--ink) }
-.cookie-banner a { color: var(--sapphire); font-weight: 600 }
-.cookie-actions { display: flex; gap: 8px; flex-wrap: wrap }
-.cookie-actions .btn { min-height: 40px; padding: .5rem .9rem; font-size: .83rem }
-
-/* ---------- Reveal animations ---------- */
-.js .reveal { opacity: 0; transform: translateY(20px); transition: opacity .65s var(--ease), transform .65s var(--ease); transition-delay: var(--d,0ms) }
-.js .reveal.is-visible { opacity: 1; transform: none }
-.js .reveal-scale { opacity: 0; transform: scale(.97) translateY(14px); transition: opacity .6s var(--ease), transform .6s var(--ease); transition-delay: var(--d,0ms) }
-.js .reveal-scale.is-visible { opacity: 1; transform: none }
-
-/* ---------- Responsive ---------- */
-@media (max-width: 1024px) {
-  .hero-inner { grid-template-columns: 1fr; gap: 36px }
-  .hero-art { max-width: 560px; margin-inline: auto; width: 100% }
-  .process-grid { grid-template-columns: repeat(2,1fr); gap: 28px }
-  .step-line { display: none }
-  .stats-bar { grid-template-columns: repeat(2,1fr) }
-  .pricing-grid { grid-template-columns: repeat(2,1fr); max-width: 600px; margin-inline: auto }
-  .price-card.is-popular { grid-column: 1 / -1 }
-  .care-grid { grid-template-columns: 1fr }
-  .footer-top { grid-template-columns: 1.2fr 1fr 1fr; gap: 28px }
-  .footer-top .footer-col:last-child { grid-column: 1 / -1 }
-  .contact-grid { grid-template-columns: 1fr }
-}
-
-@media (max-width: 860px) {
-  :root { --header-h: 64px }
-  .nav-toggle { display: inline-flex }
-  .primary-nav {
-    position: fixed; top: var(--header-h); left: 0; right: 0;
-    display: block; padding: 12px var(--gutter) 22px;
-    background: var(--surface); border-bottom: 1px solid var(--border-subtle);
-    box-shadow: var(--shadow-lg);
-    transform: translateY(-12px); opacity: 0; visibility: hidden; pointer-events: none;
-    transition: transform .22s var(--ease), opacity .22s, visibility .22s;
-    max-height: calc(100vh - var(--header-h)); overflow-y: auto;
-  }
-  .nav-open .primary-nav { transform: none; opacity: 1; visibility: visible; pointer-events: auto }
-  .nav-list { flex-direction: column; align-items: stretch; gap: 2px }
-  .nav-list a { min-height: 48px; padding: .55rem .7rem; font-size: .98rem }
-  .nav-list .nav-cta { margin: 8px 0 0 }
-  .nav-list .nav-cta .btn { width: 100% }
-  .grid-3 { grid-template-columns: repeat(2,1fr) }
-  .grid-2 { grid-template-columns: 1fr }
-}
-
-@media (max-width: 640px) {
-  .grid-3, .grid-4 { grid-template-columns: 1fr }
-  .stats-bar { grid-template-columns: 1fr 1fr; gap: 0 }
-  .process-grid { grid-template-columns: 1fr }
-  .pricing-grid { grid-template-columns: 1fr; max-width: 420px }
-  .price-card.is-popular { grid-column: auto }
-  .form-grid { grid-template-columns: 1fr }
-  .footer-top { grid-template-columns: 1fr 1fr }
-  .footer-top > div:first-child { grid-column: 1 / -1 }
-  .cookie-banner { flex-direction: column; align-items: stretch; bottom: 10px }
-  .cookie-banner p { flex: 0 1 auto }
-  .cookie-actions .btn { flex: 1 }
-  .hero-actions { flex-direction: column; align-items: stretch }
-  .hero-actions .btn { width: 100% }
-}
-
-@media (max-width: 440px) {
-  .cta-actions { flex-direction: column; align-items: stretch }
-  .cta-actions .btn { width: 100% }
-}
-
-/* ---------- Motion preferences ---------- */
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto }
-  *,*::before,*::after {
-    animation-duration: .01ms !important; animation-iteration-count: 1 !important;
-    transition-duration: .01ms !important; transition-delay: 0ms !important;
-  }
-  .reveal, .reveal-scale { opacity: 1 !important; transform: none !important }
-}
-
-@media print {
-  .site-header, .cookie-banner, .site-footer, .cta-band { display: none !important }
-  .js .reveal, .js .reveal-scale { opacity: 1 !important; transform: none !important }
-  body { color: #000 }
-  .hero { background: #fff; color: #000 }
-  .hero h1, .hero .lead { color: #000 }
-}
-</style>
 </head>
 <body>
 <a class="skip-link" href="#main" data-scroll>Skip to content</a>
@@ -879,7 +168,7 @@ h1[tabindex="-1"]:focus, h2[tabindex="-1"]:focus, main:focus { outline: none }
 <header class="site-header" id="site-header">
   <div class="container header-inner">
     <a class="brand" href="#home" aria-label="Ancya — home">
-      <img src="assets/svg/ancya-logo-color.svg" alt="Ancya" style="height:36px;width:auto" />
+      <img src="assets/svg/ancya-logo-color.svg" alt="Ancya" style="height:34px;width:auto" />
     </a>
 
     <nav class="primary-nav" id="primary-nav" aria-label="Primary">
@@ -907,10 +196,14 @@ h1[tabindex="-1"]:focus, h2[tabindex="-1"]:focus, main:focus { outline: none }
 <!-- ============================== HERO ============================== -->
 <section id="home" aria-labelledby="home-title">
   <div class="hero">
+    <canvas class="hero-galaxy" id="hero-galaxy" aria-hidden="true"></canvas>
+    <div class="hero-glow hero-glow--1" aria-hidden="true"></div>
+    <div class="hero-glow hero-glow--2" aria-hidden="true"></div>
+    <div class="hero-glow hero-glow--3" aria-hidden="true"></div>
     <div class="container hero-inner">
       <div class="hero-copy">
         <p class="eyebrow eyebrow--light"><span>Web design &amp; AI automation studio</span></p>
-        <h1 id="home-title">Websites that load in a blink — and <span class="gradient-text">work while you sleep.</span></h1>
+        <h1 id="home-title">Websites that load in a blink — and <span class="gradient-text hero-hook" id="hero-hook">work while you sleep.</span></h1>
         <p class="lead lead--light">Ancya Tech builds lightning-fast, high-converting marketing websites and custom AI automation workflows for ambitious small and medium-sized businesses. Hand-crafted design, rigorous engineering, and 100% code ownership from day one.</p>
         <div class="hero-actions">
           <a class="btn btn-primary btn-lg" href="#contact">Start a project <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
@@ -927,69 +220,6 @@ h1[tabindex="-1"]:focus, h2[tabindex="-1"]:focus, main:focus { outline: none }
         </div>
       </div>
 
-      <div class="hero-art reveal-scale">
-        <div class="hero-badge"><svg aria-hidden="true" style="width:14px;height:14px"><use href="#i-bolt"/></svg> 0.8s load · 98 PageSpeed</div>
-        <div class="hero-art-card">
-          <svg viewBox="0 0 480 360" role="img" aria-label="Illustration of a fast-loading website with a PageSpeed score of 98 and AI automation indicators">
-            <!-- Browser window -->
-            <rect x="20" y="10" width="440" height="340" rx="16" fill="#0B0F1C" stroke="#1E2B4A" stroke-width="2"/>
-            <rect x="20" y="10" width="440" height="40" rx="16" fill="#11182A" stroke="#1E2B4A" stroke-width="1.5"/>
-            <path d="M20 42h440v-8a16 16 0 0 0-16-16H36a16 16 0 0 0-16 16v8z" fill="#11182A"/>
-            <circle cx="40" cy="26" r="5" fill="#FC5332"/>
-            <circle cx="56" cy="26" r="5" fill="#FFA537"/>
-            <circle cx="72" cy="26" r="5" fill="#60A5FA"/>
-            <rect x="90" y="20" width="200" height="12" rx="6" fill="#1E2B4A"/>
-
-            <!-- Hero headline -->
-            <rect x="44" y="72" width="180" height="18" rx="6" fill="#F8FAFC"/>
-            <rect x="44" y="98" width="240" height="10" rx="5" fill="#94A3B8" opacity=".5"/>
-            <rect x="44" y="116" width="200" height="10" rx="5" fill="#94A3B8" opacity=".4"/>
-
-            <!-- CTA button -->
-            <rect x="44" y="142" width="120" height="36" rx="10" fill="url(#heroSwoop)"/>
-            <rect x="44" y="142" width="120" height="36" rx="10" fill="none" stroke="#FC5332" stroke-width="0" opacity=".3"/>
-
-            <!-- PageSpeed gauge -->
-            <circle cx="360" cy="110" r="44" fill="none" stroke="#1E2B4A" stroke-width="6"/>
-            <circle cx="360" cy="110" r="44" fill="none" stroke="url(#heroSwoop)" stroke-width="6" stroke-linecap="round"
-              stroke-dasharray="246" stroke-dashoffset="20" transform="rotate(-90 360 110)"/>
-            <text x="360" y="116" text-anchor="middle" font-family="Plus Jakarta Sans" font-size="24" font-weight="800" fill="#F8FAFC">98</text>
-            <text x="360" y="132" text-anchor="middle" font-family="Plus Jakarta Sans" font-size="9" font-weight="600" fill="#94A3B8">PAGESPEED</text>
-
-            <!-- Stats row -->
-            <rect x="44" y="200" width="100" height="60" rx="10" fill="#11182A" stroke="#1E2B4A"/>
-            <rect x="56" y="214" width="40" height="14" rx="3" fill="url(#heroSwoop)"/>
-            <text x="56" y="248" font-family="Plus Jakarta Sans" font-size="8" font-weight="500" fill="#94A3B8">0.8s load</text>
-
-            <rect x="156" y="200" width="100" height="60" rx="10" fill="#11182A" stroke="#1E2B4A"/>
-            <rect x="168" y="214" width="36" height="14" rx="3" fill="#60A5FA"/>
-            <text x="168" y="248" font-family="Plus Jakarta Sans" font-size="8" font-weight="500" fill="#94A3B8">+212% leads</text>
-
-            <rect x="268" y="200" width="100" height="60" rx="10" fill="#11182A" stroke="#1E2B4A"/>
-            <rect x="280" y="214" width="44" height="14" rx="3" fill="#FFA537"/>
-            <text x="280" y="248" font-family="Plus Jakarta Sans" font-size="8" font-weight="500" fill="#94A3B8">AI SEO</text>
-
-            <!-- AI automation indicators -->
-            <rect x="44" y="280" width="392" height="52" rx="10" fill="#11182A" stroke="#1E2B4A"/>
-            <circle cx="68" cy="306" r="10" fill="rgba(252,83,50,.15)" stroke="#FC5332" stroke-width="1.5"/>
-            <path d="M64 302v8l4 2" fill="none" stroke="#FC5332" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <rect x="88" y="298" width="120" height="8" rx="4" fill="#94A3B8" opacity=".4"/>
-            <rect x="88" y="310" width="80" height="6" rx="3" fill="#94A3B8" opacity=".25"/>
-            <rect x="300" y="298" width="60" height="20" rx="8" fill="rgba(11,81,156,.2)" stroke="#60A5FA" stroke-width="1"/>
-            <text x="330" y="312" text-anchor="middle" font-family="Plus Jakarta Sans" font-size="8" font-weight="600" fill="#60A5FA">Automated</text>
-            <circle cx="380" cy="308" r="4" fill="#10B981"/>
-            <circle cx="380" cy="308" r="7" fill="none" stroke="#10B981" stroke-width="1" opacity=".4"/>
-
-            <defs>
-              <linearGradient id="heroSwoop" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stop-color="#FC5332"/>
-                <stop offset="50%" stop-color="#FE7234"/>
-                <stop offset="100%" stop-color="#FFA537"/>
-              </linearGradient>
-            </defs>
-          </svg>
-        </div>
-      </div>
     </div>
   </div>
 
@@ -1017,7 +247,7 @@ h1[tabindex="-1"]:focus, h2[tabindex="-1"]:focus, main:focus { outline: none }
 </section>
 
 <!-- ============================== PROBLEM / PROMISE ============================== -->
-<section class="section band" aria-labelledby="problem-title">
+<section class="section band has-ribbon ribbon--mixed" aria-labelledby="problem-title">
   <div class="container">
     <div class="section-head is-centered reveal">
       <p class="eyebrow">The problem</p>
@@ -1051,92 +281,337 @@ h1[tabindex="-1"]:focus, h2[tabindex="-1"]:focus, main:focus { outline: none }
 </section>
 
 <!-- ============================== SERVICES ============================== -->
-<section class="section band-white" id="services" aria-labelledby="services-title">
+<section class="section band-white has-ribbon ribbon--wave" id="services" aria-labelledby="services-title">
   <div class="container">
     <div class="section-head is-centered reveal">
       <p class="eyebrow">What we do</p>
       <h2 id="services-title">Everything your business needs to win online.</h2>
       <p class="lead">Strategy, design, build, AI SEO, and automation — under one roof. No juggling five contractors. No vendor lock-in. Just fast, measurable results you own outright.</p>
     </div>
-    <div class="grid grid-3">
-      <div class="card card--lift reveal" style="--d:0ms">
-        <div class="icon-tile"><svg aria-hidden="true"><use href="#i-brush"/></svg></div>
-        <h3>Web Design (UI/UX)</h3>
-        <p>Custom visual design, wireframes, prototypes, and design systems that make your brand unforgettable — not another template.</p>
-        <a class="btn-link" href="#contact">Learn more <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
-      </div>
-      <div class="card card--lift reveal" style="--d:60ms">
-        <div class="icon-tile"><svg aria-hidden="true"><use href="#i-code"/></svg></div>
-        <h3>Web Development</h3>
-        <p>Fast, accessible, responsive builds using modern front-end tooling — React, TypeScript, Vite, Tailwind. 98+ PageSpeed, sub-second loads.</p>
-        <a class="btn-link" href="#contact">Learn more <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
-      </div>
-      <div class="card card--lift reveal" style="--d:120ms">
-        <div class="icon-tile icon-tile--swoop"><svg aria-hidden="true"><use href="#i-search"/></svg></div>
-        <h3>AI SEO / GEO</h3>
-        <p>Generative Engine Optimization for ChatGPT Search, Perplexity, Google AI Overviews, and Apple Intelligence. Be the answer, not a link.</p>
-        <a class="btn-link" href="#contact">Learn more <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
-      </div>
-      <div class="card card--lift reveal" style="--d:0ms">
-        <div class="icon-tile icon-tile--swoop"><svg aria-hidden="true"><use href="#i-robot"/></svg></div>
-        <h3>AI Automation Workflows</h3>
-        <p>Custom AI agents that handle lead qualification, appointment booking, email triage, and CRM sync — saving 10–20+ hours per week.</p>
-        <a class="btn-link" href="#contact">Learn more <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
-      </div>
-      <div class="card card--lift reveal" style="--d:60ms">
-        <div class="icon-tile"><svg aria-hidden="true"><use href="#i-layers"/></svg></div>
-        <h3>Branding &amp; Identity</h3>
-        <p>Logo, color, typography, brand guidelines, and full 4K vector asset packs. Build a brand that looks premium at any size.</p>
-        <a class="btn-link" href="#contact">Learn more <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
-      </div>
-      <div class="card card--lift reveal" style="--d:120ms">
-        <div class="icon-tile"><svg aria-hidden="true"><use href="#i-cart"/></svg></div>
-        <h3>E-commerce</h3>
-        <p>Storefront design and build, product pages, cart and checkout optimisation, and payment integration that actually converts.</p>
-        <a class="btn-link" href="#contact">Learn more <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    <div class="services">
+<article class="service reveal is-active" data-service="design">
+        <button class="service-head" type="button" aria-pressed="true" aria-controls="svc-design">
+          <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3l11 11-3 3L6 6l3-3zM6 6L3 9M9 9l6 6M3 21c2-4 5-5 8-5"/></svg></span>
+          <span class="service-title">Web Design (UI/UX)</span>
+          <span class="service-plus" aria-hidden="true">→</span>
+        </button>
+        <p class="service-lede">Wireframes, interfaces, and a design system that does not look like a template.</p>
+        <span class="service-tag">WIREFRAME → SYSTEM → PROTOTYPE</span>
+      </article>
+
+<article class="service reveal" data-service="dev" style="--d:60ms">
+        <button class="service-head" type="button" aria-pressed="false" aria-controls="svc-dev">
+          <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 8l-4 4 4 4M16 8l4 4-4 4M14 6l-4 12"/></svg></span>
+          <span class="service-title">Web Development</span>
+          <span class="service-plus" aria-hidden="true">→</span>
+        </button>
+        <p class="service-lede">React, TypeScript and Vite, built to a performance budget.</p>
+        <span class="service-tag">98+ PAGESPEED</span>
+      </article>
+
+<article class="service reveal" data-service="seo" style="--d:120ms">
+        <button class="service-head" type="button" aria-pressed="false" aria-controls="svc-seo">
+          <span class="icon icon--signal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M16 16l4 4"/></svg></span>
+          <span class="service-title">AI SEO / GEO</span>
+          <span class="service-plus" aria-hidden="true">→</span>
+        </button>
+        <p class="service-lede">Structured content that AI search can read, quote, and recommend.</p>
+        <span class="service-tag">BE THE ANSWER</span>
+      </article>
+
+<article class="service reveal" data-service="auto">
+        <button class="service-head" type="button" aria-pressed="false" aria-controls="svc-auto">
+          <span class="icon icon--signal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="8" width="14" height="12" rx="2"/><path d="M12 4v4M9 13h.01M15 13h.01M9 17h6"/><circle cx="12" cy="3" r="1.5" fill="currentColor"/></svg></span>
+          <span class="service-title">AI Automation</span>
+          <span class="service-plus" aria-hidden="true">→</span>
+        </button>
+        <p class="service-lede">Qualification, booking, triage, and CRM sync running without a babysitter.</p>
+        <span class="service-tag">10–20 HRS / WEEK</span>
+      </article>
+
+<article class="service reveal" data-service="brand" style="--d:60ms">
+        <button class="service-head" type="button" aria-pressed="false" aria-controls="svc-brand">
+          <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5 9-5zM3 12l9 5 9-5M3 17l9 5 9-5"/></svg></span>
+          <span class="service-title">Branding &amp; Identity</span>
+          <span class="service-plus" aria-hidden="true">→</span>
+        </button>
+        <p class="service-lede">Logo, colour, type, and the rules that keep it consistent everywhere.</p>
+        <span class="service-tag">LOGO → GUIDELINES</span>
+      </article>
+
+<article class="service reveal" data-service="shop" style="--d:120ms">
+        <button class="service-head" type="button" aria-pressed="false" aria-controls="svc-shop">
+          <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2.5 12.5h11L21 8H7"/><circle cx="9" cy="20" r="1.5" fill="currentColor"/><circle cx="18" cy="20" r="1.5" fill="currentColor"/></svg></span>
+          <span class="service-title">E-commerce</span>
+          <span class="service-plus" aria-hidden="true">→</span>
+        </button>
+        <p class="service-lede">Storefront, checkout, and payment flow that does not lose people at the last step.</p>
+        <span class="service-tag">BROWSE → BUY</span>
+      </article>
+      <div class="service-stage" id="service-stage" aria-live="polite">
+        <div class="service-stage-inner">
+        <div class="stage-slide is-active" data-panel="design" id="svc-design">
+<div class="service-art">
+              <svg viewBox="0 0 320 170" role="img" aria-label="Wireframe diagram with layout blocks and a highlighted component">
+                <rect width="320" height="170" rx="12" fill="#F8FAFC"/>
+                <rect x="14" y="14" width="292" height="20" rx="6" fill="#F1F5F9"/>
+                <circle cx="26" cy="24" r="3" fill="#FC5332"/><circle cx="38" cy="24" r="3" fill="#1D4ED8"/><circle cx="50" cy="24" r="3" fill="#FFE8C2"/>
+                <rect x="14" y="46" width="150" height="14" rx="4" fill="#0B132B"/>
+                <rect x="14" y="68" width="118" height="8" rx="4" fill="#CBD5E1"/>
+                <rect x="14" y="82" width="132" height="8" rx="4" fill="#CBD5E1"/>
+                <rect x="14" y="104" width="70" height="24" rx="12" fill="#FC5332"/>
+                <rect x="188" y="46" width="108" height="82" rx="10" fill="#DBEAFE" stroke="#1D4ED8" stroke-dasharray="4 4"/>
+                <path d="M196 120l20-22 14 12 22-30" fill="none" stroke="#1D4ED8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+                <rect x="14" y="142" width="82" height="14" rx="4" fill="#F1F5F9"/><rect x="104" y="142" width="82" height="14" rx="4" fill="#F1F5F9"/><rect x="194" y="142" width="102" height="14" rx="4" fill="#F1F5F9"/>
+              </svg>
+            </div>
+          <div class="stage-copy">
+            <span class="stage-kicker">WIREFRAME → SYSTEM → PROTOTYPE</span>
+            <h3>Web Design (UI/UX)</h3>
+            <p>We start with how your customer decides, not with a template. You get wireframes, a component library, and responsive states for every breakpoint — a system you can extend yourself.</p>
+            <a class="btn btn-secondary btn-sm" href="#contact">Discuss this service</a>
+          </div>
+        </div>
+
+        <div class="stage-slide" data-panel="dev" id="svc-dev">
+<div class="service-art">
+              <svg viewBox="0 0 320 170" role="img" aria-label="Diagram: codebase moves through build, test and ship stages">
+                <rect width="320" height="170" rx="12" fill="#F8FAFC"/>
+                <rect x="14" y="18" width="176" height="134" rx="12" fill="#FFFFFF" stroke="#E2E8F0"/>
+                <text x="28" y="40" font-family="ui-monospace,monospace" font-size="8" letter-spacing="1.6" fill="#64748B">CODEBASE</text>
+                <rect x="28" y="52" width="104" height="7" rx="3.5" fill="#1D4ED8"/>
+                <rect x="140" y="52" width="30" height="7" rx="3.5" fill="#DBEAFE"/>
+                <rect x="28" y="66" width="140" height="7" rx="3.5" fill="#DBEAFE"/>
+                <rect x="28" y="80" width="90" height="7" rx="3.5" fill="#DBEAFE"/>
+                <rect x="28" y="94" width="120" height="7" rx="3.5" fill="#F1F5F9"/>
+                <rect x="28" y="108" width="70" height="7" rx="3.5" fill="#F1F5F9"/>
+                <rect x="28" y="126" width="54" height="18" rx="9" fill="#FC5332"/>
+                <path d="M194 85h18" stroke="#1D4ED8" stroke-width="1.6" stroke-dasharray="4 5"/>
+                <g font-family="ui-monospace,monospace" font-size="8" letter-spacing="1.2" fill="#64748B">
+                  <rect x="220" y="32" width="86" height="28" rx="8" fill="#DBEAFE"/><text x="234" y="50">BUILD</text>
+                  <rect x="220" y="70" width="86" height="28" rx="8" fill="#DBEAFE"/><text x="234" y="88">TEST</text>
+                  <rect x="220" y="108" width="86" height="28" rx="8" fill="#FFE8C2"/><text x="234" y="126">SHIP</text>
+                </g>
+              </svg>
+            </div>
+          <div class="stage-copy">
+            <span class="stage-kicker">98+ PAGESPEED</span>
+            <h3>Web Development</h3>
+            <p>Semantic markup, accessible components, and a codebase your next developer can read. We measure speed on mid-range phones, not just on the studio laptop.</p>
+            <a class="btn btn-secondary btn-sm" href="#contact">Discuss this service</a>
+          </div>
+        </div>
+
+        <div class="stage-slide" data-panel="seo" id="svc-seo">
+<div class="service-art">
+              <svg viewBox="0 0 320 170" role="img" aria-label="Diagram: site content becomes structured entities that AI answers cite">
+                <rect width="320" height="170" rx="12" fill="#F8FAFC"/>
+                <g font-family="ui-monospace,monospace" font-size="8" letter-spacing="1.4" fill="#64748B">
+                  <rect x="14" y="56" width="88" height="60" rx="10" fill="#FFFFFF" stroke="#E2E8F0"/><text x="26" y="78">SITE</text>
+                  <rect x="116" y="24" width="90" height="60" rx="10" fill="#DBEAFE" stroke="#1D4ED8" stroke-dasharray="4 4"/><text x="128" y="46">ENTITIES</text>
+                  <rect x="220" y="94" width="86" height="60" rx="10" fill="#FFFFFF" stroke="#E2E8F0"/><text x="232" y="116">AI ANSWER</text>
+                </g>
+                <line x1="34" y1="86" x2="60" y2="100" stroke="#CBD5E1" stroke-width="4" stroke-linecap="round"/>
+                <line x1="34" y1="98" x2="54" y2="106" stroke="#DBEAFE" stroke-width="4" stroke-linecap="round"/>
+                <path d="M102 76C118 70 124 62 128 56" stroke="#1D4ED8" stroke-width="1.6" stroke-dasharray="4 5" fill="none"/>
+                <path d="M200 70C220 80 224 92 228 102" stroke="#1D4ED8" stroke-width="1.6" stroke-dasharray="4 5" fill="none"/>
+                <circle cx="150" cy="42" r="4" fill="#1D4ED8"/><circle cx="176" cy="60" r="4" fill="#FC5332"/>
+                <path d="M258 128l5 5 11-12" fill="none" stroke="#047857" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          <div class="stage-copy">
+            <span class="stage-kicker">BE THE ANSWER</span>
+            <h3>AI SEO / GEO</h3>
+            <p>We structure pages as entities and answers, not keyword stuffing: schema markup, internal linking, and clear service pages that AI engines can quote with confidence.</p>
+            <a class="btn btn-secondary btn-sm" href="#contact">Discuss this service</a>
+          </div>
+        </div>
+
+        <div class="stage-slide" data-panel="auto" id="svc-auto">
+<div class="service-art">
+              <svg viewBox="0 0 320 170" role="img" aria-label="Diagram: enquiry is scored by AI then booked and synced to the CRM">
+                <rect width="320" height="170" rx="12" fill="#F8FAFC"/>
+                <g font-family="ui-monospace,monospace" font-size="8" letter-spacing="1.4" fill="#64748B">
+                  <rect x="14" y="48" width="88" height="64" rx="10" fill="#FFFFFF" stroke="#E2E8F0"/><text x="26" y="70">FORM</text>
+                  <rect x="116" y="34" width="90" height="78" rx="10" fill="#FFFFFF" stroke="#E2E8F0"/><text x="128" y="56">AI SCORE</text>
+                  <rect x="220" y="48" width="86" height="64" rx="10" fill="#FFE8C2" stroke="#B9CE55"/><text x="232" y="70">BOOKED</text>
+                </g>
+                <rect x="28" y="80" width="52" height="7" rx="3.5" fill="#F1F5F9"/>
+                <circle cx="136" cy="80" r="5" fill="#1D4ED8"/><circle cx="156" cy="80" r="5" fill="#CBD5E1"/><circle cx="176" cy="80" r="5" fill="#CBD5E1"/>
+                <text x="128" y="102" font-family="Plus Jakarta Sans,sans-serif" font-size="12" font-weight="700" fill="#1D4ED8">87 / 100</text>
+                <path d="M102 80h14M206 80h14" stroke="#1D4ED8" stroke-width="1.6" stroke-dasharray="4 5"/>
+                <circle cx="238" cy="80" r="5" fill="#047857"/>
+                <path d="M250 96c10 10 18 16 34 18" stroke="#CBD5E1" stroke-width="1.6" stroke-dasharray="4 5" fill="none"/>
+                <text x="238" y="130" font-family="ui-monospace,monospace" font-size="8" letter-spacing="1.4" fill="#64748B">CRM SYNC</text>
+              </svg>
+            </div>
+          <div class="stage-copy">
+            <span class="stage-kicker">10–20 HRS / WEEK</span>
+            <h3>AI Automation</h3>
+            <p>We map the manual steps first, then automate the repeatable ones: qualify, reply, book, sync, follow up. You keep the exceptions and the judgment.</p>
+            <a class="btn btn-secondary btn-sm" href="#contact">Discuss this service</a>
+          </div>
+        </div>
+
+        <div class="stage-slide" data-panel="brand" id="svc-brand">
+<div class="service-art">
+              <svg viewBox="0 0 320 170" role="img" aria-label="Brand system diagram: palette swatches, type specimen and logo variants">
+                <rect width="320" height="170" rx="12" fill="#F8FAFC"/>
+                <rect x="18" y="20" width="42" height="42" rx="9" fill="#1D4ED8"/>
+                <rect x="68" y="20" width="42" height="42" rx="9" fill="#FC5332"/>
+                <rect x="118" y="20" width="42" height="42" rx="9" fill="#FFE8C2"/>
+                <rect x="168" y="20" width="42" height="42" rx="9" fill="#0B132B"/>
+                <text x="18" y="112" font-family="Plus Jakarta Sans,sans-serif" font-size="44" font-weight="700" fill="#0B132B">Aa</text>
+                <rect x="104" y="82" width="106" height="7" rx="3.5" fill="#CBD5E1"/>
+                <rect x="104" y="98" width="82" height="7" rx="3.5" fill="#E2E8F0"/>
+                <rect x="228" y="20" width="74" height="46" rx="9" fill="none" stroke="#E2E8F0" stroke-dasharray="4 4"/>
+                <text x="244" y="48" font-family="Plus Jakarta Sans,sans-serif" font-size="18" font-weight="700" fill="#1D4ED8">An</text>
+                <rect x="228" y="78" width="74" height="46" rx="9" fill="#0B132B"/>
+                <text x="244" y="106" font-family="Plus Jakarta Sans,sans-serif" font-size="18" font-weight="700" fill="#F8FAFC">An</text>
+                <text x="18" y="146" font-family="ui-monospace,monospace" font-size="8" letter-spacing="1.6" fill="#64748B">COLOUR · TYPE · USAGE RULES</text>
+              </svg>
+            </div>
+          <div class="stage-copy">
+            <span class="stage-kicker">LOGO → GUIDELINES</span>
+            <h3>Branding &amp; Identity</h3>
+            <p>A wordmark, palette, type scale and usage rules, delivered as editable files. Enough system to stay consistent, enough flexibility to grow.</p>
+            <a class="btn btn-secondary btn-sm" href="#contact">Discuss this service</a>
+          </div>
+        </div>
+
+        <div class="stage-slide" data-panel="shop" id="svc-shop">
+<div class="service-art">
+              <svg viewBox="0 0 320 170" role="img" aria-label="E-commerce funnel diagram: product page to cart to paid order">
+                <rect width="320" height="170" rx="12" fill="#F8FAFC"/>
+                <g font-family="ui-monospace,monospace" font-size="8" letter-spacing="1.4" fill="#64748B">
+                  <rect x="14" y="24" width="88" height="122" rx="10" fill="#FFFFFF" stroke="#E2E8F0"/><text x="26" y="44">PRODUCT</text>
+                  <rect x="116" y="40" width="86" height="54" rx="10" fill="#FFFFFF" stroke="#E2E8F0"/><text x="128" y="60">CART</text>
+                  <rect x="216" y="40" width="90" height="54" rx="10" fill="#DBEAFE" stroke="#1D4ED8"/><text x="228" y="60">CHECKOUT</text>
+                </g>
+                <rect x="26" y="54" width="64" height="54" rx="8" fill="#DBEAFE"/>
+                <rect x="26" y="118" width="46" height="7" rx="3.5" fill="#CBD5E1"/>
+                <text x="26" y="138" font-family="Plus Jakarta Sans,sans-serif" font-size="12" font-weight="700" fill="#0B132B">€49</text>
+                <circle cx="132" cy="78" r="4" fill="#1D4ED8"/><circle cx="148" cy="78" r="4" fill="#CBD5E1"/><circle cx="164" cy="78" r="4" fill="#CBD5E1"/>
+                <path d="M104 78h8M202 78h10" stroke="#1D4ED8" stroke-width="1.6" stroke-dasharray="4 5"/>
+                <path d="M228 112h50l-8 34h-34z" fill="#FFE8C2"/>
+                <path d="M244 126l4 4 10-11" fill="none" stroke="#047857" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+                <text x="238" y="164" font-family="ui-monospace,monospace" font-size="8" letter-spacing="1.4" fill="#64748B">PAID</text>
+              </svg>
+            </div>
+          <div class="stage-copy">
+            <span class="stage-kicker">BROWSE → BUY</span>
+            <h3>E-commerce</h3>
+            <p>Product architecture, fast listings, fewer checkout steps, and analytics that show exactly where buyers drop off — then we fix that step.</p>
+            <a class="btn btn-secondary btn-sm" href="#contact">Discuss this service</a>
+          </div>
+        </div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ============================== PROCESS ============================== -->
-<section class="section band" aria-labelledby="process-title">
+<section class="section band has-ribbon ribbon--hex" aria-labelledby="process-title">
   <div class="container">
     <div class="section-head is-centered reveal">
       <p class="eyebrow">How it works</p>
       <h2 id="process-title">From first call to launch in 5–14 business days.</h2>
       <p class="lead">AI-powered acceleration compresses what used to take two months into two weeks — without cutting corners on craft.</p>
     </div>
-    <div class="process-grid">
-      <div class="step reveal" style="--d:0ms">
-        <div class="step-num">1</div>
-        <div class="step-line"></div>
-        <h3>Strategy &amp; Discovery</h3>
-        <p>We map your goals, audience, and competitive landscape. You get a clear plan — not a vague proposal.</p>
-      </div>
-      <div class="step reveal" style="--d:80ms">
-        <div class="step-num">2</div>
-        <div class="step-line"></div>
-        <h3>Design &amp; Review</h3>
-        <p>Custom wireframes and visual design in your brand identity. Review, refine, and approve — all yours.</p>
-      </div>
-      <div class="step reveal" style="--d:160ms">
-        <div class="step-num">3</div>
-        <div class="step-line"></div>
-        <h3>Build &amp; Optimize</h3>
-        <p>Modern codebase with 95+ PageSpeed, technical SEO, and schema.org structured data baked in from the start.</p>
-      </div>
-      <div class="step reveal" style="--d:240ms">
-        <div class="step-num">4</div>
-        <h3>Launch &amp; Grow</h3>
-        <p>Deploy to a global CDN, connect analytics, and hand over 100% of the code and assets. Then we grow together.</p>
-      </div>
-    </div>
+    <ol class="roadmap">
+      <li class="roadmap-step reveal" style="--d:0ms">
+        <div class="roadmap-marker"><span class="roadmap-node">01</span><span class="roadmap-connector" aria-hidden="true"></span></div>
+        <div class="roadmap-card">
+          <span class="roadmap-art">
+            <svg viewBox="0 0 200 120" aria-hidden="true">
+              <path d="M18 84c22-34 48-44 74-26s36 2 48-16" fill="none" stroke="#9CBEE4" stroke-width="2" stroke-dasharray="5 6" stroke-linecap="round"/>
+              <circle cx="18" cy="84" r="5" fill="#fff" stroke="#0B519C" stroke-width="2"/>
+              <circle cx="74" cy="62" r="5" fill="#fff" stroke="#0B519C" stroke-width="2"/>
+              <circle cx="140" cy="42" r="5" fill="#FC5332"/>
+              <circle cx="152" cy="72" r="22" fill="rgba(96,165,250,.12)" stroke="#0B519C" stroke-width="2.4"/>
+              <path d="M168 88l14 14" stroke="#0B519C" stroke-width="4" stroke-linecap="round"/>
+              <path d="M143 63l8 8 14-18" fill="none" stroke="#FC5332" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          <span class="roadmap-kicker">Kick-off</span>
+          <h3>Strategy &amp; Discovery</h3>
+          <p>We map your goals, audience, and competitive landscape. You get a clear plan — not a vague proposal.</p>
+        </div>
+      </li>
+      <li class="roadmap-step reveal" style="--d:80ms">
+        <div class="roadmap-marker"><span class="roadmap-node">02</span><span class="roadmap-connector" aria-hidden="true"></span></div>
+        <div class="roadmap-card">
+          <span class="roadmap-art">
+            <svg viewBox="0 0 200 120" aria-hidden="true">
+              <rect x="22" y="24" width="118" height="76" rx="8" fill="#fff" stroke="#0B519C" stroke-width="2.2"/>
+              <path d="M22 40h118" stroke="#CBD5E1" stroke-width="1.6"/>
+              <circle cx="34" cy="32" r="2.4" fill="#FC5332"/><circle cx="43" cy="32" r="2.4" fill="#FFA537"/><circle cx="52" cy="32" r="2.4" fill="#60A5FA"/>
+              <rect x="34" y="52" width="44" height="8" rx="3" fill="#0B519C"/>
+              <rect x="34" y="66" width="60" height="6" rx="3" fill="#CBD5E1"/>
+              <rect x="34" y="78" width="36" height="6" rx="3" fill="#CBD5E1"/>
+              <rect x="92" y="52" width="34" height="32" rx="5" fill="rgba(96,165,250,.16)" stroke="#9CBEE4" stroke-dasharray="4 4"/>
+              <path d="M150 84l26-26 9 9-26 26-12 3z" fill="#fff" stroke="#0B519C" stroke-width="2"/>
+              <path d="M172 62l9 9" stroke="#FC5332" stroke-width="2.2"/>
+            </svg>
+          </span>
+          <span class="roadmap-kicker">Concepts</span>
+          <h3>Design &amp; Review</h3>
+          <p>Custom wireframes and visual design in your brand identity. Review, refine, and approve — all yours.</p>
+        </div>
+      </li>
+      <li class="roadmap-step reveal" style="--d:160ms">
+        <div class="roadmap-marker"><span class="roadmap-node">03</span><span class="roadmap-connector" aria-hidden="true"></span></div>
+        <div class="roadmap-card">
+          <span class="roadmap-art">
+            <svg viewBox="0 0 200 120" aria-hidden="true">
+              <rect x="18" y="26" width="112" height="72" rx="8" fill="#0B132B"/>
+              <path d="M18 40h112" stroke="#334155" stroke-width="1.4"/>
+              <circle cx="29" cy="33" r="2.2" fill="#FC5332"/><circle cx="38" cy="33" r="2.2" fill="#FFA537"/><circle cx="47" cy="33" r="2.2" fill="#60A5FA"/>
+              <path d="M44 60l-10 9 10 9" fill="none" stroke="#60A5FA" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M66 60l10 9-10 9" fill="none" stroke="#60A5FA" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M60 78l6-30" stroke="#FFA537" stroke-width="2" stroke-linecap="round"/>
+              <path d="M150 90a24 24 0 0 1 44 0" fill="none" stroke="#CBD5E1" stroke-width="5" stroke-linecap="round"/>
+              <path d="M172 90l14-18" stroke="#FC5332" stroke-width="3" stroke-linecap="round"/>
+              <circle cx="172" cy="90" r="4" fill="#0B519C"/>
+              <text x="168" y="108" font-size="9" font-weight="700" fill="#0B519C">98</text>
+            </svg>
+          </span>
+          <span class="roadmap-kicker">Engineering</span>
+          <h3>Build &amp; Optimize</h3>
+          <p>Modern codebase with 95+ PageSpeed, technical SEO, and schema.org structured data baked in from the start.</p>
+        </div>
+      </li>
+      <li class="roadmap-step reveal" style="--d:240ms">
+        <div class="roadmap-marker"><span class="roadmap-node">04</span><span class="roadmap-connector" aria-hidden="true"></span></div>
+        <div class="roadmap-card">
+          <span class="roadmap-art">
+            <svg viewBox="0 0 200 120" aria-hidden="true">
+              <path d="M24 100c28-8 50-24 64-48" fill="none" stroke="#9CBEE4" stroke-width="2" stroke-dasharray="5 6" stroke-linecap="round"/>
+              <path d="M150 96l22-9 9 7" fill="none" stroke="#CBD5E1" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M150 84l16-7 15 11" fill="none" stroke="#0B519C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+              <g transform="translate(122 62) rotate(45)">
+                <path d="M0-34c9 7 14 19 14 31v11h-28v-11c0-12 5-24 14-31z" fill="#fff" stroke="#0B519C" stroke-width="2.2" stroke-linejoin="round"/>
+                <circle cx="0" cy="-11" r="5.5" fill="rgba(96,165,250,.2)" stroke="#0B519C" stroke-width="2"/>
+                <path d="M-14 6l-9 12h23" fill="none" stroke="#0B519C" stroke-width="2" stroke-linejoin="round"/>
+                <path d="M-5 20c0 7-2 11-6 15 6 1 10-1 12-5" fill="#FFA537"/>
+                <path d="M5 20c0 7 2 11 6 15-6 1-10-1-12-5" fill="#FC5332" opacity=".85"/>
+              </g>
+              <path d="M66 34l2-6 2 6 6 2-6 2-2 6-2-6-6-2z" fill="#FFA537" opacity=".8"/>
+              <circle cx="48" cy="46" r="2.4" fill="#FC5332" opacity=".7"/>
+            </svg>
+          </span>
+          <span class="roadmap-kicker">Go live</span>
+          <h3>Launch &amp; Grow</h3>
+          <p>Deploy to a global CDN, connect analytics, and hand over 100% of the code and assets. Then we grow together.</p>
+        </div>
+      </li>
+    </ol>
   </div>
 </section>
 
 <!-- ============================== WORK ============================== -->
-<section class="section band-white" id="work" aria-labelledby="work-title">
+<section class="section band-white has-ribbon ribbon--circle" id="work" aria-labelledby="work-title">
   <div class="container">
     <div class="section-head is-centered reveal">
       <p class="eyebrow">Selected work</p>
@@ -1249,6 +724,7 @@ h1[tabindex="-1"]:focus, h2[tabindex="-1"]:focus, main:focus { outline: none }
 <section class="section band-dark" aria-labelledby="testimonial-title">
   <div class="container">
     <div class="quote-card reveal-scale">
+      <canvas class="quote-sky" id="quote-sky" aria-hidden="true"></canvas>
       <p class="eyebrow eyebrow--light" id="testimonial-title" style="margin-bottom:1.5rem">Client story</p>
       <div class="quote-stars">
         <svg aria-hidden="true"><use href="#i-star"/></svg>
@@ -1270,27 +746,30 @@ h1[tabindex="-1"]:focus, h2[tabindex="-1"]:focus, main:focus { outline: none }
 </section>
 
 <!-- ============================== PRICING ============================== -->
-<section class="section band-white" id="pricing" aria-labelledby="pricing-title">
+<section class="section band-white has-ribbon ribbon--hex" id="pricing" aria-labelledby="pricing-title">
   <div class="container">
     <div class="section-head is-centered reveal">
       <p class="eyebrow">Pricing</p>
       <h2 id="pricing-title">Transparent European pricing. No surprises.</h2>
       <p class="lead">Clear, approachable pricing in the cheap-to-medium market sweet spot. You own 100% of your code and assets from day one.</p>
     </div>
+
     <div class="pricing-grid">
       <div class="price-card reveal" style="--d:0ms">
+        <div class="price-badge price-badge--offer"><svg aria-hidden="true"><use href="#i-bolt"/></svg> Free hosting</div>
         <div class="price-name">Starter Launchpad</div>
         <div class="price-amount">
           <span class="price-figure">€790</span>
         </div>
-        <p class="price-desc">5 custom hand-crafted pages. Perfect for getting online fast.</p>
+        <p class="price-desc">5 custom pages. Perfect for getting online fast, with hosting on us.</p>
         <ul class="price-features">
           <li><svg aria-hidden="true"><use href="#i-check"/></svg> 5 pages: Home, About, Services, Gallery, Contact</li>
           <li><svg aria-hidden="true"><use href="#i-check"/></svg> Fully mobile-responsive</li>
           <li><svg aria-hidden="true"><use href="#i-check"/></svg> 95+ Google PageSpeed score</li>
           <li><svg aria-hidden="true"><use href="#i-check"/></svg> Foundational technical SEO</li>
           <li><svg aria-hidden="true"><use href="#i-check"/></svg> Contact form with anti-spam</li>
-          <li><svg aria-hidden="true"><use href="#i-check"/></svg> Domain &amp; SSL setup</li>
+          <li class="is-free"><svg aria-hidden="true"><use href="#i-bolt"/></svg> Free basic hosting server</li>
+          <li><svg aria-hidden="true"><use href="#i-check"/></svg> Domain &amp; SSL configured by us</li>
           <li><svg aria-hidden="true"><use href="#i-check"/></svg> 100% code ownership</li>
         </ul>
         <a class="btn btn-secondary btn-block" href="#contact">Get started</a>
@@ -1348,7 +827,16 @@ h1[tabindex="-1"]:focus, h2[tabindex="-1"]:focus, main:focus { outline: none }
         <a class="btn btn-secondary btn-block" href="#contact">Get started</a>
       </div>
     </div>
-    <p class="price-note">All prices exclude VAT. Optional care plans available from €59/month.</p>
+    <aside class="pricing-info reveal">
+      <div class="pricing-info-head">
+        <span class="pricing-info-icon"><svg aria-hidden="true"><use href="#i-globe"/></svg></span>
+        <div>
+          <h3>Domain &amp; hosting: how it works</h3>
+          <p>Domain registration and hosting servers are not included in the project price — they're billed separately and paid directly by you. We'll register your domain in your name and manage both for you, so you only deal with one partner.</p>
+        </div>
+      </div>
+      <p class="pricing-info-foot">Starter Launchpad includes a free basic hosting server. All prices exclude VAT; optional care plans from €59/month.</p>
+    </aside>
 
     <!-- Care plans -->
     <div style="margin-top:clamp(40px,5vw,64px)">
@@ -1375,7 +863,7 @@ h1[tabindex="-1"]:focus, h2[tabindex="-1"]:focus, main:focus { outline: none }
 </section>
 
 <!-- ============================== FAQ ============================== -->
-<section class="section band" aria-labelledby="faq-title">
+<section class="section band has-ribbon ribbon--mixed" aria-labelledby="faq-title">
   <div class="container">
     <div class="section-head is-centered reveal">
       <p class="eyebrow">FAQ</p>
@@ -1411,7 +899,7 @@ h1[tabindex="-1"]:focus, h2[tabindex="-1"]:focus, main:focus { outline: none }
 </section>
 
 <!-- ============================== BLOG ============================== -->
-<section class="section band-white" id="blog" aria-labelledby="blog-title">
+<section class="section band-white has-ribbon ribbon--wave" id="blog" aria-labelledby="blog-title">
   <div class="container">
     <div class="section-head is-centered reveal">
       <p class="eyebrow">Journal</p>
@@ -1506,7 +994,7 @@ h1[tabindex="-1"]:focus, h2[tabindex="-1"]:focus, main:focus { outline: none }
 </section>
 
 <!-- ============================== CONTACT ============================== -->
-<section class="section band-white" id="contact" aria-labelledby="contact-title">
+<section class="section band-white has-ribbon ribbon--mixed" id="contact" aria-labelledby="contact-title">
   <div class="container">
     <div class="section-head is-centered reveal">
       <p class="eyebrow">Get in touch</p>
@@ -1600,37 +1088,64 @@ h1[tabindex="-1"]:focus, h2[tabindex="-1"]:focus, main:focus { outline: none }
 </section>
 
 <!-- ============================== ABOUT ============================== -->
-<section class="section band" id="about" aria-labelledby="about-title">
+<section class="section band about has-ribbon ribbon--circle" id="about" aria-labelledby="about-title">
   <div class="container">
-    <div class="section-head is-centered reveal">
-      <p class="eyebrow">About</p>
-      <h2 id="about-title">Built by Antony S. — for ambitious SMBs.</h2>
+    <div class="founder-hero">
+      <div class="founder-hero-copy reveal">
+        <p class="eyebrow">The founder</p>
+        <h2 id="about-title">Independent by design.<br>Built with AI. Reviewed by hand.</h2>
+        <p class="lead">I'm Antony S. — a freelance web architect and the solo founder of Ancya Tech. I use modern AI tooling to design and build fast, careful websites and automations for small businesses that have outgrown templates but don't want an agency's overhead.</p>
+      </div>
+
+      <figure class="founder-portrait reveal" style="--d:120ms">
+        <div class="founder-photo">
+          <span class="founder-photo-fallback" aria-hidden="true">AS</span>
+          <img src="assets/img/founder.jpg" alt="Antony S., founder and web architect at Ancya Tech" width="648" height="1152" loading="lazy" decoding="async" onerror="this.hidden=true">
+        </div>
+        <figcaption class="founder-card">
+          <span class="founder-name">Antony S.</span>
+          <span class="founder-role">Founder &amp; web architect</span>
+          <span class="founder-loc"><svg aria-hidden="true"><use href="#i-pin"/></svg>Kortenberg, Belgium</span>
+        </figcaption>
+      </figure>
     </div>
-    <div class="grid grid-2" style="align-items:center">
-      <div class="reveal">
-        <p class="lead">Ancya Tech is a solo studio run by <strong>Antony S.</strong>, a web architect based in Kortenberg, Belgium. After years of watching small businesses get overcharged for slow, generic template sites, I started Ancya to do things differently.</p>
-        <p>Every project gets hand-crafted design, modern engineering, and 100% code ownership. No vendor lock-in. No mystery invoices. Just fast websites and AI automations that save you real time — delivered in days, not months.</p>
-        <div style="margin-top:2rem">
-          <a class="btn btn-primary" href="#contact">Work with me <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+
+    <ol class="founder-principles reveal">
+      <li>
+        <span class="fp-icon"><svg aria-hidden="true"><use href="#i-code"/></svg></span>
+        <div>
+          <h3>AI does the building. I set the standard.</h3>
+          <p>I build with modern AI tooling rather than pretend otherwise. It compresses months into days; the architecture, accessibility and performance decisions are still reviewed and owned by me.</p>
         </div>
-      </div>
-      <div class="grid" style="gap:16px">
-        <div class="card reveal" style="--d:60ms">
-          <div class="icon-tile"><svg aria-hidden="true"><use href="#i-bolt"/></svg></div>
-          <h3>AI-accelerated delivery</h3>
-          <p style="font-size:.9rem;color:var(--muted);margin-bottom:0">We use modern AI tools to compress 2-month timelines into 5–14 days — and pass the savings to you.</p>
+      </li>
+      <li>
+        <span class="fp-icon"><svg aria-hidden="true"><use href="#i-users"/></svg></span>
+        <div>
+          <h3>Independent, and accountable for it</h3>
+          <p>You work directly with the person doing the work. No account managers, no hand-offs, and no team you never meet.</p>
         </div>
-        <div class="card reveal" style="--d:120ms">
-          <div class="icon-tile"><svg aria-hidden="true"><use href="#i-shield"/></svg></div>
-          <h3>100% ownership guarantee</h3>
-          <p style="font-size:.9rem;color:var(--muted);margin-bottom:0">You own every line of code, every vector asset, and every credential. No proprietary lock-in, ever.</p>
+      </li>
+      <li>
+        <span class="fp-icon"><svg aria-hidden="true"><use href="#i-heart"/></svg></span>
+        <div>
+          <h3>Socially responsible by default</h3>
+          <p>Access is part of the build: pages that stay usable on modest phones, legible type and contrast, and no dark patterns — because the web should work for the businesses that keep our towns running.</p>
         </div>
-        <div class="card reveal" style="--d:180ms">
-          <div class="icon-tile icon-tile--swoop"><svg aria-hidden="true"><use href="#i-heart"/></svg></div>
-          <h3>Transparent &amp; approachable</h3>
-          <p style="font-size:.9rem;color:var(--muted);margin-bottom:0">Clear European pricing, friendly communication, and responsive support. No jargon, no surprises.</p>
+      </li>
+      <li>
+        <span class="fp-icon"><svg aria-hidden="true"><use href="#i-rocket"/></svg></span>
+        <div>
+          <h3>Built for the next five years</h3>
+          <p>Modern, maintainable stacks and structured content, so a site can keep growing — and stay findable as search moves into AI assistants.</p>
         </div>
-      </div>
+      </li>
+    </ol>
+
+    <div class="founder-foot reveal">
+      <blockquote class="founder-quote">
+        <p>AI shouldn't be a moat for the companies that can afford it. Used well, it raises the floor for everyone — and small businesses deserve their share of that growth.</p>
+      </blockquote>
+      <a class="btn btn-primary" href="#contact">Work with me <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
     </div>
   </div>
 </section>
@@ -1690,6 +1205,11 @@ h1[tabindex="-1"]:focus, h2[tabindex="-1"]:focus, main:focus { outline: none }
   </div>
 </footer>
 
+<!-- Back to top -->
+<button class="to-top" id="to-top" type="button" aria-label="Back to top">
+  <svg aria-hidden="true"><use href="#i-arrow"/></svg>
+</button>
+
 <!-- Cookie banner -->
 <div class="cookie-banner" id="cookie-banner" hidden>
   <p><strong>We use cookies</strong> to improve your experience and analyze traffic. See our <a href="cookie-policy.html">Cookie Policy</a>.</p>
@@ -1699,6 +1219,7 @@ h1[tabindex="-1"]:focus, h2[tabindex="-1"]:focus, main:focus { outline: none }
   </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script>
 (function() {
   'use strict';
@@ -1731,6 +1252,22 @@ h1[tabindex="-1"]:focus, h2[tabindex="-1"]:focus, main:focus { outline: none }
     lastScroll = y;
   }, { passive: true });
 
+  // ---- Back to top ----
+  var toTop = document.getElementById('to-top');
+  if (toTop) {
+    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function syncToTop() {
+      toTop.classList.toggle('is-visible', window.scrollY > 480);
+    }
+    window.addEventListener('scroll', syncToTop, { passive: true });
+    syncToTop();
+    toTop.addEventListener('click', function() {
+      window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
+      var mainEl = document.getElementById('main');
+      if (mainEl) mainEl.focus({ preventScroll: true });
+    });
+  }
+
   // ---- Smooth scroll for in-page links ----
   document.querySelectorAll('a[href^="#"][data-scroll], a[href^="#"]:not([href="#"])').forEach(function(link) {
     link.addEventListener('click', function(e) {
@@ -1762,24 +1299,25 @@ h1[tabindex="-1"]:focus, h2[tabindex="-1"]:focus, main:focus { outline: none }
   }
 
   // ---- Active nav link on scroll ----
-  var sections = document.querySelectorAll('section[id], main > section[id]');
   var navLinks = document.querySelectorAll('.nav-list a[data-nav]');
-  if ('IntersectionObserver' in window && sections.length) {
-    var navIO = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry) {
-        if (entry.isIntersecting) {
-          var id = entry.target.id;
-          navLinks.forEach(function(link) {
-            link.removeAttribute('aria-current');
-            if (link.getAttribute('data-nav') === id) {
-              link.setAttribute('aria-current', 'page');
-            }
-          });
-        }
-      });
-    }, { threshold: 0.3 });
-    sections.forEach(function(s) { navIO.observe(s); });
+  var navTargets = [];
+  navLinks.forEach(function(link) {
+    var target = document.getElementById(link.getAttribute('data-nav'));
+    if (target) navTargets.push({ link: link, section: target });
+  });
+  function updateActiveNav() {
+    var probe = window.scrollY + 120;
+    var current = null;
+    var best = -1;
+    for (var i = 0; i < navTargets.length; i++) {
+      var top = navTargets[i].section.getBoundingClientRect().top + window.scrollY;
+      if (top <= probe && top > best) { best = top; current = navTargets[i].link; }
+    }
+    navLinks.forEach(function(link) { link.removeAttribute('aria-current'); });
+    if (current) current.setAttribute('aria-current', 'page');
   }
+  window.addEventListener('scroll', updateActiveNav, { passive: true });
+  updateActiveNav();
 
   // ---- Contact form ----
   var form = document.getElementById('contact-form');
@@ -1815,10 +1353,504 @@ h1[tabindex="-1"]:focus, h2[tabindex="-1"]:focus, main:focus { outline: none }
     });
   }
 
+  /* ---------- v1.0 animation layer ---------- */
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var hasGsap = !!window.gsap;
+
+  /* ---------- Hero: entrance, galaxy field, rotating hook ---------- */
+  if (hasGsap && !reduced) {
+    gsap.timeline({ defaults: { ease: 'power3.out' } })
+      .from('.hero-glow', { scale: .72, opacity: 0, duration: 1.5, stagger: .12 }, 0)
+      .from('.hero-copy > *', { y: 24, opacity: 0, duration: .7, stagger: .07 }, .15);
+
+    var heroGlows = document.querySelectorAll('.hero-glow');
+    for (var gi = 0; gi < heroGlows.length; gi++) {
+      gsap.to(heroGlows[gi], {
+        x: gi % 2 ? -46 : 44, y: gi === 1 ? 34 : -26,
+        duration: 10 + gi * 2.5, yoyo: true, repeat: -1, ease: 'sine.inOut'
+      });
+    }
+  }
+
+  /* ---------- Rotating hero hook ---------- */
+  var heroHook = document.getElementById('hero-hook');
+  var heroHooks = ['work while you sleep.', 'get cited by AI.', 'launch in 5–14 days.', 'run on autopilot.'];
+  var heroHookIdx = 0;
+  if (heroHook && hasGsap && !reduced) {
+    setInterval(function () {
+      heroHookIdx = (heroHookIdx + 1) % heroHooks.length;
+      var tl = gsap.timeline();
+      tl.to(heroHook, { opacity: 0, scale: .9, filter: 'blur(7px)', duration: .38, ease: 'power2.in' })
+        .add(function () { heroHook.textContent = heroHooks[heroHookIdx]; })
+        .fromTo(heroHook,
+          { opacity: 0, scale: 1.1, filter: 'blur(7px)' },
+          { opacity: 1, scale: 1, filter: 'blur(0px)', duration: .6, ease: 'power3.out' });
+    }, 4600);
+  }
+
+  /* ---------- Brand logo micro-animation ---------- */
+  var brandEl = document.querySelector('.brand');
+  var brandLogo = brandEl ? brandEl.querySelector('img') : null;
+  if (brandEl && brandLogo && hasGsap && !reduced) {
+    brandEl.addEventListener('mouseenter', function () {
+      gsap.fromTo(brandLogo, { rotate: -5, scale: .95 },
+        { rotate: 0, scale: 1.06, duration: .5, ease: 'back.out(2.6)' });
+    });
+    brandEl.addEventListener('mouseleave', function () {
+      gsap.to(brandLogo, { rotate: 0, scale: 1, duration: .4, ease: 'power2.out' });
+    });
+    brandEl.addEventListener('focus', function () {
+      gsap.fromTo(brandLogo, { rotate: -4, scale: .96 },
+        { rotate: 0, scale: 1.05, duration: .45, ease: 'back.out(2.2)' });
+    });
+  }
+
+  /* ---------- Soft galaxy dot field ---------- */
+  (function () {
+    var canvas = document.getElementById('hero-galaxy');
+    if (!canvas || !canvas.getContext) return;
+    var ctx = canvas.getContext('2d');
+    var host = canvas.parentElement;
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var W = 0, H = 0, stars = [], sprite = null, raf = null, running = false, t0 = 0;
+    var shot = null, nextShot = 1.5 + Math.random() * 4;
+
+    function makeSprite() {
+      var size = 32, s = document.createElement('canvas');
+      s.width = s.height = size;
+      var g = s.getContext('2d');
+      var grad = g.createRadialGradient(16, 16, 0, 16, 16, 16);
+      grad.addColorStop(0, 'rgba(255,255,255,.95)');
+      grad.addColorStop(.22, 'rgba(214,228,255,.55)');
+      grad.addColorStop(.55, 'rgba(160,190,255,.16)');
+      grad.addColorStop(1, 'rgba(120,160,255,0)');
+      g.fillStyle = grad;
+      g.fillRect(0, 0, size, size);
+      return s;
+    }
+
+    function build() {
+      var count = Math.round(W * H / 7200);
+      count = Math.max(34, Math.min(170, count));
+      stars = [];
+      for (var i = 0; i < count; i++) {
+        var x = Math.random() * W, y = Math.random() * H;
+        stars.push({
+          x: x, y: y,
+          r: .55 + Math.random() * 1.7,
+          phase: x * .006 + y * .004 + Math.random() * 1.1,
+          wave: 5 + Math.random() * 11,
+          speed: .16 + Math.random() * .26,
+          driftX: (Math.random() - .5) * .07,
+          driftY: (Math.random() - .5) * .05,
+          alpha: .16 + Math.random() * .5,
+          twinkle: .4 + Math.random() * 1.4,
+          spark: Math.random() < .16,
+          sparkSize: 3 + Math.random() * 5
+        });
+      }
+    }
+
+    function spawnShot(t) {
+      var dir = Math.random() < .5 ? 1 : -1;
+      var dur = .6 + Math.random() * 1.9;
+      var speed = 380 + Math.random() * 340;
+      var x = W * (dir > 0 ? .08 + Math.random() * .5 : .42 + Math.random() * .5);
+      var y = H * (.05 + Math.random() * .26);
+      var ang = (18 + Math.random() * 28) * Math.PI / 180;
+      shot = {
+        x0: x, y0: y,
+        vx: Math.cos(ang) * speed * dir,
+        vy: Math.sin(ang) * speed,
+        start: t, dur: dur,
+        len: 70 + Math.random() * 150
+      };
+      nextShot = t + dur + 2 + Math.random() * 5.5;
+    }
+
+    function drawShot(t) {
+      if (!shot) return;
+      var p = (t - shot.start) / shot.dur;
+      if (p >= 1) { shot = null; return; }
+      var fade = p < .18 ? p / .18 : (p > .68 ? (1 - p) / .32 : 1);
+      var alpha = Math.max(0, Math.min(1, fade));
+      var x = shot.x0 + shot.vx * p * shot.dur;
+      var y = shot.y0 + shot.vy * p * shot.dur;
+      var mag = Math.sqrt(shot.vx * shot.vx + shot.vy * shot.vy) || 1;
+      var tx = x - shot.vx / mag * (shot.len * (.7 + p * .5));
+      var ty = y - shot.vy / mag * (shot.len * (.7 + p * .5));
+      var grad = ctx.createLinearGradient(x, y, tx, ty);
+      grad.addColorStop(0, 'rgba(255,255,255,' + alpha + ')');
+      grad.addColorStop(.3, 'rgba(214,228,255,' + (alpha * .55) + ')');
+      grad.addColorStop(1, 'rgba(160,190,255,0)');
+      ctx.globalAlpha = 1;
+      ctx.strokeStyle = grad;
+      ctx.lineWidth = 2;
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.lineTo(tx, ty);
+      ctx.stroke();
+      ctx.globalAlpha = alpha;
+      ctx.drawImage(sprite, x - 11, y - 11, 22, 22);
+      ctx.globalAlpha = 1;
+    }
+
+    function draw(now) {
+      if (!t0) t0 = now;
+      var t = (now - t0) / 1000;
+      ctx.clearRect(0, 0, W, H);
+      for (var i = 0; i < stars.length; i++) {
+        var s = stars[i];
+        s.x += s.driftX;
+        s.y += s.driftY;
+        if (s.x < -24) s.x = W + 24; else if (s.x > W + 24) s.x = -24;
+        if (s.y < -24) s.y = H + 24; else if (s.y > H + 24) s.y = -24;
+        var wx = Math.sin(t * s.speed + s.phase) * s.wave;
+        var wy = Math.cos(t * s.speed * .82 + s.phase * 1.1) * s.wave * .62;
+        var a = s.alpha * (.55 + .45 * Math.sin(t * s.twinkle + s.phase));
+        var d = s.r * (s.spark ? 15 : 8);
+        ctx.globalAlpha = a;
+        ctx.drawImage(sprite, s.x + wx - d / 2, s.y + wy - d / 2, d, d);
+        if (s.spark) {
+          var pulse = .5 + .5 * Math.sin(t * (.7 + s.twinkle * .5) + s.phase * 1.3);
+          var cx = s.x + wx, cy = s.y + wy;
+          var L = s.sparkSize * (.45 + pulse);
+          ctx.strokeStyle = 'rgba(255,255,255,.9)';
+          ctx.lineWidth = .9;
+          ctx.globalAlpha = Math.min(1, .2 + a * 1.5);
+          ctx.beginPath();
+          ctx.moveTo(cx - L, cy); ctx.lineTo(cx + L, cy);
+          ctx.moveTo(cx, cy - L); ctx.lineTo(cx, cy + L);
+          ctx.stroke();
+          var L2 = L * .5;
+          ctx.globalAlpha = Math.min(1, .12 + a);
+          ctx.beginPath();
+          ctx.moveTo(cx - L2, cy - L2); ctx.lineTo(cx + L2, cy + L2);
+          ctx.moveTo(cx + L2, cy - L2); ctx.lineTo(cx - L2, cy + L2);
+          ctx.stroke();
+        }
+      }
+      if (!reduced) {
+        if (t > nextShot) spawnShot(t);
+        drawShot(t);
+      }
+      ctx.globalAlpha = 1;
+      if (running && !reduced) raf = requestAnimationFrame(draw);
+    }
+
+    function start() {
+      if (running) return;
+      running = true;
+      t0 = 0;
+      shot = null;
+      nextShot = 1.5 + Math.random() * 4;
+      raf = requestAnimationFrame(draw);
+    }
+    function stop() {
+      running = false;
+      if (raf) cancelAnimationFrame(raf);
+      raf = null;
+    }
+
+    function resize() {
+      var rect = host.getBoundingClientRect();
+      W = Math.max(1, rect.width);
+      H = Math.max(1, rect.height);
+      canvas.width = Math.round(W * dpr);
+      canvas.height = Math.round(H * dpr);
+      canvas.style.width = W + 'px';
+      canvas.style.height = H + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      build();
+      if (reduced) draw(performance.now());
+    }
+
+    sprite = makeSprite();
+    resize();
+    window.addEventListener('resize', function () {
+      stop();
+      resize();
+      if (!reduced) start();
+    }, { passive: true });
+
+    if (!reduced && 'IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) start(); else stop();
+        });
+      }, { threshold: 0 }).observe(host);
+    } else if (!reduced) {
+      start();
+    }
+  })();
+
+  /* ---------- Service selector + detail panel ---------- */
+  var serviceGrid = document.querySelector('.services');
+  var serviceCards = document.querySelectorAll('[data-service]');
+  var stage = document.getElementById('service-stage');
+  var slides = stage ? stage.querySelectorAll('.stage-slide') : [];
+  var activeService = null;
+
+  function selectService(card) {
+    if (!card || !stage || card === activeService) return;
+    var slide = stage.querySelector('[data-panel="' + card.getAttribute('data-service') + '"]');
+    if (!slide) return;
+    activeService = card;
+    serviceCards.forEach(function (c) {
+      c.classList.toggle('is-active', c === card);
+      var b = c.querySelector('.service-head');
+      if (b) b.setAttribute('aria-pressed', c === card ? 'true' : 'false');
+    });
+    slides.forEach(function (s) { s.classList.toggle('is-active', s === slide); });
+  }
+
+  serviceCards.forEach(function (card) {
+    card.addEventListener('click', function () { selectService(card); });
+  });
+
+  if (serviceGrid && serviceCards.length) selectService(serviceCards[0]);
+})();
+
+/* ---------- Rotating shape ribbons ---------- */
+(function () {
+  var colors = ['#FC5332', '#FFA537', '#60A5FA', '#0B519C'];
+  var shapes = {
+    triangle: '<svg viewBox="0 0 100 100" aria-hidden="true"><path d="M50 6 94 86H6Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>',
+    hex: '<svg viewBox="0 0 100 100" aria-hidden="true"><path d="M50 4l40 23v46L50 96 10 73V27Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>',
+    circle: '<svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>'
+  };
+  var observer = 'IntersectionObserver' in window
+    ? new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) { e.target.classList.toggle('is-paused', !e.isIntersecting); });
+      }, { rootMargin: '200px' })
+    : null;
+
+  var sections = document.querySelectorAll('.has-ribbon');
+  for (var s = 0; s < sections.length; s++) {
+    var sec = sections[s];
+    var kind = sec.classList.contains('ribbon--mixed') ? 'mixed'
+             : sec.classList.contains('ribbon--triangle') ? 'triangle'
+             : sec.classList.contains('ribbon--circle') ? 'circle'
+             : sec.classList.contains('ribbon--hex') ? 'hex' : null;
+    if (!kind) continue;
+
+    var field = document.createElement('div');
+    field.className = 'ribbon-field';
+    field.setAttribute('aria-hidden', 'true');
+
+    for (var i = 0; i < 9; i++) {
+      var shapeKind = kind === 'mixed'
+        ? ['triangle', 'hex', 'circle'][Math.floor(Math.random() * 3)]
+        : kind;
+      var el = document.createElement('span');
+      el.className = 'ribbon-shape ribbon-shape--' + shapeKind;
+
+      var size = Math.round(54 + Math.random() * 136);
+      var edge = kind === 'mixed' ? true : (i % 4 !== 3);
+      var xPct = kind === 'mixed'
+        ? 4 + Math.random() * 92
+        : (edge ? (Math.random() < .5 ? Math.random() * 18 : 82 + Math.random() * 18) : 32 + Math.random() * 36);
+      var yPct = 4 + Math.random() * 90;
+
+      el.style.width = size + 'px';
+      el.style.height = size + 'px';
+      el.style.left = 'calc(' + xPct.toFixed(2) + '% - ' + (size / 2).toFixed(0) + 'px)';
+      el.style.top = 'calc(' + yPct.toFixed(2) + '% - ' + (size / 2).toFixed(0) + 'px)';
+      el.style.color = colors[i % colors.length];
+      el.style.opacity = edge ? '.92' : '.45';
+
+      if (shapeKind === 'circle') {
+        el.style.setProperty('--dur', (6 + Math.random() * 9).toFixed(1) + 's');
+        el.style.setProperty('--delay', (-Math.random() * 10).toFixed(1) + 's');
+      } else {
+        el.style.setProperty('--dur', (50 + Math.random() * 70).toFixed(1) + 's');
+        el.style.setProperty('--dir', Math.random() < .5 ? 'normal' : 'reverse');
+        el.style.animationDelay = (-Math.random() * 40).toFixed(1) + 's';
+      }
+
+      el.innerHTML = shapes[shapeKind];
+      field.appendChild(el);
+    }
+
+    sec.appendChild(field);
+    if ('IntersectionObserver' in window) {
+      observer.observe(field);
+    }
+  }
+})();
+
+/* ---------- Client story sky ---------- */
+(function () {
+  var canvas = document.getElementById('quote-sky');
+  if (!canvas || !canvas.getContext) return;
+  var host = canvas.parentElement;
+  var ctx = canvas.getContext('2d');
+  var dpr = Math.min(window.devicePixelRatio || 1, 2);
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var W = 0, H = 0, stars = [], sprite = null, raf = null, running = false, t0 = 0;
+  var shot = null, nextShot = 1.5 + Math.random() * 3;
+
+  function makeSprite() {
+    var size = 32, s = document.createElement('canvas');
+    s.width = s.height = size;
+    var g = s.getContext('2d');
+    var grad = g.createRadialGradient(16, 16, 0, 16, 16, 16);
+    grad.addColorStop(0, 'rgba(255,255,255,.95)');
+    grad.addColorStop(.24, 'rgba(214,228,255,.5)');
+    grad.addColorStop(.6, 'rgba(160,190,255,.12)');
+    grad.addColorStop(1, 'rgba(120,160,255,0)');
+    g.fillStyle = grad;
+    g.fillRect(0, 0, size, size);
+    return s;
+  }
+
+  function build() {
+    var count = Math.max(16, Math.min(60, Math.round(W * H / 9500)));
+    stars = [];
+    for (var i = 0; i < count; i++) {
+      stars.push({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        r: .4 + Math.random() * 1.1,
+        phase: Math.random() * Math.PI * 2,
+        driftX: (Math.random() - .5) * .035,
+        driftY: (Math.random() - .5) * .03,
+        alpha: .12 + Math.random() * .42,
+        twinkle: .4 + Math.random() * 1.3,
+        spark: Math.random() < .12,
+        sparkSize: 2 + Math.random() * 3.4
+      });
+    }
+  }
+
+  function spawnShot(t) {
+    var dir = Math.random() < .5 ? 1 : -1;
+    var dur = .6 + Math.random() * 1.7;
+    var speed = 260 + Math.random() * 240;
+    var x = W * (dir > 0 ? .05 + Math.random() * .5 : .45 + Math.random() * .5);
+    var y = H * (.05 + Math.random() * .3);
+    var ang = (16 + Math.random() * 24) * Math.PI / 180;
+    shot = {
+      x0: x, y0: y,
+      vx: Math.cos(ang) * speed * dir,
+      vy: Math.sin(ang) * speed,
+      start: t, dur: dur,
+      len: 60 + Math.random() * 90
+    };
+    nextShot = t + dur + 2.5 + Math.random() * 5;
+  }
+
+  function drawShot(t) {
+    if (!shot) return;
+    var p = (t - shot.start) / shot.dur;
+    if (p >= 1) { shot = null; return; }
+    var fade = p < .18 ? p / .18 : (p > .68 ? (1 - p) / .32 : 1);
+    var alpha = Math.max(0, Math.min(1, fade));
+    var x = shot.x0 + shot.vx * p * shot.dur;
+    var y = shot.y0 + shot.vy * p * shot.dur;
+    var mag = Math.sqrt(shot.vx * shot.vx + shot.vy * shot.vy) || 1;
+    var tx = x - shot.vx / mag * shot.len;
+    var ty = y - shot.vy / mag * shot.len;
+    var grad = ctx.createLinearGradient(x, y, tx, ty);
+    grad.addColorStop(0, 'rgba(255,255,255,' + alpha + ')');
+    grad.addColorStop(.35, 'rgba(214,228,255,' + (alpha * .5) + ')');
+    grad.addColorStop(1, 'rgba(160,190,255,0)');
+    ctx.globalAlpha = 1;
+    ctx.strokeStyle = grad;
+    ctx.lineWidth = 1.8;
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(tx, ty);
+    ctx.stroke();
+    ctx.globalAlpha = alpha;
+    ctx.drawImage(sprite, x - 9, y - 9, 18, 18);
+    ctx.globalAlpha = 1;
+  }
+
+  function draw(now) {
+    if (!t0) t0 = now;
+    var t = (now - t0) / 1000;
+    ctx.clearRect(0, 0, W, H);
+    for (var i = 0; i < stars.length; i++) {
+      var st = stars[i];
+      st.x += st.driftX;
+      st.y += st.driftY;
+      if (st.x < -12) st.x = W + 12; else if (st.x > W + 12) st.x = -12;
+      if (st.y < -12) st.y = H + 12; else if (st.y > H + 12) st.y = -12;
+      var a = st.alpha * (.55 + .45 * Math.sin(t * st.twinkle + st.phase));
+      var d = st.r * (st.spark ? 12 : 7);
+      ctx.globalAlpha = a;
+      ctx.drawImage(sprite, st.x - d / 2, st.y - d / 2, d, d);
+      if (st.spark) {
+        var pulse = .5 + .5 * Math.sin(t * (.8 + st.twinkle * .4) + st.phase * 1.2);
+        var L = st.sparkSize * (.45 + pulse);
+        ctx.strokeStyle = 'rgba(255,255,255,.9)';
+        ctx.lineWidth = .8;
+        ctx.globalAlpha = Math.min(1, .18 + a * 1.5);
+        ctx.beginPath();
+        ctx.moveTo(st.x - L, st.y); ctx.lineTo(st.x + L, st.y);
+        ctx.moveTo(st.x, st.y - L); ctx.lineTo(st.x, st.y + L);
+        ctx.stroke();
+      }
+    }
+    if (!reduce) {
+      if (t > nextShot) spawnShot(t);
+      drawShot(t);
+    }
+    ctx.globalAlpha = 1;
+    if (running && !reduce) raf = requestAnimationFrame(draw);
+  }
+
+  function start() {
+    if (running) return;
+    running = true;
+    t0 = 0;
+    shot = null;
+    nextShot = 1.5 + Math.random() * 3;
+    raf = requestAnimationFrame(draw);
+  }
+  function stop() {
+    running = false;
+    if (raf) cancelAnimationFrame(raf);
+    raf = null;
+  }
+
+  function resize() {
+    var rect = host.getBoundingClientRect();
+    W = Math.max(1, rect.width);
+    H = Math.max(1, rect.height);
+    canvas.width = Math.round(W * dpr);
+    canvas.height = Math.round(H * dpr);
+    canvas.style.width = W + 'px';
+    canvas.style.height = H + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    build();
+    if (reduce) draw(performance.now());
+  }
+
+  sprite = makeSprite();
+  resize();
+  window.addEventListener('resize', function () {
+    stop();
+    resize();
+    if (!reduce) start();
+  }, { passive: true });
+
+  if (!reduce && 'IntersectionObserver' in window) {
+    new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) start(); else stop();
+      });
+    }, { threshold: 0 }).observe(host);
+  } else if (!reduce) {
+    start();
+  }
 })();
 
 // Cookie banner + Google Consent Mode v2 is handled by assets/js/consent.js (shared with legal pages)
 </script>
-<script src="assets/js/consent.js" defer></script>
+<script src="assets/js/consent.js?v=20261103" defer></script>
 </body>
 </html>

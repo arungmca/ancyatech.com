@@ -12,7 +12,10 @@
   //   https://<preview-name>.ancyatech.com
   "preview_urls": true,
   "assets": {
-    "directory": "."
+    "directory": "./public",
+    // Serve extension-less URLs (/work) from work.html and show public/404.html for misses.
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
   },
   // Bind both hostnames to this Worker. Cloudflare creates the DNS records and
   // certificates on deploy; the hostnames must not have conflicting records.

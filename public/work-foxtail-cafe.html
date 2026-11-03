@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Foxtail Café — Ancya case study</title>
+<meta name="description" content="Case study: how Ancya rebuilt Foxtail Café’s website in 8 days, with online ordering, multilingual content and local search.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="assets/favicons/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicons/favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/favicons/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/main.css?v=20261103">
+<script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+<!-- TEMPLATE FOR REVIEW — remove the noindex meta and add the production analytics/consent head block from index.html before launch. -->
+
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute;overflow:hidden">
+  <defs>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 2v6M12 16v6M2 12h6M16 12h6M5 5l3 3M16 16l3 3M19 5l-3 3M8 16l-3 3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2L4 14h7l-2 8 9-12h-7l2-8z" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-code" viewBox="0 0 24 24"><path d="M8 8l-4 4 4 4M16 8l4 4-4 4M14 6l-4 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-brush" viewBox="0 0 24 24"><path d="M9 3l11 11-3 3L6 6l3-3zM6 6l-3 3M9 9l6 6M3 21c2-4 5-5 8-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 16l4 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-robot" viewBox="0 0 24 24"><rect x="5" y="8" width="14" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 4v4M9 13h.01M15 13h.01M9 17h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="3" r="1.5" fill="currentColor"/></symbol>
+    <symbol id="i-cart" viewBox="0 0 24 24"><path d="M3 4h2l2.5 12.5h11L21 8H7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="20" r="1.5" fill="currentColor"/><circle cx="18" cy="20" r="1.5" fill="currentColor"/></symbol>
+    <symbol id="i-rocket" viewBox="0 0 24 24"><path d="M12 2c4 3 6 7 6 11l-3 2H9l-3-2c0-4 2-8 6-11z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="12" cy="9" r="1.5" fill="currentColor"/><path d="M9 17c-2 0-3 1-3 3 2 0 3-1 3-3zM15 17c2 0 3 1 3 3-2 0-3-1-3-3z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-4 8-8 9-4-1-8-4-8-9V6l8-3z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V4M4 20h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 16v-4M12 16V8M16 16v-6" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 7v5l3 3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 7l8 6 8-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.5" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5-3 2c1 3 3 5 6 6l2-3 5 2v4c0 1-1 2-2 2C9 22 2 15 2 6c0-1 1-2 3-2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 2l3 7 7 .5-5.5 4.5 2 7L12 17l-6.5 4 2-7L2 9.5 9 9z" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-linkedin" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M7 10v7M7 7v.01M11 17v-4a2 2 0 0 1 4 0v4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-instagram" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17" cy="7" r="1" fill="currentColor"/></symbol>
+    <symbol id="i-github" viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-3 19.5c.5 0 .5-.2.5-.5v-2c-2 .5-2.5-1-2.5-1-.3-.8-.8-1-.8-1-.7-.5 0-.5 0-.5.8 0 1.2.8 1.2.8.7 1.2 2 .8 2.5.6 0-.5.3-.8.5-1-1.5-.2-3-1-3-3.5 0-.8.3-1.4.8-2 0-.2-.3-1 .1-2 0 0 .7-.2 2.2.8a7.5 7.5 0 0 1 4 0c1.5-1 2.2-.8 2.2-.8.4 1 .1 1.8.1 2 .5.6.8 1.2.8 2 0 2.5-1.5 3.3-3 3.5.2.2.5.7.5 1.5v2c0 .3 0 .5.5.5A10 10 0 0 0 12 2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 20c0-3 3-5 6-5s6 2 6 5M16 8a3 3 0 0 1 0 6M18 20c0-2-1-4-3-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5 9-5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M3 12l9 5 9-5M3 17l9 5 9-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+    <symbol id="i-puzzle" viewBox="0 0 24 24"><path d="M10 4a2 2 0 0 1 4 0v3h3v3a2 2 0 0 0 0 4v3h-3a2 2 0 0 0-4 0H7v-3a2 2 0 0 1 0-4V7h3V4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2 4 4 0 0 1 7 2c0 5.5-7 10-7 10z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+  </defs>
+</svg>
+
+<header class="site-header" id="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="index.html" aria-label="Ancya — home">
+      <img src="assets/svg/ancya-logo-color.svg" alt="Ancya" style="height:34px;width:auto">
+    </a>
+    <nav class="primary-nav" id="primary-nav" aria-label="Primary">
+      <ul class="nav-list">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html#services">Services</a></li>
+        <li><a href="work.html" aria-current="page">Work</a></li>
+        <li><a href="index.html#pricing">Pricing</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="journal.html">Journal</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+        <li class="nav-cta"><a class="btn btn-primary btn-sm" href="index.html#contact">Start a project <svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+      </ul>
+    </nav>
+    <button class="nav-toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="Open navigation menu">
+      <svg class="icon-menu" aria-hidden="true"><use href="#i-menu"/></svg>
+      <svg class="icon-close" aria-hidden="true"><use href="#i-close"/></svg>
+    </button>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+
+<section class="page-hero band">
+  <div class="container">
+    <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="work.html">Work</a><span class="sep">/</span><span>Foxtail Café</span></nav>
+    <p class="eyebrow">Case study &middot; Café</p>
+    <h1>A café site that takes orders while the kitchen works.</h1>
+    <p class="lead">A menu-first website with online ordering, multilingual content and Google Business sync — rebuilt in eight days.</p>
+    <dl class="case-meta">
+      <div><dt>Client</dt><dd>Foxtail Café</dd></div>
+      <div><dt>Industry</dt><dd>Hospitality</dd></div>
+      <div><dt>Services</dt><dd>Design, build, local SEO</dd></div>
+      <div><dt>Timeline</dt><dd>8 business days</dd></div>
+    </dl>
+  </div>
+</section>
+
+<section class="section band-white">
+  <div class="container">
+    <div class="case-visual-large reveal"><svg viewBox="0 0 260 160" role="img" aria-label="Coffee shop website illustration">
+            <rect x="10" y="10" width="240" height="140" rx="10" fill="#fff" stroke="#E2E8F0" stroke-width="2"/>
+            <path d="M10 38h240" stroke="#E2E8F0" stroke-width="1.5"/>
+            <circle cx="24" cy="24" r="4" fill="#FC5332"/><circle cx="36" cy="24" r="4" fill="#FFA537"/><circle cx="48" cy="24" r="4" fill="#60A5FA"/>
+            <rect x="70" y="18" width="90" height="12" rx="6" fill="#F1F5F9"/>
+            <rect x="30" y="56" width="80" height="12" rx="4" fill="#0B132B"/>
+            <rect x="30" y="76" width="100" height="7" rx="3.5" fill="#CBD5E1"/>
+            <rect x="30" y="90" width="70" height="7" rx="3.5" fill="#CBD5E1"/>
+            <rect x="30" y="106" width="60" height="24" rx="8" fill="url(#caseGrad1)"/>
+            <path d="M150 58c-8 4-14 10-16 20 8 0 14-4 18-12M168 58c8 4 14 10 16 20-8 0-14-4-18-12" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round"/>
+            <rect x="145" y="90" width="80" height="50" rx="8" fill="#F1F5F9" stroke="#E2E8F0" stroke-width="1.5"/>
+            <path d="M155 120c4-8 10-12 18-12s14 4 18 12" fill="none" stroke="#FC5332" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="185" cy="105" r="6" fill="#FFA537" opacity=".5"/>
+            <defs><linearGradient id="caseGrad1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FC5332"/><stop offset="100%" stop-color="#FFA537"/></linearGradient></defs>
+          </svg></div>
+  </div>
+</section>
+
+<section class="section band has-ribbon ribbon--circle">
+  <div class="container">
+    <div class="grid grid-2" style="gap:clamp(28px,5vw,72px);align-items:start">
+      <div class="reveal">
+        <p class="eyebrow">The challenge</p>
+        <h2>A good café hidden behind a bad website.</h2>
+        <p>Foxtail's old site was a template with a PDF menu, no mobile ordering, and a Google profile that listed the wrong opening hours. Weekend staff were spending hours on the phone that should have gone to service.</p>
+        <p>The brief was simple: make it easy for a customer to see the menu, order, and find the café — on a phone, in the language they prefer.</p>
+      </div>
+      <div class="reveal" style="--d:80ms">
+        <p class="eyebrow">The approach</p>
+        <h2>One clear action on every screen.</h2>
+        <p>We started from the menu, not the homepage. Every layout was tested against three tasks: order for collection, check allergens, find the café. Content is structured so AI search can read the menu and hours directly.</p>
+        <p>Built with modern AI tooling, reviewed by hand, and handed over with the code, domain and analytics all in the client's name.</p>
+      </div>
+    </div>
+
+    <div class="result-grid reveal" style="margin-top:clamp(32px,5vw,56px)">
+      <div class="result-stat"><strong>+34%</strong><span>Online orders in the first month</span></div>
+      <div class="result-stat"><strong>0.9s</strong><span>Median mobile load time</span></div>
+      <div class="result-stat"><strong>8</strong><span>Business days from kick-off to launch</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section band-white">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">What we built</p>
+      <h2>Small site. Big operational relief.</h2>
+    </div>
+    <div class="grid grid-3">
+      <article class="card reveal" style="--d:0ms">
+        <div class="icon-tile"><svg aria-hidden="true"><use href="#i-cart"/></svg></div>
+        <h3>Menu &amp; ordering</h3>
+        <p>A visual menu that updates in minutes, with collection orders and allergen filters.</p>
+      </article>
+      <article class="card reveal" style="--d:60ms">
+        <div class="icon-tile"><svg aria-hidden="true"><use href="#i-globe"/></svg></div>
+        <h3>Multilingual content</h3>
+        <p>Dutch, French and English content from one editable source — no duplicated pages.</p>
+      </article>
+      <article class="card reveal" style="--d:120ms">
+        <div class="icon-tile icon-tile--swoop"><svg aria-hidden="true"><use href="#i-search"/></svg></div>
+        <h3>Local &amp; AI search</h3>
+        <p>Google Business sync, schema markup and clean answers that AI assistants can quote.</p>
+      </article>
+    </div>
+    <blockquote class="founder-quote reveal" style="margin-top:clamp(28px,4vw,44px)">
+      <p>“Ancya rebuilt our website in 8 days and it loads in under a second. Our online orders jumped 34% in the first month.” — Marie Devries, Owner</p>
+    </blockquote>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="container cta-inner reveal-scale">
+    <h2>Ready to build something fast?</h2>
+    <p>Get a free 30-minute consultation. We'll map your project, estimate costs, and show you exactly how AI acceleration can compress your timeline.</p>
+    <div class="cta-actions">
+      <a class="btn btn-primary btn-lg" href="index.html#contact">Book a free call <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      <a class="btn btn-ghost btn-lg" href="mailto:antony@ancyatech.com">antony@ancyatech.com</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img src="assets/svg/ancya-logo-white-orange.svg" alt="Ancya" style="height:40px;width:auto" />
+        <p>Lightning-fast websites, AI SEO, and custom automation for ambitious small and medium-sized businesses.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Services</h3>
+        <ul>
+          <li><a href="services-web-design.html">Web Design</a></li>
+          <li><a href="index.html#services">Web Development</a></li>
+          <li><a href="index.html#services">AI SEO / GEO</a></li>
+          <li><a href="index.html#services">AI Automation</a></li>
+          <li><a href="index.html#services">Branding</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Company</h3>
+        <ul>
+          <li><a href="about.html">About</a></li>
+          <li><a href="work.html">Work</a></li>
+          <li><a href="journal.html">Journal</a></li>
+          <li><a href="index.html#pricing">Pricing</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Get in touch</h3>
+        <ul>
+          <li><a href="mailto:antony@ancyatech.com">antony@ancyatech.com</a></li>
+          <li>Stroeykensstraat 37</li>
+          <li>Kortenberg 3071, Belgium</li>
+        </ul>
+        <div class="social-row" style="margin-top:1rem">
+          <a class="social-btn" href="#" aria-label="LinkedIn"><svg aria-hidden="true"><use href="#i-linkedin"/></svg></a>
+          <a class="social-btn" href="#" aria-label="Instagram"><svg aria-hidden="true"><use href="#i-instagram"/></svg></a>
+          <a class="social-btn" href="#" aria-label="GitHub"><svg aria-hidden="true"><use href="#i-github"/></svg></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Ancya Tech. All rights reserved.</p>
+      <div class="footer-legal">
+        <a href="privacy-policy.html">Privacy Policy</a>
+        <a href="terms-of-service.html">Terms of Service</a>
+        <a href="cookie-policy.html">Cookie Policy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<button class="to-top" id="to-top" type="button" aria-label="Back to top">
+  <svg aria-hidden="true"><use href="#i-arrow"/></svg>
+</button>
+
+<script src="assets/js/site.js?v=20261103" defer></script>
+</body>
+</html>
