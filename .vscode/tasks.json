@@ -1,0 +1,50 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "serve: public (8080)",
+      "type": "shell",
+      "command": "python3 -m http.server 8080 --bind 127.0.0.1 --directory public",
+      "isBackground": true,
+      "presentation": { "reveal": "always", "panel": "dedicated", "group": "servers" },
+      "problemMatcher": {
+        "owner": "python-http",
+        "pattern": { "regexp": "^$" },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "Serving HTTP",
+          "endsPattern": "Serving HTTP on"
+        }
+      }
+    },
+    {
+      "label": "wrangler: dev (8787)",
+      "type": "shell",
+      "command": "npx wrangler dev --port 8787",
+      "isBackground": true,
+      "presentation": { "reveal": "always", "panel": "dedicated", "group": "servers" },
+      "problemMatcher": {
+        "owner": "wrangler",
+        "pattern": { "regexp": "^$" },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "Starting local server",
+          "endsPattern": "Ready on http"
+        }
+      }
+    },
+    {
+      "label": "stop: local servers",
+      "type": "shell",
+      "command": "pkill -f 'http.server 8080' || true; pkill -f 'wrangler dev --port 8787' || true",
+      "presentation": { "reveal": "silent" },
+      "problemMatcher": []
+    },
+    {
+      "label": "check: links",
+      "type": "shell",
+      "command": "python3 scripts/check_links.py",
+      "problemMatcher": []
+    }
+  ]
+}

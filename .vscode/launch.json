@@ -1,0 +1,40 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run & Debug site — static server (Chrome)",
+      "type": "pwa-chrome",
+      "request": "launch",
+      "url": "http://localhost:8080/",
+      "webRoot": "${workspaceFolder}/public",
+      "preLaunchTask": "serve: public (8080)",
+      "postDebugTask": "stop: local servers",
+      "sourceMaps": false
+    },
+    {
+      "name": "Run & Debug site — Wrangler (Chrome)",
+      "type": "pwa-chrome",
+      "request": "launch",
+      "url": "http://localhost:8787/",
+      "webRoot": "${workspaceFolder}/public",
+      "preLaunchTask": "wrangler: dev (8787)",
+      "postDebugTask": "stop: local servers",
+      "sourceMaps": false
+    },
+    {
+      "name": "Attach to Chrome (port 9222)",
+      "type": "pwa-chrome",
+      "request": "attach",
+      "port": 9222,
+      "webRoot": "${workspaceFolder}/public"
+    },
+    {
+      "name": "Debug link checker (Python)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/scripts/check_links.py",
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal"
+    }
+  ]
+}

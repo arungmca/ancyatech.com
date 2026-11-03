@@ -1,0 +1,11 @@
+{
+  "python.terminal.useEnvFile": true,
+  "files.exclude": {
+    "**/.DS_Store": true
+  },
+  "search.exclude": {
+    "node_modules": true,
+    "public/assets/png": true
+  },
+  "liveServer.settings.root": "/public"
+}

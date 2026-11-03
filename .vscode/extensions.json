@@ -1,0 +1,7 @@
+{
+  "recommendations": [
+    "cloudflare.workers",
+    "ms-python.python",
+    "ecmel.vscode-html-css"
+  ]
+}
