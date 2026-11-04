@@ -3,6 +3,12 @@
   "name": "web",
   "main": "worker/index.js",
   "compatibility_date": "2026-10-23",
+  // public/ is generated and not committed. Wrangler runs this before reading
+  // assets.directory, so Cloudflare's deploy command (npx wrangler deploy or
+  // preview) builds the Eleventy site without extra dashboard configuration.
+  "build": {
+    "command": "npm run build"
+  },
   "observability": {
     "enabled": true
   },

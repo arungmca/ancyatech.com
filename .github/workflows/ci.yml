@@ -138,3 +138,30 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: deploy
+
+  # ---------------------------------------------------------------------------
+  # Single required check for the `main-protection` ruleset, so adding or
+  # renaming build jobs never means reconfiguring the protected branch.
+  # The ruleset requires the exact context name "CI Success".
+  # ---------------------------------------------------------------------------
+  ci-success:
+    name: CI Success
+    if: always()
+    needs: [build, credentials, deploy]
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Verify all jobs succeeded or were skipped
+        env:
+          RESULTS: ${{ join(needs.*.result, ' ') }}
+        run: |
+          echo "Job results: $RESULTS"
+          for result in $RESULTS; do
+            case "$result" in
+              failure|cancelled)
+                echo "::error::A required CI job did not succeed."
+                exit 1
+                ;;
+            esac
+          done
+          echo "All required jobs passed."
