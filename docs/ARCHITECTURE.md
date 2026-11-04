@@ -120,9 +120,9 @@ Browser
 
 Static headers live in `src/_headers` and cover CSP, HSTS, `X-Content-Type-Options`,
 `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy` and cache policy. The Worker
-mirrors the baseline headers in `setSecurityHeaders()`. The current CSP permits
-`'unsafe-inline'`, Google Tag Manager and cdnjs (GSAP); tightening it requires removing
-inline scripts and self-hosting the library.
+mirrors the baseline headers in `setSecurityHeaders()`. The CSP allows `'unsafe-inline'`
+and Google Tag Manager only; fonts, CSS and JS are same-origin. gtag.js is injected by
+`consent.js` only after the visitor accepts cookies.
 
 The in-isolate rate limiter in the Worker is best-effort. Production-grade limiting
 belongs in Cloudflare WAF rules for `POST /api/contact`.

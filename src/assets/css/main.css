@@ -968,3 +968,37 @@ h1[tabindex="-1"]:focus, h2[tabindex="-1"]:focus, main:focus { outline: none }
 .hero-glow--3{width:560px;height:560px;left:30%;bottom:-40%;background:radial-gradient(circle,rgba(255,165,55,.34),rgba(255,165,55,.08) 45%,transparent 72%)}
 .hero-inner,.hero .container{position:relative;z-index:1}
 .hero::before{opacity:.35}
+
+/* ---------- CSS motion layer (replaces the former GSAP dependency) ---------- */
+@keyframes heroRise {
+  from { opacity: 0; transform: translateY(24px) }
+  to   { opacity: 1; transform: none }
+}
+@keyframes glowDrift {
+  from { transform: translate(0, 0) }
+  to   { transform: translate(var(--dx, 0), var(--dy, 0)) }
+}
+
+.js .hero-copy > * { animation: heroRise .7s cubic-bezier(.22, 1, .36, 1) both }
+.js .hero-copy > *:nth-child(1) { animation-delay: .15s }
+.js .hero-copy > *:nth-child(2) { animation-delay: .22s }
+.js .hero-copy > *:nth-child(3) { animation-delay: .29s }
+.js .hero-copy > *:nth-child(4) { animation-delay: .36s }
+.js .hero-copy > *:nth-child(5) { animation-delay: .43s }
+
+.js .hero-glow { animation: glowDrift var(--glow-dur, 11s) ease-in-out infinite alternate }
+.hero-glow--1 { --dx: 44px; --dy: -26px; --glow-dur: 10s }
+.hero-glow--2 { --dx: -46px; --dy: 34px; --glow-dur: 12.5s }
+.hero-glow--3 { --dx: 44px; --dy: -26px; --glow-dur: 15s }
+
+.hero-hook { transition: opacity .38s ease, transform .38s ease, filter .38s ease }
+.hero-hook.is-swapping { opacity: 0; transform: scale(.9); filter: blur(7px) }
+
+.brand img, .brand svg { transition: transform .4s cubic-bezier(.34, 1.56, .64, 1) }
+.brand:hover img, .brand:hover svg,
+.brand:focus-visible img, .brand:focus-visible svg { transform: rotate(-2deg) scale(1.06) }
+
+@media (prefers-reduced-motion: reduce) {
+  .js .hero-copy > *, .js .hero-glow { animation: none !important }
+  .hero-hook { transition: none }
+}

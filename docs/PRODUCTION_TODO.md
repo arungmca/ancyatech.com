@@ -22,7 +22,7 @@ The release is not ready to tag until every gate below passes.
 | Metadata, canonicals, Open Graph and structured data | `[x]` | Present in every content template; validate JSON-LD and canonicals after the final build. |
 | Accessibility | `[~]` | `npm run check:a11y` covers structural rules. Run `npm run test:a11y` for axe and complete a keyboard/reduced-motion pass. |
 | Performance budget | `[ ]` | Capture a Lighthouse mobile baseline; target LCP < 2.5 s, CLS < 0.1, INP < 200 ms. |
-| Security headers and CSP | `[~]` | Defined in `src/_headers` and mirrored by the Worker. Verify in a browser; the CSP still allows `'unsafe-inline'` and cdnjs for GSAP. |
+| Security headers and CSP | `[~]` | Defined in `src/_headers` and mirrored by the Worker. Fonts are self-hosted; the CSP still allows `'unsafe-inline'` for two small bootstraps. |
 | Secrets are not committed | `[x]` | `.dev.vars` is ignored; only `.dev.vars.example` is tracked. Configure `RESEND_API_KEY` with `wrangler secret put`. |
 | Build and CI are repeatable | `[ ]` | `npm run build` exists. Add the lint scripts and `npm test` alias, then replace the pre-migration CI page-inventory step with a build-based pipeline. |
 | Preview deploy verified | `[ ]` | Deploy a preview through Wrangler and exercise pages, 404 and the form. |
@@ -110,8 +110,8 @@ The release is not ready to tag until every gate below passes.
 
 - **In-isolate rate limiting is not a security boundary.** Cloudflare may run many
   isolates; configure edge rate limiting for the contact endpoint.
-- **CSP is not strict yet.** `script-src` allows `'unsafe-inline'`, Google Tag Manager
-  and cdnjs. Tightening requires removing inline scripts and self-hosting GSAP.
+- **CSP is not strict yet.** `script-src` allows `'unsafe-inline'` and Google Tag Manager.
+  Tightening requires hashing or externalising the inline consent bootstrap.
 - **`public/` is generated.** Editing it directly will be overwritten by the next build
   and will fail a source/output comparison.
 - **Draft Work pages contain illustrative metrics.** Keep them `noindex` until the

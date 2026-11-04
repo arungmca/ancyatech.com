@@ -178,56 +178,23 @@
     });
   }
 
-  /* ---------- v1.0 animation layer ---------- */
+  /* ---------- Motion preferences ---------- */
   var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var hasGsap = !!window.gsap;
 
-  /* ---------- Hero: entrance, galaxy field, rotating hook ---------- */
-  if (hasGsap && !reduced) {
-    gsap.timeline({ defaults: { ease: 'power3.out' } })
-      .from('.hero-glow', { scale: .72, opacity: 0, duration: 1.5, stagger: .12 }, 0)
-      .from('.hero-copy > *', { y: 24, opacity: 0, duration: .7, stagger: .07 }, .15);
-
-    var heroGlows = document.querySelectorAll('.hero-glow');
-    for (var gi = 0; gi < heroGlows.length; gi++) {
-      gsap.to(heroGlows[gi], {
-        x: gi % 2 ? -46 : 44, y: gi === 1 ? 34 : -26,
-        duration: 10 + gi * 2.5, yoyo: true, repeat: -1, ease: 'sine.inOut'
-      });
-    }
-  }
-
-  /* ---------- Rotating hero hook ---------- */
+  /* ---------- Rotating hero hook ----------
+     Entrance and glow-drift animations are CSS; this only swaps the phrase. */
   var heroHook = document.getElementById('hero-hook');
   var heroHooks = ['work while you sleep.', 'get cited by AI.', 'launch in 5–14 days.', 'run on autopilot.'];
   var heroHookIdx = 0;
-  if (heroHook && hasGsap && !reduced) {
+  if (heroHook && !reduced) {
     setInterval(function () {
-      heroHookIdx = (heroHookIdx + 1) % heroHooks.length;
-      var tl = gsap.timeline();
-      tl.to(heroHook, { opacity: 0, scale: .9, filter: 'blur(7px)', duration: .38, ease: 'power2.in' })
-        .add(function () { heroHook.textContent = heroHooks[heroHookIdx]; })
-        .fromTo(heroHook,
-          { opacity: 0, scale: 1.1, filter: 'blur(7px)' },
-          { opacity: 1, scale: 1, filter: 'blur(0px)', duration: .6, ease: 'power3.out' });
+      heroHook.classList.add('is-swapping');
+      window.setTimeout(function () {
+        heroHookIdx = (heroHookIdx + 1) % heroHooks.length;
+        heroHook.textContent = heroHooks[heroHookIdx];
+        heroHook.classList.remove('is-swapping');
+      }, 380);
     }, 4600);
-  }
-
-  /* ---------- Brand logo micro-animation ---------- */
-  var brandEl = document.querySelector('.brand');
-  var brandLogo = brandEl ? brandEl.querySelector('img') : null;
-  if (brandEl && brandLogo && hasGsap && !reduced) {
-    brandEl.addEventListener('mouseenter', function () {
-      gsap.fromTo(brandLogo, { rotate: -5, scale: .95 },
-        { rotate: 0, scale: 1.06, duration: .5, ease: 'back.out(2.6)' });
-    });
-    brandEl.addEventListener('mouseleave', function () {
-      gsap.to(brandLogo, { rotate: 0, scale: 1, duration: .4, ease: 'power2.out' });
-    });
-    brandEl.addEventListener('focus', function () {
-      gsap.fromTo(brandLogo, { rotate: -4, scale: .96 },
-        { rotate: 0, scale: 1.05, duration: .45, ease: 'back.out(2.2)' });
-    });
   }
 
   /* ---------- Soft galaxy dot field ---------- */

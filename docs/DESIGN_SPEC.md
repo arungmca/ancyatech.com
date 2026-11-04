@@ -283,9 +283,9 @@ Rules:
 ## 12. Performance budget
 
 - LCP < 2.5s, CLS < 0.1, INP < 200ms on a mid-range phone.
-- CSS is one shared file; no frameworks. JS is small and deferred except the home hero (GSAP).
+- CSS is layered (`base.css` + `main.css`/`legal.css`); no frameworks. JS is small and deferred; hero motion is CSS-driven with no animation library.
 - Images: explicit dimensions, lazy below the fold, WebP/AVIF where possible. Portrait currently `src/assets/img/founder.jpg` (648×1152).
-- Fonts: Plus Jakarta Sans via Google Fonts with `display=swap`; self-hosting/subsetting is a pending optimisation.
+- Fonts: Plus Jakarta Sans is self-hosted (`src/assets/fonts/`, variable woff2, `display=swap`) and preloaded from the document head.
 - Canvases: cap DPR at 2, pause off-screen, cap particle counts (hero ≤170, quote card ≤60).
 - Do not add an animation loop without an IntersectionObserver pause.
 
@@ -396,9 +396,8 @@ Rules:
 - **Work pages are drafts.** `src/work.njk` and `src/work-foxtail-cafe.njk` contain
   illustrative metrics and quotes, render `noindex`, and are excluded from the sitemap
   until the client approves the case data.
-- **CSP is not strict yet.** `src/_headers` allows `'unsafe-inline'`, Google Tag Manager
-  and cdnjs for GSAP. Tightening it requires removing inline scripts and self-hosting
-  the library.
+- **CSP is not strict yet.** `src/_headers` allows `'unsafe-inline'` and Google Tag
+  Manager. Tightening it requires hashing or externalising the inline consent bootstrap.
 - **The in-isolate rate limit is best-effort.** Configure Cloudflare WAF rate limiting
   for `POST /api/contact`.
 - **Lighthouse baseline is not captured.** Run it before release and record the numbers

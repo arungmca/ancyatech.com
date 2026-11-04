@@ -1,9 +1,11 @@
 /* ==========================================================================
    ANCYA — Cookie banner + Google Consent Mode v2
-   Shared by index.html and all legal pages.
-   The GA4 tag + consent defaults live inline in each page's <head> (they must
-   fire before the page view). This file handles the banner UI and pushes the
-   visitor's choice to gtag('consent', 'update', …) after the DOM is ready.
+   Shared by the home page and all legal pages.
+
+   The consent defaults live inline in each page's <head> (they must exist
+   before anything else). This file loads gtag.js only after the visitor
+   accepts, so an unconsented visit makes no Google Analytics request and
+   sets no analytics cookies.
    ========================================================================== */
 (function () {
   'use strict';
@@ -12,6 +14,21 @@
   var accept  = document.getElementById('cookie-accept');
   var decline = document.getElementById('cookie-decline');
   var consentKey = 'ancya-cookie';
+  var analyticsId = window.ancyaAnalyticsId;
+  var analyticsLoaded = false;
+
+  function loadAnalytics() {
+    if (!analyticsId || analyticsLoaded) return;
+    analyticsLoaded = true;
+
+    gtag('js', new Date());
+    gtag('config', analyticsId, { 'anonymize_ip': true });
+
+    var script = document.createElement('script');
+    script.async = true;
+    script.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(analyticsId);
+    document.head.appendChild(script);
+  }
 
   function setConsent(granted) {
     if (typeof gtag !== 'function') return;
@@ -21,6 +38,7 @@
       'ad_user_data':       granted ? 'granted' : 'denied',
       'ad_personalization': granted ? 'granted' : 'denied'
     });
+    if (granted) loadAnalytics();
   }
 
   /* Restore a previously stored choice (also accepts legacy values) */
