@@ -2,19 +2,35 @@
   "name": "ancyatech-com",
   "private": true,
   "scripts": {
-    "dev": "wrangler dev",
+    "build": "eleventy",
+    "build:watch": "eleventy --watch",
+    "dev": "npm run build && wrangler dev",
     "preview": "python3 -m http.server 8080 --directory public",
+    "clean": "rm -rf public",
     "check": "python3 scripts/check_links.py",
     "check:a11y": "python3 scripts/check_a11y.py",
     "test:a11y": "bash scripts/test_a11y.sh",
-    "deploy": "wrangler deploy"
+    "test": "node --test tests/worker/",
+    "test:worker": "node --test tests/worker/",
+    "lint:html": "html-validate 'public/**/*.html'",
+    "lint:css": "stylelint 'src/assets/css/*.css'",
+    "lint:js": "eslint src/assets/js worker",
+    "deploy": "npm run build && wrangler deploy"
   },
   "devDependencies": {
+    "@11ty/eleventy": "^3.1.8",
     "@axe-core/cli": "^4.14.0",
+    "@eslint/js": "^10.0.1",
     "chromedriver": "^140.0.0",
+    "eslint": "^10.14.0",
+    "globals": "^17.14.0",
+    "html-validate": "^11.18.0",
+    "stylelint": "^18.0.0",
+    "stylelint-config-standard": "^41.0.0",
     "wrangler": "^4.154.0"
   },
   "allowScripts": {
+    "chromedriver@140.0.4": true,
     "chromedriver@152.0.3": true
   }
 }

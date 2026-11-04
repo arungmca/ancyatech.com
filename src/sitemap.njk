@@ -1,0 +1,20 @@
+---json
+{
+  "permalink": "/sitemap.xml",
+  "eleventyExcludeFromCollections": true
+}
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+{%- for item in collections.all %}
+{%- if item.url != "/404.html" and not (item.data.robots and "noindex" in item.data.robots) %}
+{%- set section = item.data.section %}
+  <url>
+    <loc>{{ site.url }}{% if item.url == "/index.html" %}/{% else %}{{ item.url | replace(".html", "") }}{% endif %}</loc>
+    <lastmod>{{ item.date | isoDate }}</lastmod>
+    <changefreq>{% if section == "home" or section == "services" %}monthly{% elif item.url == "/journal.html" %}weekly{% elif section == "journal" %}monthly{% elif section == "legal" %}yearly{% else %}monthly{% endif %}</changefreq>
+    <priority>{% if section == "home" %}1.0{% elif section == "services" %}0.8{% elif item.url == "/journal.html" %}0.8{% elif section == "journal" %}0.6{% elif section == "legal" %}0.3{% else %}0.7{% endif %}</priority>
+  </url>
+{%- endif %}
+{%- endfor %}
+</urlset>

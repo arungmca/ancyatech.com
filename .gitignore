@@ -1,42 +1,24 @@
-# Angular specific
-/dist/
-/out-tsc/
-/tmp/
-/coverage/
-/e2e/test-output/
-/.angular/
-.angular/
-
 # Node modules
 node_modules/
 
-# Note: lockfiles (package-lock.json, yarn.lock, pnpm-lock.yaml) must stay
-# committed — CI installs with `npm ci` and needs a deterministic dependency
-# tree. Do not re-add them here.
+# Build output — Eleventy generates public/ from src/
+/public/
+_site/
 
-# Environment files (keep .env.example committed)
+# Lockfiles must stay committed: CI installs with `npm ci`.
+
+# Environment files (keep examples committed)
 .env
 .env.*
 !.env.example
-
-# Angular CLI and build artefacts
-/.angular-cli.json
-/.ng/
-
-# TypeScript cache
-*.tsbuildinfo
+.dev.vars*
+!.dev.vars.example
 
 # Logs
 *.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
 
 # Cloudflare Wrangler local state
 .wrangler/
-
-# GitHub Pages staging output (produced by the deploy workflow)
-_site/
 
 # OS / editor noise
 .DS_Store
@@ -47,11 +29,7 @@ _site/
 !.vscode/extensions.json
 !.vscode/settings.json
 
-.dev.vars*
-!.dev.vars.example
-
-
-# AI
+# AI tooling state
 .omp
 .claude
 .kiro

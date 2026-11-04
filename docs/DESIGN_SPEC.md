@@ -1,7 +1,7 @@
 # ANCYA — Design & Build Specification
 
-**Version:** 1.0 (review lock)
-**Updated:** 3 November 2026
+**Version:** 1.1 (source-path update)
+**Updated:** 4 November 2026
 **Audience:** design agents, front-end agents, and any human or AI contributor shipping pages for ancyatech.com.
 
 > This document is the contract. If a request conflicts with it, stop and ask. The visual language is **frozen**: changes ship as a deliberate version bump, never as a side effect of adding a page.
@@ -12,13 +12,17 @@
 
 | Asset | Role |
 |---|---|
-| `public/assets/css/main.css` | All tokens, base styles and components. Single stylesheet shared by every page. |
+| `src/assets/css/base.css` | Design tokens (custom properties), reset, typography and layout primitives. |
+| `src/assets/css/main.css` | Component styles and page compositions. Content pages load `base.css` then `main.css`. |
+| `src/assets/css/legal.css` | Legal-page styles. Legal pages load `base.css` then `legal.css`. |
 | `docs/styleguide.html` | Live component reference with rendered examples and code. |
 | `docs/DESIGN_SPEC.md` (this file) | Rules, page templates, motion, accessibility, workflow. |
-| `public/assets/js/site.js` | Shared behaviour for sibling pages (nav, reveals, back-to-top, shape ribbons). |
-| `public/assets/js/consent.js` | Cookie banner + Google Consent Mode v2. |
+| `src/assets/js/` | Shared behaviour modules (nav, reveals, back-to-top, shape ribbons, consent). |
 
-Never introduce a second stylesheet, a CSS framework, or a component library. Never override a token with a raw hex value in a page. If a value is missing, add a token to `main.css` and document it in the style guide.
+Never introduce a second component stylesheet, a CSS framework, or a component library.
+Never override a token with a raw hex value in a page. If a value is missing, add a token
+to `base.css` and document it in the style guide. `public/assets/` is generated; edit
+`src/assets/` only.
 
 ---
 
@@ -51,7 +55,8 @@ Never introduce a second stylesheet, a CSS framework, or a component library. Ne
 
 ## 4. Colour
 
-Tokens live in `:root` in `public/assets/css/main.css`.
+Tokens live in `:root` in `src/assets/css/base.css` and are copied into the generated
+`public/assets/css/base.css`.
 
 ### Brand
 
@@ -164,14 +169,16 @@ Every page uses this anatomy:
 </main>
 <footer class="site-footer"> … </footer>
 <button class="to-top" id="to-top" aria-label="Back to top"> … </button>
-<script src="public/assets/js/site.js" defer></script>
+<script src="assets/js/site.js" defer></script>
 ```
 
 - Header is transparent and fixed; do not add a background or border.
 - The brand and nav are separate frosted capsules; keep them in the same position.
+- The shell above lives in `src/_includes/base.njk` and its partials. Page templates
+  supply content; they never repeat the header, footer, sprite or script tags.
 - On inner pages, mark the current nav item with `aria-current="page"` — `site.js` does not run scroll-spy on templates.
-- Every page includes the inline SVG sprite, the font links, `public/assets/css/main.css`, and the `js` class script in `<head>`.
-- Templates are `noindex` until approved. Remove the noindex meta and add the production analytics/consent head block from `public/index.html` before launch.
+- Every page is rendered with the inline SVG sprite from `src/_includes/sprite.njk`, the font links, and the generated `assets/css/base.css` plus `assets/css/main.css` (or `legal.css` for legal pages).
+- Work templates are `noindex` until approved. Remove the noindex flag and add the page to the sitemap only after content sign-off.
 - Include the back-to-top button and `site.js` on every page. Do not duplicate behaviours inline.
 
 ### Page hero
@@ -217,17 +224,21 @@ Hover is **feedback, not spectacle**. Cards and buttons may change border, backg
 
 All templates share the shell above and use real site content. Current review set:
 
-| Page | File | Purpose / anatomy |
+| Page | Source | Purpose / anatomy |
 |---|---|---|
-| Home | `public/index.html` | Hero, stats, problem, services selector, roadmap, work, testimonial, pricing + hosting note, FAQ, journal, CTA, contact, founder, footer. Frozen. |
-| Portfolio index | `public/work.html` | Page hero → featured case → three case cards (third = open slot CTA) → CTA. |
-| Case study | `public/work-foxtail-cafe.html` | Breadcrumb/hero → large visual → challenge/approach + result grid → what we built → quote → CTA. |
-| Journal index | `public/journal.html` | Page hero → featured article → two-column card grid → CTA. |
-| Article | `public/journal-website-cost.html` | Breadcrumb/hero + meta → article layout with sticky TOC → prose with `h2`/`h3`, list, blockquote, figure → author card → related posts → CTA. |
-| Service | `public/services-web-design.html` | Breadcrumb/hero with actions + meta → design approach with diagram → four deliverable cards → price card + domain/hosting note → FAQ → CTA. |
-| Profile | `public/about.html` | Page hero → large portrait + studio story + quote → four principles → ways to work together → CTA. |
+| Home | `src/index.njk` | Hero, stats, problem, services selector, roadmap, work, testimonial, pricing + hosting note, FAQ, journal, CTA, contact, founder, footer. Frozen. |
+| Portfolio index | `src/work.njk` | Page hero → featured case → three case cards (third = open slot CTA) → CTA. Draft (`noindex`). |
+| Case study | `src/work-foxtail-cafe.njk` | Breadcrumb/hero → large visual → challenge/approach + result grid → what we built → quote → CTA. Draft (`noindex`). |
+| Journal index | `src/journal.njk` | Page hero → featured article → two-column card grid → CTA. |
+| Article | `src/journal-website-cost.njk`, `src/journal-design-decisions.njk` | Breadcrumb/hero + meta → article layout with sticky TOC → prose with `h2`/`h3`, list, blockquote, figure → author card → related posts → CTA. |
+| Services | `src/services-*.njk` (six pages) | Breadcrumb/hero with actions + meta → approach with diagram → deliverable cards → price card + domain/hosting note → FAQ → CTA. |
+| Profile | `src/about.njk` | Page hero → large portrait + studio story + quote → four principles → ways to work together → CTA. |
+| Legal | `src/privacy-policy.njk`, `src/terms-of-service.njk`, `src/cookie-policy.njk` | Legal prose with the shared header/footer and `legal.css`. |
+| Not found | `src/404.njk` | 404 message with a link back to the site; `noindex`. |
 
-Template content is sample content. Replace metrics/quotes with verified data before removing `noindex`. When the pages are approved, update `public/index.html` navigation to point at `public/work.html`, `public/journal.html`, `public/about.html`, and link the service cards to their service pages.
+Work pages contain illustrative metrics. Keep them `noindex` and out of
+`src/sitemap.xml` until the client approves the case data. Approved pages are already
+linked from the shared navigation.
 
 ---
 
@@ -273,7 +284,7 @@ Rules:
 
 - LCP < 2.5s, CLS < 0.1, INP < 200ms on a mid-range phone.
 - CSS is one shared file; no frameworks. JS is small and deferred except the home hero (GSAP).
-- Images: explicit dimensions, lazy below the fold, WebP/AVIF where possible. Portrait currently `public/assets/img/founder.jpg` (648×1152).
+- Images: explicit dimensions, lazy below the fold, WebP/AVIF where possible. Portrait currently `src/assets/img/founder.jpg` (648×1152).
 - Fonts: Plus Jakarta Sans via Google Fonts with `display=swap`; self-hosting/subsetting is a pending optimisation.
 - Canvases: cap DPR at 2, pause off-screen, cap particle counts (hero ≤170, quote card ≤60).
 - Do not add an animation loop without an IntersectionObserver pause.
@@ -288,7 +299,7 @@ Rules:
 - Internal links: every page links back to Work, Journal, Pricing, Contact. Case studies link to the service used; articles link to relevant services.
 - Headings must describe content, not styling.
 - Sitemap and robots updated when pages go live.
-- Open Graph image: 1500×500 (existing `public/assets/social/twitter-header-1500x500.png`), replace when the brand imagery changes.
+- Open Graph image: 1500×500 (`src/assets/social/twitter-header-1500x500.png`), replace when the brand imagery changes.
 - AI search (GEO): concise answer paragraphs, lists, schema, and verifiable facts. No keyword stuffing.
 
 ---
@@ -296,61 +307,73 @@ Rules:
 ## 14. Files, naming & versioning
 
 ```
-public/                        deployed asset root (Wrangler assets.directory)
+src/                           source — edit here
+├─ _includes/
+│  ├─ base.njk                 document shell (head, sprite, header, footer, scripts)
+│  ├─ header.njk · footer.njk
+│  ├─ sprite.njk               single source for the SVG symbol sheet
+│  └─ cookie.njk
+├─ _data/                      site metadata (URL, contact details, analytics)
+├─ assets/
+│  ├─ css/base.css             design tokens, reset, type, layout primitives
+│  ├─ css/main.css             components + page compositions
+│  ├─ css/legal.css            legal-page styles
+│  ├─ js/                      site.js, consent.js and shared modules
+│  └─ img/ · svg/ · social/ · favicons/
+├─ *.njk                       page templates (index, about, work, journal, services, legal, 404)
+├─ _headers                    CSP, HSTS, frame, referrer, permissions, cache
+├─ robots.txt · sitemap.xml · site.webmanifest
+└─ .assetsignore               exclusions for the Cloudflare upload
+
+public/                        generated output (Wrangler assets.directory)
 ├─ index.html                  home (frozen)
-├─ work.html                   portfolio index
-├─ work-foxtail-cafe.html      case study template
-├─ journal.html                journal index
-├─ journal-website-cost.html   article template
-├─ services-web-design.html    service template
-├─ about.html                  founder profile
+├─ work.html · work-foxtail-cafe.html
+├─ journal.html · journal-website-cost.html · journal-design-decisions.html
+├─ services-web-design.html and the five sibling service pages
+├─ about.html
 ├─ privacy-policy.html · terms-of-service.html · cookie-policy.html
 ├─ 404.html                    not-found page
 ├─ robots.txt · sitemap.xml · site.webmanifest
-├─ .assetsignore               exclusions for the Cloudflare upload
-└─ assets/
-   ├─ css/main.css             all tokens + components (shared)
-   ├─ css/legal.css            legal-page styles
-   ├─ js/site.js               shared behaviours for sibling pages
-   ├─ js/consent.js            cookie consent
-   └─ img/ · svg/ · png/ · social/ · favicons/
+├─ _headers                    copied from src/
+└─ assets/                     generated css/js and copied images
 
 docs/                          not deployed
 ├─ styleguide.html             component reference
 ├─ DESIGN_SPEC.md              this document (source of truth for rules)
-└─ ARCHITECTURE.md             current structure + scaling plan
+└─ ARCHITECTURE.md             current structure and hosting
 
 brand/                         source logo exports (not deployed)
 scripts/check_links.py         local link checker used by CI
 README.md · wrangler.jsonc · package.json · .github/workflows/ci.yml
 ```
 
-`wrangler.jsonc` deploys only `./public`. `docs/`, `brand/`, tooling and source files never reach the CDN.
+`wrangler.jsonc` deploys only `./public`. `docs/`, `brand/`, tooling and `src/` never
+reach the CDN, and `public/` is never edited by hand.
 
 Deployment rules:
-- `html_handling: "auto-trailing-slash"` — extension-less URLs such as `/work` serve `work.html`; if pages later move to directory indexes, `/work/` serves `work/index.html`.
+- `html_handling: "auto-trailing-slash"` — extension-less URLs such as `/work` serve `work.html`.
 - `not_found_handling: "404-page"` — misses render `public/404.html`.
-- `npm run preview` serves `public/`; `npm run check` runs `scripts/check_links.py`; CI runs the same inventory, link and SEO checks.
-- No build step is required today. If a generator is introduced, its output must continue to land in `public/` (or update `assets.directory` in `wrangler.jsonc`).
+- `npm run build` renders `src/` into `public/`; `npm run check` and `npm run check:a11y` run against the built output.
+- Source and output must stay in sync: change `src/`, run the build, commit both only after the build is deterministic.
 
 Rules:
-- New component: add CSS to `public/assets/css/main.css` under a comment banner, add a live example + code to `docs/styleguide.html`, then reference it here if it is system-level.
+- New component: add CSS to `src/assets/css/main.css` under a comment banner; add new tokens to `base.css`; add a live example + code to `docs/styleguide.html`, then reference it here if it is system-level.
 - Do not add inline `<style>` blocks. Page-specific one-off styles are a smell; extend the system instead.
-- Keep the inline SVG sprite in each page (external `<use>` fails on `file://` and adds a request).
-- Cache-bust `main.css` with a version query when the design system changes.
+- Keep the inline SVG sprite generated from `src/_includes/sprite.njk` (external `<use>` fails on `file://` and adds a request).
+- Cache-bust CSS with the version query sourced from `assetVersion` in `src/_data/site.json`; do not hard-code versions in templates.
 - Version this spec and the style guide together; record the change and date at the bottom.
 
 ---
 
 ## 15. Agent workflow
 
-1. Read this spec, `docs/styleguide.html`, and the relevant section of `main.css`.
-2. Pick the closest template; copy its shell rather than starting from a blank page.
+1. Read this spec, `docs/styleguide.html`, and the relevant section of `src/assets/css/main.css` (tokens in `base.css`).
+2. Pick the closest page template; reuse `src/_includes/base.njk` and its partials rather than copying the shell.
 3. Use existing tokens and classes. No new colours, fonts, radii, shadows or motion without an approved system change.
 4. Write honest copy. Check the banned-phrase list. Mark sample data with an HTML comment.
-5. Run the review checklist below. Verify at 1440, 1024, 861, 390 and with reduced motion.
-6. Keep templates `noindex` and out of the navigation until the design owner approves them.
-7. When approved: remove `noindex`, add analytics/consent, update navigation, sitemap and internal links, then lock.
+5. Run `npm run build`, the review checklist below, and the link/a11y checks. Verify at 1440, 1024, 861, 390 and with reduced motion.
+6. Keep the work templates `noindex` and out of the sitemap until the design owner approves them.
+7. When approved: remove `noindex`, add the page to `src/sitemap.xml`, update internal links, then lock.
 
 ### Review checklist
 
@@ -370,12 +393,16 @@ Rules:
 
 ## 16. Known gaps (do not assume these are done)
 
-- **Contact form has no backend yet.** It validates and shows a success message client-side. Wire a Cloudflare Worker/Formspree endpoint before launch.
-- **Social links are `#` placeholders.** Replace with real profiles.
-- **Journal cards on the home page link to `#blog`.** Point them at real article URLs once published.
-- **`public/index.html` navigation still uses anchors** (`#work`, `#about`, `#blog`). Switch to the sibling pages when approved.
-- **Analytics/consent are not in the review templates.** Add the production head block from `public/index.html`.
-- **Sample case metrics and quotes are unverified.** Replace with client-approved data.
+- **Work pages are drafts.** `src/work.njk` and `src/work-foxtail-cafe.njk` contain
+  illustrative metrics and quotes, render `noindex`, and are excluded from the sitemap
+  until the client approves the case data.
+- **CSP is not strict yet.** `src/_headers` allows `'unsafe-inline'`, Google Tag Manager
+  and cdnjs for GSAP. Tightening it requires removing inline scripts and self-hosting
+  the library.
+- **The in-isolate rate limit is best-effort.** Configure Cloudflare WAF rate limiting
+  for `POST /api/contact`.
+- **Lighthouse baseline is not captured.** Run it before release and record the numbers
+  in `RELEASE_CHECKLIST.md`.
 
 ---
 
@@ -384,3 +411,4 @@ Rules:
 | Version | Date | Change |
 |---|---|---|
 | 1.0 | 2026-11-03 | Design language frozen. Added sibling-page templates and this specification. |
+| 1.1 | 2026-11-04 | Moved source-of-truth paths to `src/`; documented generated `public/`; refreshed page inventory and known gaps. |

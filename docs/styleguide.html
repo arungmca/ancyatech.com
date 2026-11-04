@@ -184,8 +184,8 @@ body.sg { background: var(--canvas); color: var(--body) }
       <h1>Ancya style guide</h1>
       <p class="lead">A practical reference for building new pages and components in the Ancya visual language: sapphire and kinetic coral over a cool porcelain canvas, Plus Jakarta Sans throughout, and restrained, purposeful motion.</p>
       <div class="sg-meta">
-        <span>Source of truth: <code>public/assets/css/main.css</code></span>
-        <span>Live site: <code>public/index.html</code></span>
+        <span>Source of truth: <code>src/assets/css/</code></span>
+        <span>Generated site: <code>public/</code></span>
         <span>Spec: <a href="DESIGN_SPEC.md">DESIGN_SPEC.md</a></span>
         <span>Architecture: <a href="ARCHITECTURE.md">ARCHITECTURE.md</a></span>
         <span>Updated: November 2026</span>
@@ -241,7 +241,7 @@ body.sg { background: var(--canvas); color: var(--body) }
 
       <div class="sg-note"><strong>Contrast rules.</strong> Body copy is <code>--body</code> on light surfaces and <code>--dark-text-2</code> on dark surfaces. Coral text is only used at 18px+ or on the coral badge where contrast is provided by white. Focus rings are always <code>--sapphire-500</code> with a 3px offset.</div>
 
-      <pre class="sg-code"><code>/* Tokens live in :root at the top of public/assets/css/main.css */
+      <pre class="sg-code"><code>/* Tokens live in :root in src/assets/css/base.css */
 :root {
   --sapphire: #0B519C;
   --swoop-coral: #FC5332;
@@ -613,12 +613,12 @@ body.sg { background: var(--canvas); color: var(--body) }
     &lt;input id="cf-name" name="name" type="text" required autocomplete="name"&gt;
   &lt;/div&gt;
   &lt;div class="field field--full"&gt;
-    &lt;label for="cf-details"&gt;Project details&lt;/label&gt;
-    &lt;textarea id="cf-details" name="details"&gt;&lt;/textarea&gt;
+    &lt;label for="cf-message"&gt;Project details&lt;/label&gt;
+    &lt;textarea id="cf-message" name="message"&gt;&lt;/textarea&gt;
   &lt;/div&gt;
 &lt;/div&gt;</code></pre>
 
-      <div class="sg-note"><strong>Form behaviour.</strong> Submissions are handled client-side in <code>public/index.html</code>; a hidden honeypot field (<code>#cf-website</code>) filters bots. Keep labels associated, and never rely on placeholder text as the only label.</div>
+      <div class="sg-note"><strong>Form behaviour.</strong> Submissions post to <code>/api/contact</code>, handled by <code>worker/index.js</code>; a hidden honeypot field (<code>#cf-website</code>) filters bots. Show success only after <code>{ "ok": true }</code>, and keep a <code>mailto:</code> fallback. Keep labels associated, and never rely on placeholder text as the only label.</div>
     </section>
 
     <!-- ============================== ACCORDION ============================== -->
@@ -913,7 +913,7 @@ body.sg { background: var(--canvas); color: var(--body) }
     <!-- ============================== ICONS ============================== -->
     <section class="sg-section" id="icons">
       <h2>Icons</h2>
-      <p class="sg-lede">Icons come from a single inline SVG sprite at the top of each page, generated from <code>public/index.html</code>. Reference them with <code>&lt;use href="#i-name"&gt;</code>; they inherit <code>currentColor</code> and are 24px on a 24px grid.</p>
+      <p class="sg-lede">Icons come from a single inline SVG sprite generated from <code>src/_includes/sprite.njk</code>. Reference them with <code>&lt;use href="#i-name"&gt;</code>; they inherit <code>currentColor</code> and are 24px on a 24px grid.</p>
       <div class="sg-icons">
         <span class="sg-icon"><svg aria-hidden="true"><use href="#i-arrow"/></svg><code>#i-arrow</code></span>
         <span class="sg-icon"><svg aria-hidden="true"><use href="#i-check"/></svg><code>#i-check</code></span>
@@ -967,27 +967,28 @@ body.sg { background: var(--canvas); color: var(--body) }
     <!-- ============================== FILES ============================== -->
     <section class="sg-section" id="files">
       <h2>File map</h2>
-      <p class="sg-lede">The site is intentionally small and static. Styles are shared, so this guide and the live site cannot drift apart.</p>
+      <p class="sg-lede">The site is generated from <code>src/</code> by Eleventy and deployed from <code>public/</code>. Styles are shared, so this guide and the live site cannot drift apart.</p>
       <table class="sg-table">
         <thead><tr><th>Path</th><th>Purpose</th></tr></thead>
         <tbody>
-          <tr><td><code>public/</code></td><td>Everything that is deployed: HTML pages, assets, robots, sitemap and manifest.</td></tr>
-          <tr><td><code>public/index.html</code></td><td>Home page: markup, inline SVG sprite, page scripts.</td></tr>
-          <tr><td><code>public/work.html</code> · <code>work-foxtail-cafe.html</code></td><td>Portfolio index and case-study template.</td></tr>
-          <tr><td><code>public/journal.html</code> · <code>journal-website-cost.html</code></td><td>Journal index and article template.</td></tr>
-          <tr><td><code>public/services-web-design.html</code> · <code>about.html</code></td><td>Service page and founder profile.</td></tr>
-          <tr><td><code>public/assets/css/main.css</code></td><td>All site tokens, base styles and components. Shared by the site and this guide.</td></tr>
-          <tr><td><code>public/assets/js/site.js</code></td><td>Shared page behaviour for sibling pages.</td></tr>
-          <tr><td><code>public/assets/js/consent.js</code></td><td>Cookie banner and Google Consent Mode v2.</td></tr>
-          <tr><td><code>public/assets/img/</code> · <code>public/assets/svg/</code></td><td>Photography, logos and brand marks used by the site.</td></tr>
+          <tr><td><code>src/</code></td><td>Source of truth: page templates (<code>*.njk</code>), includes, data and assets.</td></tr>
+          <tr><td><code>src/index.njk</code></td><td>Home page content, rendered through <code>src/_includes/base.njk</code>.</td></tr>
+          <tr><td><code>src/work.njk</code> · <code>work-foxtail-cafe.njk</code></td><td>Portfolio index and case-study pages (draft, <code>noindex</code>).</td></tr>
+          <tr><td><code>src/journal.njk</code> · <code>journal-website-cost.njk</code> · <code>journal-design-decisions.njk</code></td><td>Journal index and articles.</td></tr>
+          <tr><td><code>src/services-*.njk</code> · <code>about.njk</code></td><td>Six service pages and the founder profile.</td></tr>
+          <tr><td><code>src/_includes/sprite.njk</code></td><td>Single source for the inline SVG icon sheet.</td></tr>
+          <tr><td><code>src/assets/css/base.css</code> · <code>main.css</code> · <code>legal.css</code></td><td>Tokens/reset, components and legal-page styles. Copied to <code>public/assets/css/</code> by the build.</td></tr>
+          <tr><td><code>src/assets/js/site.js</code> · <code>consent.js</code></td><td>Shared page behaviour and the cookie banner / Consent Mode v2.</td></tr>
+          <tr><td><code>src/assets/img/</code> · <code>src/assets/svg/</code></td><td>Photography, logos and brand marks used by the site.</td></tr>
+          <tr><td><code>public/</code></td><td>Generated output: HTML pages, assets, <code>_headers</code>, robots, sitemap and manifest. Never edit by hand.</td></tr>
           <tr><td><code>docs/styleguide.html</code></td><td>This reference page. Not deployed, not indexed.</td></tr>
           <tr><td><code>docs/DESIGN_SPEC.md</code></td><td>Rules, templates, motion, accessibility and contributor workflow.</td></tr>
-          <tr><td><code>docs/ARCHITECTURE.md</code></td><td>Production structure and the recommended path to a generated, multi-editor site.</td></tr>
+          <tr><td><code>docs/ARCHITECTURE.md</code></td><td>Source/output structure, build pipeline and hosting.</td></tr>
           <tr><td><code>brand/</code></td><td>Source logo exports that are not deployed.</td></tr>
         </tbody>
       </table>
 
-      <div class="sg-note"><strong>Conventions.</strong> Use the shared tokens rather than new hex values. Add new components to <code>public/assets/css/main.css</code> with a comment banner and document them here in the same pull request. Keep class names semantic and flat (<code>.price-card</code>, <code>.service-stage</code>) and use state classes (<code>.is-active</code>, <code>.is-open</code>, <code>.is-visible</code>) for behaviour.</div>
+      <div class="sg-note"><strong>Conventions.</strong> Use the shared tokens rather than new hex values. Add new components to <code>src/assets/css/main.css</code> with a comment banner and document them here in the same pull request. Keep class names semantic and flat (<code>.price-card</code>, <code>.service-stage</code>) and use state classes (<code>.is-active</code>, <code>.is-open</code>, <code>.is-visible</code>) for behaviour.</div>
     </section>
 
   </main>

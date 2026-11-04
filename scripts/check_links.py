@@ -29,7 +29,15 @@ for file in FILES:
             target = PUBLIC / target_path.lstrip("/")
         else:
             target = file.parent / target_path
-        if not target.exists():
+
+        # Cloudflare's auto-trailing-slash handling serves /about from
+        # about.html, so accept the extensionless spelling as well.
+        candidates = [target]
+        if not target.suffix:
+            candidates.append(target.with_suffix(".html"))
+        if target.is_dir():
+            candidates.append(target / "index.html")
+        if not any(candidate.exists() for candidate in candidates):
             missing.append((file.relative_to(ROOT), url))
 
 if missing:
