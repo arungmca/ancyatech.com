@@ -1,7 +1,14 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "web",
+  "main": "worker/index.js",
   "compatibility_date": "2026-10-23",
+  // public/ is generated and not committed. Wrangler runs this before reading
+  // assets.directory, so Cloudflare's deploy command (npx wrangler deploy or
+  // preview) builds the Eleventy site without extra dashboard configuration.
+  "build": {
+    "command": "npm run build"
+  },
   "observability": {
     "enabled": true
   },
@@ -12,12 +19,23 @@
   //   https://<preview-name>.ancyatech.com
   "preview_urls": true,
   "assets": {
-    "directory": "."
+    "directory": "./public",
+    // Expose the published asset bundle to the Worker as env.ASSETS so static pages
+    // keep using the same html_handling and 404 behaviour while /api/contact is
+    // served dynamically.
+    "binding": "ASSETS",
+    // Serve extension-less URLs (/work) from work.html and show public/404.html for misses.
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
   },
   // Bind both hostnames to this Worker. Cloudflare creates the DNS records and
   // certificates on deploy; the hostnames must not have conflicting records.
   "routes": [
     { "pattern": "ancyatech.com", "custom_domain": true },
     { "pattern": "www.ancyatech.com", "custom_domain": true }
-  ]
+  ],
+  "vars": {
+    "RESEND_TO": "antony@ancyatech.com",
+    "RESEND_FROM": "Ancya Enquiry <noreply@ancyatech.com>"
+  }
 }

@@ -1,0 +1,75 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ title }}</title>
+<meta name="description" content="{{ description }}">
+{%- if author %}
+<meta name="author" content="{{ author }}">
+{%- endif %}
+{%- if themeColor %}
+<meta name="theme-color" content="{{ themeColor }}">
+{%- endif %}
+{%- if robots %}
+<meta name="robots" content="{{ robots }}">
+{%- endif %}
+<link rel="canonical" href="{{ site.url }}{{ canonical }}">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="icon" href="/assets/favicons/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicons/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicons/apple-touch-icon.png">
+
+<!-- Open Graph / Twitter -->
+<meta property="og:type" content="{{ ogType or 'website' }}">
+<meta property="og:site_name" content="{{ site.name }}">
+<meta property="og:title" content="{{ ogTitle or title }}">
+<meta property="og:description" content="{{ ogDescription or description }}">
+<meta property="og:url" content="{{ ogUrl or (site.url + canonical) }}">
+{%- if twitter %}
+<meta property="og:image" content="{{ site.url }}{{ site.ogImage }}">
+<meta property="og:image:width" content="1500">
+<meta property="og:image:height" content="500">
+<meta property="og:image:alt" content="{{ site.ogImageAlt }}">
+{%- endif %}
+<meta property="og:locale" content="en_US">
+{%- if twitter %}
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ twitterTitle or ogTitle or title }}">
+<meta name="twitter:description" content="{{ twitterDescription or ogDescription or description }}">
+<meta name="twitter:image" content="{{ site.url }}{{ site.ogImage }}">
+{%- endif %}
+
+<!-- Fonts: Plus Jakarta Sans is self-hosted (see base.css @font-face) -->
+<link rel="preload" href="/assets/fonts/plus-jakarta-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+
+{%- if jsonld %}
+<!-- Structured data -->
+{{ jsonld | safe }}
+{%- endif %}
+
+{%- if css != "legal" %}
+<script>document.documentElement.classList.add('js');</script>
+{%- endif %}
+{%- if analytics %}
+<!-- Google Analytics — Consent Mode v2 (GDPR / EU opt-in).
+     The gtag.js library is loaded by assets/js/consent.js only after the
+     visitor accepts, so no GA request or cookie is made on first load. -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {
+    'ad_storage':         'denied',
+    'analytics_storage':  'denied',
+    'ad_user_data':       'denied',
+    'ad_personalization': 'denied',
+    'wait_for_update':    500
+  });
+  window.ancyaAnalyticsId = '{{ site.analyticsId }}';
+</script>
+{%- endif %}
+
+<link rel="stylesheet" href="/assets/css/base.css?v={{ site.assetVersion }}">
+{%- if css == "legal" %}
+<link rel="stylesheet" href="/assets/css/legal.css?v={{ site.assetVersion }}">
+{%- else %}
+<link rel="stylesheet" href="/assets/css/main.css?v={{ site.assetVersion }}">
+{%- endif %}

@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Agent workflow and roles
+    url: https://github.com/arungmca/ancyatech.com/blob/v2/docs/agents/roles.md
+    about: Read the agent ownership and review rules before opening a task.

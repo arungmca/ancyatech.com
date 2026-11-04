@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ancya Style Guide</title>
+<meta name="description" content="Design tokens, typography, spacing and component reference for the Ancya Tech website.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="../public/assets/favicons/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="../public/assets/favicons/favicon-32x32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../public/assets/css/main.css?v=20261103">
+<style>
+/* ---------- Style guide shell (documentation only) ---------- */
+body.sg { background: var(--canvas); color: var(--body) }
+
+.sg-topbar { position: sticky; top: 0; z-index: 60; background: rgba(248,250,252,.92); border-bottom: 1px solid var(--border-subtle); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px) }
+.sg-topbar-inner { width: min(100% - 32px, 1280px); margin: 0 auto; min-height: 68px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap }
+.sg-topbar .brand { margin-right: 0 }
+.sg-version { font-size: .68rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted) }
+.sg-back { margin-left: auto }
+
+.sg-shell { width: min(100% - 32px, 1280px); margin: 0 auto; display: grid; grid-template-columns: 236px minmax(0,1fr); gap: clamp(28px,4vw,64px); padding: clamp(28px,4vw,48px) 0 96px }
+.sg-nav { position: sticky; top: 92px; align-self: start; max-height: calc(100vh - 116px); overflow: auto; padding-right: 8px }
+.sg-nav-title { margin: 0 0 .5rem; font-size: .64rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted) }
+.sg-nav-group { margin-bottom: 1.4rem }
+.sg-nav a { display: block; padding: .28rem 0 .28rem 12px; border-left: 2px solid transparent; font-size: .85rem; color: var(--body); text-decoration: none }
+.sg-nav a:hover { color: var(--sapphire); border-left-color: var(--sapphire-200) }
+
+.sg-main { min-width: 0 }
+.sg-intro h1 { font-size: clamp(2rem,4vw,3rem); margin-bottom: .5rem }
+.sg-intro .lead { max-width: 68ch }
+.sg-meta { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 1rem; font-size: .76rem; color: var(--muted) }
+.sg-meta code { font-size: .74rem }
+
+.sg-section { margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--border-subtle); scroll-margin-top: 92px }
+.sg-section > h2 { font-size: clamp(1.45rem,2.3vw,1.9rem); margin-bottom: .45rem }
+.sg-lede { max-width: 70ch; font-size: .94rem }
+.sg-sub { margin: 26px 0 10px; font-size: .68rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--sapphire) }
+
+.sg-preview { margin-top: 14px; padding: clamp(18px,3vw,28px); background: var(--surface); border: 1px solid var(--border-subtle); border-radius: 16px; overflow: hidden }
+.sg-preview--dark { background: var(--dark-root); border-color: var(--dark-border) }
+.sg-preview--dark .sg-preview-label { color: var(--dark-text-2) }
+.sg-preview-label { margin: 0 0 14px; font-size: .64rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted) }
+.sg-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center }
+.sg-stack { display: grid; gap: 14px }
+.sg-stats .stats-bar { margin-top: 0 }
+
+.sg-swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(132px,1fr)); gap: 12px }
+.sg-swatch { background: #fff; border: 1px solid var(--border-subtle); border-radius: 12px; overflow: hidden; font-size: .72rem }
+.sg-swatch-color { height: 62px }
+.sg-swatch-info { display: grid; gap: 2px; padding: 8px 10px }
+.sg-swatch-info strong { font-size: .74rem; color: var(--ink) }
+.sg-swatch-info code { font-size: .68rem; color: var(--muted) }
+
+.sg-table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: .84rem }
+.sg-table th { padding: 8px 10px; text-align: left; font-size: .66rem; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--border-subtle) }
+.sg-table td { padding: 9px 10px; border-bottom: 1px solid var(--border-subtle); vertical-align: top }
+.sg-table tr:last-child td { border-bottom: 0 }
+.sg-table code { font-size: .78rem; color: var(--ink) }
+
+.sg-code { margin-top: 12px; padding: 16px 18px; background: #0B132B; color: #E2E8F0; border-radius: 12px; overflow: auto; font: 400 .78rem/1.6 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; white-space: pre; tab-size: 2 }
+.sg-code .c { color: #7DD3FC }
+
+.sg-note { margin-top: 16px; padding: 14px 18px; border-left: 3px solid var(--swoop-coral); border-radius: 0 12px 12px 0; background: linear-gradient(90deg, rgba(252,83,50,.06), rgba(255,165,55,.02) 55%, transparent); font-size: .88rem }
+.sg-note strong { color: var(--ink) }
+
+.sg-type-row { display: grid; grid-template-columns: 150px minmax(0,1fr); gap: 18px; align-items: baseline; padding: 14px 0; border-bottom: 1px solid var(--border-subtle) }
+.sg-type-row:last-child { border-bottom: 0 }
+.sg-type-row > * { margin: 0 }
+.sg-type-label { font: .7rem/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--muted) }
+
+.sg-demo-nav { display: flex; align-items: center; gap: 18px; flex-wrap: wrap }
+.sg-demo-nav .brand { margin-right: auto }
+.sg-badge-demo { max-width: 340px; padding-top: 16px }
+.sg-to-top-demo { position: static; opacity: 1; visibility: visible; transform: none }
+.sg-icons { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px,1fr)); gap: 10px }
+.sg-icon { display: flex; align-items: center; gap: 8px; padding: 8px 10px; background: #fff; border: 1px solid var(--border-subtle); border-radius: 10px; font: .72rem ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--body) }
+.sg-icon svg { width: 18px; height: 18px; color: var(--sapphire); flex: none }
+.sg-check { list-style: none; margin: 0; padding: 0; display: grid; gap: .6rem; font-size: .9rem }
+.sg-check li { display: flex; gap: .6rem; align-items: flex-start }
+.sg-check svg { width: 17px; height: 17px; flex: none; margin-top: 2px; color: var(--sapphire) }
+
+@media (max-width: 960px) {
+  .sg-shell { grid-template-columns: 1fr; gap: 18px; padding-top: 20px }
+  .sg-nav { position: static; max-height: none; display: flex; flex-wrap: wrap; gap: 2px 14px; padding: 0 0 10px; border-bottom: 1px solid var(--border-subtle) }
+  .sg-nav-group { display: contents }
+  .sg-nav-title { display: none }
+  .sg-nav a { border-left: 0; padding: 2px 0; font-size: .8rem }
+  .sg-type-row { grid-template-columns: 1fr; gap: 4px }
+}
+</style>
+</head>
+<body class="sg">
+
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute;overflow:hidden">
+  <defs>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 2v6M12 16v6M2 12h6M16 12h6M5 5l3 3M16 16l3 3M19 5l-3 3M8 16l-3 3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2L4 14h7l-2 8 9-12h-7l2-8z" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-code" viewBox="0 0 24 24"><path d="M8 8l-4 4 4 4M16 8l4 4-4 4M14 6l-4 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-brush" viewBox="0 0 24 24"><path d="M9 3l11 11-3 3L6 6l3-3zM6 6l-3 3M9 9l6 6M3 21c2-4 5-5 8-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 16l4 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-robot" viewBox="0 0 24 24"><rect x="5" y="8" width="14" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 4v4M9 13h.01M15 13h.01M9 17h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="3" r="1.5" fill="currentColor"/></symbol>
+    <symbol id="i-cart" viewBox="0 0 24 24"><path d="M3 4h2l2.5 12.5h11L21 8H7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="20" r="1.5" fill="currentColor"/><circle cx="18" cy="20" r="1.5" fill="currentColor"/></symbol>
+    <symbol id="i-rocket" viewBox="0 0 24 24"><path d="M12 2c4 3 6 7 6 11l-3 2H9l-3-2c0-4 2-8 6-11z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="12" cy="9" r="1.5" fill="currentColor"/><path d="M9 17c-2 0-3 1-3 3 2 0 3-1 3-3zM15 17c2 0 3 1 3 3-2 0-3-1-3-3z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-4 8-8 9-4-1-8-4-8-9V6l8-3z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V4M4 20h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 16v-4M12 16V8M16 16v-6" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 7v5l3 3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 7l8 6 8-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.5" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5-3 2c1 3 3 5 6 6l2-3 5 2v4c0 1-1 2-2 2C9 22 2 15 2 6c0-1 1-2 3-2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 2l3 7 7 .5-5.5 4.5 2 7L12 17l-6.5 4 2-7L2 9.5 9 9z" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-linkedin" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M7 10v7M7 7v.01M11 17v-4a2 2 0 0 1 4 0v4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-instagram" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17" cy="7" r="1" fill="currentColor"/></symbol>
+    <symbol id="i-github" viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-3 19.5c.5 0 .5-.2.5-.5v-2c-2 .5-2.5-1-2.5-1-.3-.8-.8-1-.8-1-.7-.5 0-.5 0-.5.8 0 1.2.8 1.2.8.7 1.2 2 .8 2.5.6 0-.5.3-.8.5-1-1.5-.2-3-1-3-3.5 0-.8.3-1.4.8-2 0-.2-.3-1 .1-2 0 0 .7-.2 2.2.8a7.5 7.5 0 0 1 4 0c1.5-1 2.2-.8 2.2-.8.4 1 .1 1.8.1 2 .5.6.8 1.2.8 2 0 2.5-1.5 3.3-3 3.5.2.2.5.7.5 1.5v2c0 .3 0 .5.5.5A10 10 0 0 0 12 2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 20c0-3 3-5 6-5s6 2 6 5M16 8a3 3 0 0 1 0 6M18 20c0-2-1-4-3-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5 9-5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M3 12l9 5 9-5M3 17l9 5 9-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+    <symbol id="i-puzzle" viewBox="0 0 24 24"><path d="M10 4a2 2 0 0 1 4 0v3h3v3a2 2 0 0 0 0 4v3h-3a2 2 0 0 0-4 0H7v-3a2 2 0 0 1 0-4V7h3V4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2 4 4 0 0 1 7 2c0 5.5-7 10-7 10z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+  </defs>
+</svg>
+
+<header class="sg-topbar">
+  <div class="sg-topbar-inner">
+    <a class="brand" href="../public/index.html" aria-label="Ancya home">
+      <img src="../public/assets/svg/ancya-logo-color.svg" alt="Ancya" style="height:30px;width:auto">
+    </a>
+    <span class="sg-version">Styleguide · v1.0</span>
+    <a class="btn btn-secondary btn-sm sg-back" href="../public/index.html">View site</a>
+  </div>
+</header>
+
+<div class="sg-shell">
+  <nav class="sg-nav" aria-label="Style guide sections">
+    <div class="sg-nav-group">
+      <p class="sg-nav-title">Foundations</p>
+      <a href="#colour">Colour</a>
+      <a href="#typography">Typography</a>
+      <a href="#layout">Layout &amp; spacing</a>
+      <a href="#elevation">Radii &amp; elevation</a>
+      <a href="#motion">Motion</a>
+    </div>
+    <div class="sg-nav-group">
+      <p class="sg-nav-title">Components</p>
+      <a href="#navigation">Navigation</a>
+      <a href="#buttons">Buttons &amp; links</a>
+      <a href="#to-top">Back to top</a>
+      <a href="#badges">Eyebrows &amp; badges</a>
+      <a href="#cards">Cards</a>
+      <a href="#forms">Forms</a>
+      <a href="#accordion">FAQ accordion</a>
+      <a href="#services">Service selector</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#stats">Stats bar</a>
+    </div>
+    <div class="sg-nav-group">
+      <p class="sg-nav-title">Templates</p>
+      <a href="../public/work.html">Portfolio index</a>
+      <a href="../public/work-foxtail-cafe.html">Case study</a>
+      <a href="../public/journal.html">Journal index</a>
+      <a href="../public/journal-website-cost.html">Article</a>
+      <a href="../public/services-web-design.html">Service page</a>
+      <a href="../public/about.html">Founder profile</a>
+    </div>
+    <div class="sg-nav-group">
+      <p class="sg-nav-title">Reference</p>
+      <a href="#icons">Icons</a>
+      <a href="#accessibility">Accessibility</a>
+      <a href="#files">File map</a>
+    </div>
+  </nav>
+
+  <main class="sg-main" id="main" tabindex="-1">
+
+    <header class="sg-intro">
+      <h1>Ancya style guide</h1>
+      <p class="lead">A practical reference for building new pages and components in the Ancya visual language: sapphire and kinetic coral over a cool porcelain canvas, Plus Jakarta Sans throughout, and restrained, purposeful motion.</p>
+      <div class="sg-meta">
+        <span>Source of truth: <code>src/assets/css/</code></span>
+        <span>Generated site: <code>public/</code></span>
+        <span>Spec: <a href="DESIGN_SPEC.md">DESIGN_SPEC.md</a></span>
+        <span>Architecture: <a href="ARCHITECTURE.md">ARCHITECTURE.md</a></span>
+        <span>Updated: November 2026</span>
+      </div>
+    </header>
+
+    <!-- ============================== COLOUR ============================== -->
+    <section class="sg-section" id="colour">
+      <h2>Colour</h2>
+      <p class="sg-lede">Two brand hues — sapphire blue and kinetic coral — sit over a cool, slightly blue neutral scale. Coral is a signal colour: it marks emphasis, the primary action, and the start of a journey. Never use coral for body text.</p>
+
+      <h3 class="sg-sub">Brand — sapphire</h3>
+      <div class="sg-swatches">
+        <div class="sg-swatch"><div class="sg-swatch-color" style="background:var(--sapphire)"></div><div class="sg-swatch-info"><strong>Sapphire</strong><code>--sapphire · #0B519C</code></div></div>
+        <div class="sg-swatch"><div class="sg-swatch-color" style="background:var(--sapphire-deep)"></div><div class="sg-swatch-info"><strong>Deep</strong><code>--sapphire-deep · #082A61</code></div></div>
+        <div class="sg-swatch"><div class="sg-swatch-color" style="background:var(--sapphire-500)"></div><div class="sg-swatch-info"><strong>500 · focus</strong><code>--sapphire-500 · #3B82F6</code></div></div>
+        <div class="sg-swatch"><div class="sg-swatch-color" style="background:var(--sapphire-300)"></div><div class="sg-swatch-info"><strong>300 · dark-mode</strong><code>--sapphire-300 · #93C5FD</code></div></div>
+        <div class="sg-swatch"><div class="sg-swatch-color" style="background:var(--sapphire-100)"></div><div class="sg-swatch-info"><strong>100 · tint</strong><code>--sapphire-100 · #DBEAFE</code></div></div>
+        <div class="sg-swatch"><div class="sg-swatch-color" style="background:var(--sapphire-50)"></div><div class="sg-swatch-info"><strong>50 · wash</strong><code>--sapphire-50 · #EFF6FF</code></div></div>
+      </div>
+
+      <h3 class="sg-sub">Brand — kinetic swoop</h3>
+      <div class="sg-swatches">
+        <div class="sg-swatch"><div class="sg-swatch-color" style="background:var(--swoop-coral)"></div><div class="sg-swatch-info"><strong>Coral</strong><code>--swoop-coral · #FC5332</code></div></div>
+        <div class="sg-swatch"><div class="sg-swatch-color" style="background:var(--swoop-mid)"></div><div class="sg-swatch-info"><strong>Mid</strong><code>--swoop-mid · #FE7234</code></div></div>
+        <div class="sg-swatch"><div class="sg-swatch-color" style="background:var(--swoop-amber)"></div><div class="sg-swatch-info"><strong>Amber</strong><code>--swoop-amber · #FFA537</code></div></div>
+        <div class="sg-swatch"><div class="sg-swatch-color" style="background:var(--gradient-swoop)"></div><div class="sg-swatch-info"><strong>Swoop</strong><code>--gradient-swoop</code></div></div>
+        <div class="sg-swatch"><div class="sg-swatch-color" style="background:var(--gradient-cta)"></div><div class="sg-swatch-info"><strong>CTA</strong><code>--gradient-cta</code></div></div>
+        <div class="sg-swatch"><div class="sg-swatch-color" style="background:var(--gradient-hero)"></div><div class="sg-swatch-info"><strong>Hero</strong><code>--gradient-hero</code></div></div>
+      </div>
+
+      <h3 class="sg-sub">Neutrals</h3>
+      <div class="sg-swatches">
+        <div class="sg-swatch"><div class="sg-swatch-color" style="background:var(--ink)"></div><div class="sg-swatch-info"><strong>Ink</strong><code>--ink · #0B132B</code></div></div>
+        <div class="sg-swatch"><div class="sg-swatch-color" style="background:var(--body)"></div><div class="sg-swatch-info"><strong>Body</strong><code>--body · #475569</code></div></div>
+        <div class="sg-swatch"><div class="sg-swatch-color" style="background:var(--muted)"></div><div class="sg-swatch-info"><strong>Muted</strong><code>--muted · #94A3B8</code></div></div>
+        <div class="sg-swatch"><div class="sg-swatch-color" style="background:var(--canvas)"></div><div class="sg-swatch-info"><strong>Canvas</strong><code>--canvas · #F8FAFC</code></div></div>
+        <div class="sg-swatch"><div class="sg-swatch-color" style="background:var(--surface);border-bottom:1px solid var(--border-subtle)"></div><div class="sg-swatch-info"><strong>Surface</strong><code>--surface · #FFFFFF</code></div></div>
+        <div class="sg-swatch"><div class="sg-swatch-color" style="background:var(--surface-elev)"></div><div class="sg-swatch-info"><strong>Elevated</strong><code>--surface-elev · #F1F5F9</code></div></div>
+        <div class="sg-swatch"><div class="sg-swatch-color" style="background:var(--border-subtle)"></div><div class="sg-swatch-info"><strong>Border</strong><code>--border-subtle · #E2E8F0</code></div></div>
+        <div class="sg-swatch"><div class="sg-swatch-color" style="background:var(--border-strong)"></div><div class="sg-swatch-info"><strong>Border strong</strong><code>--border-strong · #CBD5E1</code></div></div>
+      </div>
+
+      <h3 class="sg-sub">Dark surfaces</h3>
+      <div class="sg-swatches">
+        <div class="sg-swatch"><div class="sg-swatch-color" style="background:var(--dark-root)"></div><div class="sg-swatch-info"><strong>Root</strong><code>--dark-root · #070A12</code></div></div>
+        <div class="sg-swatch"><div class="sg-swatch-color" style="background:var(--dark-surface)"></div><div class="sg-swatch-info"><strong>Surface</strong><code>--dark-surface · #0B0F1C</code></div></div>
+        <div class="sg-swatch"><div class="sg-swatch-color" style="background:var(--dark-surface-2)"></div><div class="sg-swatch-info"><strong>Surface 2</strong><code>--dark-surface-2 · #11182A</code></div></div>
+        <div class="sg-swatch"><div class="sg-swatch-color" style="background:var(--dark-border)"></div><div class="sg-swatch-info"><strong>Border</strong><code>--dark-border · #1E2B4A</code></div></div>
+        <div class="sg-swatch"><div class="sg-swatch-color" style="background:var(--dark-text)"></div><div class="sg-swatch-info"><strong>Text</strong><code>--dark-text · #F8FAFC</code></div></div>
+        <div class="sg-swatch"><div class="sg-swatch-color" style="background:var(--dark-text-2)"></div><div class="sg-swatch-info"><strong>Text 2</strong><code>--dark-text-2 · #94A3B8</code></div></div>
+      </div>
+
+      <div class="sg-note"><strong>Contrast rules.</strong> Body copy is <code>--body</code> on light surfaces and <code>--dark-text-2</code> on dark surfaces. Coral text is only used at 18px+ or on the coral badge where contrast is provided by white. Focus rings are always <code>--sapphire-500</code> with a 3px offset.</div>
+
+      <pre class="sg-code"><code>/* Tokens live in :root in src/assets/css/base.css */
+:root {
+  --sapphire: #0B519C;
+  --swoop-coral: #FC5332;
+  --ink: #0B132B;
+  --body: #475569;
+  --canvas: #F8FAFC;
+  --gradient-cta: linear-gradient(135deg, #FC5332 0%, #FE7234 50%, #FFA537 100%);
+}</code></pre>
+    </section>
+
+    <!-- ============================== TYPOGRAPHY ============================== -->
+    <section class="sg-section" id="typography">
+      <h2>Typography</h2>
+      <p class="sg-lede">One family — Plus Jakarta Sans — carries the whole system. Hierarchy comes from size, weight and colour rather than from a second typeface. Headings are tight and dark; body is relaxed and cool grey.</p>
+
+      <div class="sg-preview">
+        <p class="sg-preview-label">Type specimen</p>
+        <div class="sg-type-row"><span class="sg-type-label">h1 · clamp(2.4rem, 5.5vw, 4rem)</span><h1>Websites that load in a blink</h1></div>
+        <div class="sg-type-row"><span class="sg-type-label">h2 · clamp(1.75rem, 3.5vw, 2.6rem)</span><h2>Everything your business needs</h2></div>
+        <div class="sg-type-row"><span class="sg-type-label">h3 · clamp(1.15rem, 1.6vw, 1.4rem)</span><h3>Technical excellence</h3></div>
+        <div class="sg-type-row"><span class="sg-type-label">h4 · 1.05rem</span><h4>Card and list headings</h4></div>
+        <div class="sg-type-row"><span class="sg-type-label">.lead · clamp(1.05rem, 1.4vw, 1.2rem)</span><p class="lead" style="margin:0">An intro paragraph that carries the pitch without competing with the headline.</p></div>
+        <div class="sg-type-row"><span class="sg-type-label">body · 1rem / 1.65</span><p style="margin:0">Regular body copy for descriptions, articles and form help text. Line length is capped around 60–70 characters wherever prose runs long.</p></div>
+        <div class="sg-type-row"><span class="sg-type-label">.eyebrow · .75rem / 700</span><p class="eyebrow" style="margin:0">What we do</p></div>
+        <div class="sg-type-row"><span class="sg-type-label">.service-tag · .68rem / 600</span><span class="service-tag" style="padding-top:0;margin:0">Wireframe → System → Prototype</span></div>
+      </div>
+
+      <table class="sg-table">
+        <thead><tr><th>Role</th><th>CSS</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Display</td><td><code>h1</code></td><td>800 weight, −0.035em, balance wrapping</td></tr>
+          <tr><td>Section heading</td><td><code>h2</code></td><td>700 weight, −0.03em</td></tr>
+          <tr><td>Sub-heading</td><td><code>h3</code></td><td>600 weight, 1.4rem max</td></tr>
+          <tr><td>Intro copy</td><td><code>.lead</code></td><td>Max 60ch, colour <code>--body</code></td></tr>
+          <tr><td>Body</td><td><code>p</code></td><td>1rem / 1.65, 1.1em bottom margin</td></tr>
+          <tr><td>Label</td><td><code>.eyebrow</code></td><td>Uppercase, .12em, coral gradient dot</td></tr>
+          <tr><td>Meta</td><td><code>.tag</code>, <code>.service-tag</code></td><td>Uppercase micro labels</td></tr>
+        </tbody>
+      </table>
+
+      <pre class="sg-code"><code>&lt;p class="eyebrow"&gt;What we do&lt;/p&gt;
+&lt;h2 id="services-title"&gt;Everything your business needs to win online.&lt;/h2&gt;
+&lt;p class="lead"&gt;Strategy, design, build, AI SEO and automation — under one roof.&lt;/p&gt;</code></pre>
+    </section>
+
+    <!-- ============================== LAYOUT ============================== -->
+    <section class="sg-section" id="layout">
+      <h2>Layout &amp; spacing</h2>
+      <p class="sg-lede">Content sits in a 1200px container with fluid gutters. Sections breathe with a single vertical rhythm token, and grids stay simple: two, three or four equal columns that stack down on small screens.</p>
+
+      <table class="sg-table">
+        <thead><tr><th>Token</th><th>Value</th><th>Use</th></tr></thead>
+        <tbody>
+          <tr><td><code>--maxw</code></td><td>1200px</td><td>Container maximum width</td></tr>
+          <tr><td><code>--gutter</code></td><td>clamp(20px, 5vw, 40px)</td><td>Horizontal page padding</td></tr>
+          <tr><td><code>--section-y</code></td><td>clamp(72px, 9vw, 128px)</td><td>Vertical padding for every section</td></tr>
+          <tr><td><code>--header-h</code></td><td>72px / 64px mobile</td><td>Fixed header height and scroll offset</td></tr>
+          <tr><td><code>--r-card</code></td><td>16px</td><td>Cards, panels, image frames</td></tr>
+          <tr><td><code>--r-sm</code></td><td>12px</td><td>Inputs, small surfaces</td></tr>
+          <tr><td><code>--r-pill</code></td><td>9999px</td><td>Badges, nav capsule, pills</td></tr>
+        </tbody>
+      </table>
+
+      <div class="sg-note"><strong>Ambient texture.</strong> Every light section (<code>.band</code>, <code>.band-white</code>) carries a 56px blueprint grid at 4.5% sapphire, drifting diagonally over 45 seconds (<code>::before</code>). Every light section carries decorative line-work via <code>.has-ribbon</code>, alternating between two systems. <code>#services</code> and <code>#blog</code> use the drifting four-line wave ribbon. The other sections get in-place shape fields generated by JS: process and pricing use slowly rotating hexagons, work and about use pulsing circles, and the problem, FAQ and contact sections use a random mix of triangles, hexagons and circles. Shapes vary in size and position, spin or pulse on their own timings, and are masked strongest at the edges and soft behind content. Its mask is inverted: the lines are strongest at the left and right edges and fade to nothing behind the central content column, so the ribbon never competes with text. Both layers sit at <code>z-index: -1</code> inside an isolated section and stop animating under <code>prefers-reduced-motion</code>. The dark hero instead uses the canvas galaxy with four-point sparkles.</div>
+
+      <div class="sg-preview">
+        <p class="sg-preview-label">Grid utilities</p>
+        <div class="sg-stack">
+          <div class="grid grid-2" style="gap:14px">
+            <div class="card"><h4 style="margin-bottom:.2rem">.grid-2</h4><p style="font-size:.82rem;margin:0">Two equal columns.</p></div>
+            <div class="card"><h4 style="margin-bottom:.2rem">.grid-2</h4><p style="font-size:.82rem;margin:0">Stacks under 1024px.</p></div>
+          </div>
+          <div class="grid grid-3" style="gap:14px">
+            <div class="card"><h4 style="margin-bottom:.2rem">.grid-3</h4><p style="font-size:.82rem;margin:0">Three-up content.</p></div>
+            <div class="card"><h4 style="margin-bottom:.2rem">.grid-3</h4><p style="font-size:.82rem;margin:0">Two-up under 860px.</p></div>
+            <div class="card"><h4 style="margin-bottom:.2rem">.grid-3</h4><p style="font-size:.82rem;margin:0">One-up under 640px.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <pre class="sg-code"><code>&lt;div class="container"&gt;
+  &lt;section class="section band-white"&gt; … &lt;/section&gt;
+&lt;/div&gt;
+
+&lt;div class="grid grid-3"&gt; … &lt;/div&gt;
+&lt;!-- .grid-2 · .grid-3 · .grid-4 --&gt;
+
+&lt;!-- Section bands: alternate --canvas and --surface --&gt;
+&lt;section class="section band"&gt;…&lt;/section&gt;
+&lt;section class="section band-white"&gt;…&lt;/section&gt;
+&lt;section class="section band-dark"&gt;…&lt;/section&gt;</code></pre>
+    </section>
+
+    <!-- ============================== ELEVATION ============================== -->
+    <section class="sg-section" id="elevation">
+      <h2>Radii &amp; elevation</h2>
+      <p class="sg-lede">Depth is soft and cool — tinted shadows, never black. Cards rest on a 1px hairline plus a barely-there shadow; hover adds a slightly stronger border and shadow with no movement.</p>
+
+      <div class="sg-preview">
+        <div class="sg-row" style="align-items:stretch">
+          <div class="card" style="width:220px"><h4 style="margin-bottom:.3rem">shadow-sm</h4><p style="font-size:.8rem;margin:0">Resting card state.</p></div>
+          <div class="card" style="width:220px;box-shadow:var(--shadow-md)"><h4 style="margin-bottom:.3rem">shadow-md</h4><p style="font-size:.8rem;margin:0">Popovers, raised cards.</p></div>
+          <div class="card" style="width:220px;box-shadow:var(--shadow-lg)"><h4 style="margin-bottom:.3rem">shadow-lg</h4><p style="font-size:.8rem;margin:0">Floating panels.</p></div>
+          <div class="card" style="width:220px;box-shadow:var(--shadow-swoop)"><h4 style="margin-bottom:.3rem">shadow-swoop</h4><p style="font-size:.8rem;margin:0">Coral CTAs only.</p></div>
+        </div>
+      </div>
+
+      <pre class="sg-code"><code>--r-card: 16px;   --r-sm: 12px;   --r-pill: 9999px;
+--shadow-sm: 0 1px 2px rgba(11,19,43,.06);
+--shadow-md: 0 4px 24px -6px rgba(11,19,43,.10);
+--shadow-lg: 0 12px 40px -8px rgba(11,19,43,.14);
+--shadow-swoop: 0 10px 30px -8px rgba(252,83,50,.35);</code></pre>
+    </section>
+
+    <!-- ============================== MOTION ============================== -->
+    <section class="sg-section" id="motion">
+      <h2>Motion</h2>
+      <p class="sg-lede">Motion is reserved for orientation and feedback: page entrance, the rotating hero hook, a gentle galaxy field, and the logo’s hover spring. Everything stops under <code>prefers-reduced-motion</code>.</p>
+
+      <table class="sg-table">
+        <thead><tr><th>Interaction</th><th>Motion</th><th>Duration / ease</th></tr></thead>
+        <tbody>
+          <tr><td>Hover (cards, buttons)</td><td>Border, shadow, colour only — no movement</td><td>.18–.25s · <code>--ease</code></td></tr>
+          <tr><td>Scroll reveal</td><td>Opacity + 20px rise, staggered</td><td>.65s · <code>--ease</code></td></tr>
+          <tr><td>Hero hook</td><td>Zoom + blur crossfade</td><td>.38s out / .6s in</td></tr>
+          <tr><td>Logo hover</td><td>Spring tilt and scale</td><td>.5s · <code>back.out</code></td></tr>
+          <tr><td>Service selection</td><td>Panel crossfade only, fixed height</td><td>.3s · <code>--ease</code></td></tr>
+          <tr><td>Ambient grid</td><td>Diagonal drift of the blueprint grid on light bands</td><td>45s · linear (paused with reduced motion)</td></tr>
+          <tr><td>Ambient ribbons</td><td>Wave drift on Services/Journal; rotating hexagons and pulsing circles elsewhere, random size and position</td><td>Wave 180s · shapes 50–120s spin / 6–15s pulse (paused with reduced motion)</td></tr>
+          <tr><td>Hero field</td><td>Drifting galaxy dots, twinkling four-point sparkles and a random shooting star</td><td>Canvas rAF, paused off-screen</td></tr>
+          <tr><td>Client story</td><td>Sparkle field and an occasional shooting star inside the testimonial card</td><td>Canvas rAF, paused off-screen</td></tr>
+        </tbody>
+      </table>
+
+      <div class="sg-note"><strong>Reduced motion.</strong> The reveal classes, GSAP timelines and galaxy canvas all check <code>(prefers-reduced-motion: reduce)</code>. Content must remain fully visible and static when motion is disabled — never hide information behind an entrance animation.</div>
+
+      <pre class="sg-code"><code>&lt;div class="card reveal" style="--d:80ms"&gt;…&lt;/div&gt;
+
+/* .js .reveal starts at opacity 0 and translates up 20px.
+   The IntersectionObserver adds .is-visible once per element. */
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto }
+}</code></pre>
+    </section>
+
+    <!-- ============================== NAVIGATION ============================== -->
+    <section class="sg-section" id="navigation">
+      <h2>Navigation</h2>
+      <p class="sg-lede">A floating glossy capsule sits over a transparent, fixed header. The same capsule treatment wraps the logo. Below 860px the links move into a full-width dropdown panel; the capsule styling is removed there.</p>
+
+      <div class="sg-preview">
+        <p class="sg-preview-label">Header capsule — light background</p>
+        <div class="sg-demo-nav">
+          <a class="brand" href="#" aria-label="Ancya">
+            <img src="../public/assets/svg/ancya-logo-color.svg" alt="Ancya" style="height:34px;width:auto">
+          </a>
+          <ul class="nav-list">
+            <li><a href="#" aria-current="page">Home</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">Work</a></li>
+            <li><a href="#">Pricing</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Journal</a></li>
+            <li><a href="#">Contact</a></li>
+            <li class="nav-cta"><a class="btn btn-primary btn-sm" href="#">Start a project <svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+          </ul>
+        </div>
+      </div>
+
+      <table class="sg-table">
+        <thead><tr><th>Rule</th><th>Detail</th></tr></thead>
+        <tbody>
+          <tr><td>Header</td><td><code>.site-header</code> is fixed, transparent, no border. Content scrolls beneath the capsule.</td></tr>
+          <tr><td>Capsules</td><td><code>.brand</code> and <code>.nav-list</code> share the frosted white pill: gradient fill, 1px hairline, inset highlight, soft shadow.</td></tr>
+          <tr><td>Active state</td><td><code>aria-current="page"</code> gives the link a sapphire tint and 600 weight.</td></tr>
+          <tr><td>Mobile</td><td>Below 860px: hamburger <code>#nav-toggle</code>, dropdown <code>.primary-nav</code>, 48px touch targets.</td></tr>
+          <tr><td>Anchors</td><td>The page uses <code>scroll-padding-top: calc(var(--header-h) + 12px)</code> so targets clear the fixed header.</td></tr>
+        </tbody>
+      </table>
+
+      <pre class="sg-code"><code>&lt;a class="brand" href="#home"&gt;
+  &lt;img src="../public/assets/svg/ancya-logo-color.svg" alt="Ancya"&gt;
+&lt;/a&gt;
+
+&lt;ul class="nav-list"&gt;
+  &lt;li&gt;&lt;a href="#services" data-nav="services"&gt;Services&lt;/a&gt;&lt;/li&gt;
+  &lt;li class="nav-cta"&gt;&lt;a class="btn btn-primary btn-sm" href="#contact"&gt;Start a project&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+    </section>
+
+    <!-- ============================== BUTTONS ============================== -->
+    <section class="sg-section" id="buttons">
+      <h2>Buttons &amp; links</h2>
+      <p class="sg-lede">One filled action per surface. Primary uses the coral gradient; secondary is a sapphire tint; outline is neutral; ghost only exists on dark surfaces. All buttons carry a 12px radius and a 48px minimum height.</p>
+
+      <div class="sg-preview">
+        <p class="sg-preview-label">On light surfaces</p>
+        <div class="sg-row">
+          <a class="btn btn-primary" href="#">Start a project <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          <a class="btn btn-secondary" href="#">Discuss this service</a>
+          <a class="btn btn-outline" href="#">Outline</a>
+          <a class="btn-link" href="#">Text link <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        </div>
+        <div class="sg-row" style="margin-top:18px">
+          <a class="btn btn-primary btn-sm" href="#">Small</a>
+          <a class="btn btn-primary" href="#">Default</a>
+          <a class="btn btn-primary btn-lg" href="#">Large</a>
+        </div>
+      </div>
+
+      <div class="sg-preview sg-preview--dark">
+        <p class="sg-preview-label">On dark surfaces</p>
+        <div class="sg-row">
+          <a class="btn btn-primary" href="#">Book a free call <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          <a class="btn btn-ghost" href="#">See our work</a>
+        </div>
+      </div>
+
+      <pre class="sg-code"><code>&lt;a class="btn btn-primary" href="#contact"&gt;
+  Start a project &lt;svg aria-hidden="true"&gt;&lt;use href="#i-arrow"/&gt;&lt;/svg&gt;
+&lt;/a&gt;
+&lt;a class="btn btn-secondary" href="#services"&gt;Discuss this service&lt;/a&gt;
+&lt;a class="btn btn-ghost" href="#work"&gt;See our work&lt;/a&gt;
+&lt;button class="btn btn-primary btn-block" type="submit"&gt;Send message&lt;/button&gt;</code></pre>
+    </section>
+
+    <!-- ============================== BACK TO TOP ============================== -->
+    <section class="sg-section" id="to-top">
+      <h2>Back to top</h2>
+      <p class="sg-lede">A 46px circular icon-only button appears after 480px of scroll, anchored bottom-right (safe-area aware). It is hidden with <code>visibility</code> rather than removed, so it never takes keyboard focus while off-screen, and it moves above the cookie banner on narrow screens.</p>
+
+      <div class="sg-preview">
+        <p class="sg-preview-label">Static preview</p>
+        <button class="to-top sg-to-top-demo" type="button" aria-label="Back to top">
+          <svg aria-hidden="true"><use href="#i-arrow"/></svg>
+        </button>
+      </div>
+
+      <pre class="sg-code"><code>&lt;button class="to-top" id="to-top" type="button" aria-label="Back to top"&gt;
+  &lt;svg aria-hidden="true"&gt;&lt;use href="#i-arrow"/&gt;&lt;/svg&gt;
+&lt;/button&gt;
+
+&lt;script&gt;
+  var toTop = document.getElementById('to-top');
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  window.addEventListener('scroll', function () {
+    toTop.classList.toggle('is-visible', scrollY &gt; 480);
+  }, { passive: true });
+  toTop.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+    document.getElementById('main').focus({ preventScroll: true });
+  });
+&lt;/script&gt;</code></pre>
+    </section>
+
+    <!-- ============================== BADGES ============================== -->
+    <section class="sg-section" id="badges">
+      <h2>Eyebrows &amp; badges</h2>
+      <p class="sg-lede">Small labels do a lot of the wayfinding: the coral-dot eyebrow opens every section, tags classify cards, and card-edge badges flag offers and popularity.</p>
+
+      <div class="sg-preview">
+        <p class="sg-preview-label">Labels</p>
+        <div class="sg-row" style="margin-bottom:20px">
+          <p class="eyebrow" style="margin:0">What we do</p>
+          <span class="tag">Web Design</span>
+          <span class="tag tag--swoop">AI SEO</span>
+          <span class="service-tag" style="padding-top:0">98+ PageSpeed</span>
+        </div>
+        <div class="sg-row" style="align-items:flex-start">
+          <div class="sg-badge-demo">
+            <div class="price-card">
+              <div class="price-badge price-badge--offer"><svg aria-hidden="true"><use href="#i-bolt"/></svg> Free hosting</div>
+              <div class="price-name">Starter Launchpad</div>
+              <div class="price-amount"><span class="price-figure">€790</span></div>
+              <p class="price-desc">5 custom pages. Perfect for getting online fast.</p>
+              <a class="btn btn-secondary btn-block" href="#">Get started</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <pre class="sg-code"><code>&lt;p class="eyebrow"&gt;What we do&lt;/p&gt;
+&lt;span class="tag"&gt;Web Design&lt;/span&gt;
+&lt;span class="tag tag--swoop"&gt;AI SEO&lt;/span&gt;
+
+&lt;!-- Card-edge badge, sits -13px above the card --&gt;
+&lt;div class="price-badge price-badge--offer"&gt;
+  &lt;svg aria-hidden="true"&gt;&lt;use href="#i-bolt"/&gt;&lt;/svg&gt; Free hosting
+&lt;/div&gt;</code></pre>
+    </section>
+
+    <!-- ============================== CARDS ============================== -->
+    <section class="sg-section" id="cards">
+      <h2>Cards</h2>
+      <p class="sg-lede">Cards are white surfaces on the cool canvas, with a 1px hairline and a quiet shadow. Hover changes only the border and shadow. Icon tiles use a sapphire wash; coral tiles mark AI or signal features.</p>
+
+      <div class="sg-preview">
+        <p class="sg-preview-label">Card</p>
+        <div class="grid grid-2" style="gap:16px">
+          <article class="card">
+            <div class="icon-tile"><svg aria-hidden="true"><use href="#i-bolt"/></svg></div>
+            <h3>AI-accelerated delivery</h3>
+            <p style="font-size:.9rem">Modern AI tooling compresses what used to take months into days.</p>
+            <a class="btn-link" href="#">Learn more <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          </article>
+          <article class="card">
+            <div class="icon-tile icon-tile--swoop"><svg aria-hidden="true"><use href="#i-heart"/></svg></div>
+            <h3>Socially responsible by default</h3>
+            <p style="font-size:.9rem">Accessible type, fast pages on modest phones, no dark patterns.</p>
+            <a class="btn-link" href="#">Learn more <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          </article>
+        </div>
+      </div>
+
+      <pre class="sg-code"><code>&lt;article class="card"&gt;
+  &lt;div class="icon-tile"&gt;
+    &lt;svg aria-hidden="true"&gt;&lt;use href="#i-bolt"/&gt;&lt;/svg&gt;
+  &lt;/div&gt;
+  &lt;h3&gt;AI-accelerated delivery&lt;/h3&gt;
+  &lt;p&gt;Modern AI tooling compresses months into days.&lt;/p&gt;
+  &lt;a class="btn-link" href="#"&gt;Learn more&lt;/a&gt;
+&lt;/article&gt;
+
+&lt;!-- Variants --&gt;
+.card--lift   /* adds a subtle lift on hover (opt-in) */
+.icon-tile--swoop  /* coral icon tile */</code></pre>
+    </section>
+
+    <!-- ============================== FORMS ============================== -->
+    <section class="sg-section" id="forms">
+      <h2>Forms</h2>
+      <p class="sg-lede">Inputs use the strong border token so they pass non-text contrast. Labels sit above the control; optional markers are muted. The contact form is a two-column grid that collapses to one column on mobile.</p>
+
+      <div class="sg-preview">
+        <p class="sg-preview-label">Contact form fields</p>
+        <form class="form-grid" onsubmit="return false">
+          <div class="field">
+            <label for="sg-name">Name</label>
+            <input id="sg-name" type="text" placeholder="Your name">
+          </div>
+          <div class="field">
+            <label for="sg-email">Email</label>
+            <input id="sg-email" type="email" placeholder="you@business.com">
+          </div>
+          <div class="field">
+            <label for="sg-company">Company <span class="optional">(optional)</span></label>
+            <input id="sg-company" type="text" placeholder="Your business">
+          </div>
+          <div class="field">
+            <label for="sg-budget">Budget</label>
+            <select id="sg-budget">
+              <option>Select a range</option>
+              <option>€790 – €1,490</option>
+              <option>€1,490 – €2,490</option>
+              <option>€2,490+</option>
+            </select>
+          </div>
+          <div class="field field--full">
+            <label for="sg-details">Project details</label>
+            <textarea id="sg-details" placeholder="Tell us about your business, what you need, and your timeline."></textarea>
+          </div>
+        </form>
+      </div>
+
+      <pre class="sg-code"><code>&lt;div class="form-grid"&gt;
+  &lt;div class="field"&gt;
+    &lt;label for="cf-name"&gt;Name&lt;/label&gt;
+    &lt;input id="cf-name" name="name" type="text" required autocomplete="name"&gt;
+  &lt;/div&gt;
+  &lt;div class="field field--full"&gt;
+    &lt;label for="cf-message"&gt;Project details&lt;/label&gt;
+    &lt;textarea id="cf-message" name="message"&gt;&lt;/textarea&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+      <div class="sg-note"><strong>Form behaviour.</strong> Submissions post to <code>/api/contact</code>, handled by <code>worker/index.js</code>; a hidden honeypot field (<code>#cf-website</code>) filters bots. Show success only after <code>{ "ok": true }</code>, and keep a <code>mailto:</code> fallback. Keep labels associated, and never rely on placeholder text as the only label.</div>
+    </section>
+
+    <!-- ============================== ACCORDION ============================== -->
+    <section class="sg-section" id="accordion">
+      <h2>FAQ accordion</h2>
+      <p class="sg-lede">Native <code>&lt;details&gt;</code> elements styled as quiet cards. The chevron rotates, the border lifts on hover and open, and no JavaScript is required.</p>
+
+      <div class="sg-preview">
+        <p class="sg-preview-label">FAQ item</p>
+        <details class="faq-item" open>
+          <summary>How fast can you launch my website?</summary>
+          <div class="faq-answer">Most projects go live in 5–14 business days from the kick-off call, depending on page count and how quickly content is approved.</div>
+        </details>
+        <details class="faq-item">
+          <summary>Do I own my website code and assets?</summary>
+          <div class="faq-answer">Yes — every line of code, asset and credential is handed over to you.</div>
+        </details>
+      </div>
+
+      <pre class="sg-code"><code>&lt;details class="faq-item"&gt;
+  &lt;summary&gt;How fast can you launch my website?&lt;/summary&gt;
+  &lt;div class="faq-answer"&gt;Most projects go live in 5–14 business days.&lt;/div&gt;
+&lt;/details&gt;</code></pre>
+    </section>
+
+    <!-- ============================== SERVICES ============================== -->
+    <section class="sg-section" id="services">
+      <h2>Service selector</h2>
+      <p class="sg-lede">Six service cards act as a selector for one persistent detail panel below the grid. The panel never collapses and never animates its height, so reading and hover exploration cannot shift the page. Selecting a card crossfades the panel content.</p>
+
+      <div class="sg-preview">
+        <p class="sg-preview-label">Live behaviour</p>
+        <div class="services sg-services">
+          <article class="service is-active" data-service="design">
+            <button class="service-head" type="button" aria-pressed="true" aria-controls="sg-svc-design">
+              <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3l11 11-3 3L6 6l3-3zM6 6L3 9M9 9l6 6M3 21c2-4 5-5 8-5"/></svg></span>
+              <span class="service-title">Web Design (UI/UX)</span>
+              <span class="service-plus" aria-hidden="true">→</span>
+            </button>
+            <p class="service-lede">Wireframes, interfaces, and a design system that does not look like a template.</p>
+            <span class="service-tag">Wireframe → System → Prototype</span>
+          </article>
+          <article class="service" data-service="dev">
+            <button class="service-head" type="button" aria-pressed="false" aria-controls="sg-svc-dev">
+              <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 8l-4 4 4 4M16 8l4 4-4 4M14 6l-4 12"/></svg></span>
+              <span class="service-title">Web Development</span>
+              <span class="service-plus" aria-hidden="true">→</span>
+            </button>
+            <p class="service-lede">React, TypeScript and Vite, built to a performance budget.</p>
+            <span class="service-tag">98+ PageSpeed</span>
+          </article>
+          <article class="service" data-service="seo">
+            <button class="service-head" type="button" aria-pressed="false" aria-controls="sg-svc-seo">
+              <span class="icon icon--signal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M16 16l4 4"/></svg></span>
+              <span class="service-title">AI SEO / GEO</span>
+              <span class="service-plus" aria-hidden="true">→</span>
+            </button>
+            <p class="service-lede">Structured content that AI search can read, quote, and recommend.</p>
+            <span class="service-tag">Be the answer</span>
+          </article>
+
+          <div class="service-stage" aria-live="polite">
+            <div class="service-stage-inner">
+              <div class="stage-slide is-active" data-panel="design">
+                <div class="stage-art" style="padding:14px">
+                  <svg viewBox="0 0 320 170" aria-hidden="true">
+                    <rect width="320" height="170" rx="12" fill="#F8FAFC"/>
+                    <rect x="14" y="14" width="292" height="20" rx="6" fill="#F1F5F9"/>
+                    <circle cx="26" cy="24" r="3" fill="#FC5332"/><circle cx="38" cy="24" r="3" fill="#1D4ED8"/><circle cx="50" cy="24" r="3" fill="#FFE8C2"/>
+                    <rect x="14" y="46" width="150" height="14" rx="4" fill="#0B132B"/>
+                    <rect x="14" y="68" width="118" height="8" rx="4" fill="#CBD5E1"/>
+                    <rect x="14" y="82" width="132" height="8" rx="4" fill="#CBD5E1"/>
+                    <rect x="14" y="104" width="70" height="24" rx="12" fill="#FC5332"/>
+                    <rect x="188" y="46" width="108" height="82" rx="10" fill="#DBEAFE" stroke="#1D4ED8" stroke-dasharray="4 4"/>
+                  </svg>
+                </div>
+                <div class="stage-copy">
+                  <span class="stage-kicker">Wireframe → System → Prototype</span>
+                  <h3>Web Design (UI/UX)</h3>
+                  <p>We start with how your customer decides, not with a template. You get wireframes, a component library, and responsive states for every breakpoint.</p>
+                  <a class="btn btn-secondary btn-sm" href="#">Discuss this service</a>
+                </div>
+              </div>
+              <div class="stage-slide" data-panel="dev">
+                <div class="stage-art" style="padding:14px">
+                  <svg viewBox="0 0 320 170" aria-hidden="true">
+                    <rect width="320" height="170" rx="12" fill="#F8FAFC"/>
+                    <rect x="18" y="24" width="284" height="122" rx="10" fill="#0B132B"/>
+                    <path d="M18 44h284" stroke="#334155"/>
+                    <circle cx="32" cy="34" r="3" fill="#FC5332"/><circle cx="44" cy="34" r="3" fill="#FFA537"/><circle cx="56" cy="34" r="3" fill="#60A5FA"/>
+                    <path d="M54 76l-16 14 16 14M94 76l16 14-16 14" fill="none" stroke="#60A5FA" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M82 112l14-44" stroke="#FFA537" stroke-width="2.4" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <div class="stage-copy">
+                  <span class="stage-kicker">98+ PageSpeed</span>
+                  <h3>Web Development</h3>
+                  <p>Semantic markup, accessible components, and a codebase your next developer can read. We measure speed on mid-range phones, not just on the studio laptop.</p>
+                  <a class="btn btn-secondary btn-sm" href="#">Discuss this service</a>
+                </div>
+              </div>
+              <div class="stage-slide" data-panel="seo">
+                <div class="stage-art" style="padding:14px">
+                  <svg viewBox="0 0 320 170" aria-hidden="true">
+                    <rect width="320" height="170" rx="12" fill="#F8FAFC"/>
+                    <circle cx="150" cy="82" r="40" fill="none" stroke="#1D4ED8" stroke-width="2.4"/>
+                    <path d="M178 110l26 26" stroke="#1D4ED8" stroke-width="5" stroke-linecap="round"/>
+                    <path d="M130 84l14 14 26-34" fill="none" stroke="#FC5332" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <div class="stage-copy">
+                  <span class="stage-kicker">Be the answer</span>
+                  <h3>AI SEO / GEO</h3>
+                  <p>Structured content, schema and clear answers that AI assistants can quote — so your business is the recommendation, not a search result people scroll past.</p>
+                  <a class="btn btn-secondary btn-sm" href="#">Discuss this service</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sg-note"><strong>Interaction contract.</strong> Each card carries <code>data-service</code>; each panel carries a matching <code>data-panel</code>. Clicking a card adds <code>.is-active</code> to it and to the matching slide, updates <code>aria-pressed</code>, and leaves the panel's height untouched — all slides are stacked in the same grid cell, so the tallest slide fixes the panel height.</div>
+
+      <pre class="sg-code"><code>&lt;div class="services"&gt;
+  &lt;article class="service is-active" data-service="design"&gt;
+    &lt;button class="service-head" aria-pressed="true" aria-controls="svc-design"&gt;
+      &lt;span class="icon"&gt;…&lt;/span&gt;
+      &lt;span class="service-title"&gt;Web Design (UI/UX)&lt;/span&gt;
+      &lt;span class="service-plus" aria-hidden="true"&gt;→&lt;/span&gt;
+    &lt;/button&gt;
+    &lt;p class="service-lede"&gt;…&lt;/p&gt;
+    &lt;span class="service-tag"&gt;Wireframe → System → Prototype&lt;/span&gt;
+  &lt;/article&gt;
+
+  &lt;div class="service-stage" aria-live="polite"&gt;
+    &lt;div class="service-stage-inner"&gt;
+      &lt;div class="stage-slide is-active" data-panel="design"&gt;
+        &lt;div class="stage-art"&gt;…SVG…&lt;/div&gt;
+        &lt;div class="stage-copy"&gt;
+          &lt;span class="stage-kicker"&gt;Wireframe → System → Prototype&lt;/span&gt;
+          &lt;h3&gt;Web Design (UI/UX)&lt;/h3&gt;
+          &lt;p&gt;…&lt;/p&gt;
+          &lt;a class="btn btn-secondary btn-sm" href="#contact"&gt;Discuss this service&lt;/a&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </section>
+
+    <!-- ============================== ROADMAP ============================== -->
+    <section class="sg-section" id="roadmap">
+      <h2>Roadmap</h2>
+      <p class="sg-lede">The process section is a connected milestone track. Four numbered nodes sit on a dashed route above illustration cards; the first node is coral to mark the start. Cards use the standard calm hover.</p>
+
+      <div class="sg-preview">
+        <p class="sg-preview-label">Roadmap — first two milestones</p>
+        <ol class="roadmap" style="grid-template-columns:repeat(2,minmax(0,1fr))">
+          <li class="roadmap-step">
+            <div class="roadmap-marker"><span class="roadmap-node">01</span><span class="roadmap-connector" aria-hidden="true"></span></div>
+            <div class="roadmap-card">
+              <span class="roadmap-art">
+                <svg viewBox="0 0 200 120" aria-hidden="true">
+                  <path d="M18 84c22-34 48-44 74-26s36 2 48-16" fill="none" stroke="#9CBEE4" stroke-width="2" stroke-dasharray="5 6" stroke-linecap="round"/>
+                  <circle cx="18" cy="84" r="5" fill="#fff" stroke="#0B519C" stroke-width="2"/>
+                  <circle cx="74" cy="62" r="5" fill="#fff" stroke="#0B519C" stroke-width="2"/>
+                  <circle cx="140" cy="42" r="5" fill="#FC5332"/>
+                  <circle cx="152" cy="72" r="22" fill="rgba(96,165,250,.12)" stroke="#0B519C" stroke-width="2.4"/>
+                  <path d="M168 88l14 14" stroke="#0B519C" stroke-width="4" stroke-linecap="round"/>
+                  <path d="M143 63l8 8 14-18" fill="none" stroke="#FC5332" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <span class="roadmap-kicker">Kick-off</span>
+              <h3>Strategy &amp; Discovery</h3>
+              <p>We map your goals, audience, and competitive landscape.</p>
+            </div>
+          </li>
+          <li class="roadmap-step">
+            <div class="roadmap-marker"><span class="roadmap-node">02</span><span class="roadmap-connector" aria-hidden="true"></span></div>
+            <div class="roadmap-card">
+              <span class="roadmap-art">
+                <svg viewBox="0 0 200 120" aria-hidden="true">
+                  <rect x="22" y="24" width="118" height="76" rx="8" fill="#fff" stroke="#0B519C" stroke-width="2.2"/>
+                  <path d="M22 40h118" stroke="#CBD5E1" stroke-width="1.6"/>
+                  <circle cx="34" cy="32" r="2.4" fill="#FC5332"/><circle cx="43" cy="32" r="2.4" fill="#FFA537"/><circle cx="52" cy="32" r="2.4" fill="#60A5FA"/>
+                  <rect x="34" y="52" width="44" height="8" rx="3" fill="#0B519C"/>
+                  <rect x="34" y="66" width="60" height="6" rx="3" fill="#CBD5E1"/>
+                  <rect x="34" y="78" width="36" height="6" rx="3" fill="#CBD5E1"/>
+                  <path d="M150 84l26-26 9 9-26 26-12 3z" fill="#fff" stroke="#0B519C" stroke-width="2"/>
+                  <path d="M172 62l9 9" stroke="#FC5332" stroke-width="2.2"/>
+                </svg>
+              </span>
+              <span class="roadmap-kicker">Concepts</span>
+              <h3>Design &amp; Review</h3>
+              <p>Custom wireframes and visual design in your brand identity.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+
+      <pre class="sg-code"><code>&lt;ol class="roadmap"&gt;
+  &lt;li class="roadmap-step"&gt;
+    &lt;div class="roadmap-marker"&gt;
+      &lt;span class="roadmap-node"&gt;01&lt;/span&gt;
+      &lt;span class="roadmap-connector" aria-hidden="true"&gt;&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;div class="roadmap-card"&gt;
+      &lt;span class="roadmap-art"&gt;…SVG…&lt;/span&gt;
+      &lt;span class="roadmap-kicker"&gt;Kick-off&lt;/span&gt;
+      &lt;h3&gt;Strategy &amp;amp; Discovery&lt;/h3&gt;
+      &lt;p&gt;We map your goals, audience, and competitive landscape.&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/li&gt;
+  …
+&lt;/ol&gt;</code></pre>
+    </section>
+
+    <!-- ============================== PRICING ============================== -->
+    <section class="sg-section" id="pricing">
+      <h2>Pricing</h2>
+      <p class="sg-lede">Four tiers share one card anatomy: eyebrow, price, description, feature list, and a bottom-aligned action. The popular tier gets a coral badge and sapphire border; the Starter tier uses the badge for the free-hosting offer.</p>
+
+      <div class="sg-preview">
+        <p class="sg-preview-label">Price card</p>
+        <div style="max-width:340px;padding-top:16px">
+          <div class="price-card">
+            <div class="price-badge price-badge--offer"><svg aria-hidden="true"><use href="#i-bolt"/></svg> Free hosting</div>
+            <div class="price-name">Starter Launchpad</div>
+            <div class="price-amount"><span class="price-figure">€790</span></div>
+            <p class="price-desc">5 custom pages. Perfect for getting online fast, with hosting on us.</p>
+            <ul class="price-features">
+              <li><svg aria-hidden="true"><use href="#i-check"/></svg> 5 responsive pages</li>
+              <li><svg aria-hidden="true"><use href="#i-check"/></svg> 95+ PageSpeed score</li>
+              <li class="is-free"><svg aria-hidden="true"><use href="#i-bolt"/></svg> Free basic hosting server</li>
+              <li><svg aria-hidden="true"><use href="#i-check"/></svg> 100% code ownership</li>
+            </ul>
+            <a class="btn btn-secondary btn-block" href="#">Get started</a>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="sg-sub">Domain &amp; hosting note</h3>
+      <div class="pricing-info">
+        <div class="pricing-info-head">
+          <span class="pricing-info-icon"><svg aria-hidden="true"><use href="#i-globe"/></svg></span>
+          <div>
+            <h3>Domain &amp; hosting: how it works</h3>
+            <p>Domain registration and hosting servers are not included in the project price — they're billed separately and paid directly by you. We'll register your domain in your name and manage both for you.</p>
+          </div>
+        </div>
+        <p class="pricing-info-foot">Starter Launchpad includes a free basic hosting server. All prices exclude VAT; optional care plans from €59/month.</p>
+      </div>
+
+      <pre class="sg-code"><code>&lt;div class="price-card"&gt;
+  &lt;div class="price-badge price-badge--offer"&gt;Free hosting&lt;/div&gt;
+  &lt;div class="price-name"&gt;Starter Launchpad&lt;/div&gt;
+  &lt;div class="price-amount"&gt;&lt;span class="price-figure"&gt;€790&lt;/span&gt;&lt;/div&gt;
+  &lt;p class="price-desc"&gt;…&lt;/p&gt;
+  &lt;ul class="price-features"&gt;
+    &lt;li&gt;&lt;svg&gt;&lt;use href="#i-check"/&gt;&lt;/svg&gt; …&lt;/li&gt;
+    &lt;li class="is-free"&gt;&lt;svg&gt;&lt;use href="#i-bolt"/&gt;&lt;/svg&gt; Free basic hosting server&lt;/li&gt;
+  &lt;/ul&gt;
+  &lt;a class="btn btn-secondary btn-block" href="#contact"&gt;Get started&lt;/a&gt;
+&lt;/div&gt;</code></pre>
+    </section>
+
+    <!-- ============================== STATS ============================== -->
+    <section class="sg-section" id="stats">
+      <h2>Stats bar</h2>
+      <p class="sg-lede">A hairline grid of four proof points that overlaps the hero. Numbers use the coral gradient with clipped text; labels are muted micro-copy. Individual cells tint very slightly on hover.</p>
+
+      <div class="sg-preview sg-stats">
+        <p class="sg-preview-label">Stats</p>
+        <div class="stats-bar">
+          <div class="stat"><div class="stat-num">98+</div><div class="stat-label">Avg. PageSpeed score</div></div>
+          <div class="stat"><div class="stat-num">0.8s</div><div class="stat-label">Average load time</div></div>
+          <div class="stat"><div class="stat-num">5–14</div><div class="stat-label">Days to launch</div></div>
+          <div class="stat"><div class="stat-num">20+</div><div class="stat-label">Hours saved / week</div></div>
+        </div>
+      </div>
+
+      <pre class="sg-code"><code>&lt;div class="stats-bar"&gt;
+  &lt;div class="stat"&gt;
+    &lt;div class="stat-num"&gt;98+&lt;/div&gt;
+    &lt;div class="stat-label"&gt;Avg. PageSpeed score&lt;/div&gt;
+  &lt;/div&gt;
+  …
+&lt;/div&gt;</code></pre>
+    </section>
+
+    <!-- ============================== ICONS ============================== -->
+    <section class="sg-section" id="icons">
+      <h2>Icons</h2>
+      <p class="sg-lede">Icons come from a single inline SVG sprite generated from <code>src/_includes/sprite.njk</code>. Reference them with <code>&lt;use href="#i-name"&gt;</code>; they inherit <code>currentColor</code> and are 24px on a 24px grid.</p>
+      <div class="sg-icons">
+        <span class="sg-icon"><svg aria-hidden="true"><use href="#i-arrow"/></svg><code>#i-arrow</code></span>
+        <span class="sg-icon"><svg aria-hidden="true"><use href="#i-check"/></svg><code>#i-check</code></span>
+        <span class="sg-icon"><svg aria-hidden="true"><use href="#i-spark"/></svg><code>#i-spark</code></span>
+        <span class="sg-icon"><svg aria-hidden="true"><use href="#i-bolt"/></svg><code>#i-bolt</code></span>
+        <span class="sg-icon"><svg aria-hidden="true"><use href="#i-code"/></svg><code>#i-code</code></span>
+        <span class="sg-icon"><svg aria-hidden="true"><use href="#i-brush"/></svg><code>#i-brush</code></span>
+        <span class="sg-icon"><svg aria-hidden="true"><use href="#i-search"/></svg><code>#i-search</code></span>
+        <span class="sg-icon"><svg aria-hidden="true"><use href="#i-robot"/></svg><code>#i-robot</code></span>
+        <span class="sg-icon"><svg aria-hidden="true"><use href="#i-cart"/></svg><code>#i-cart</code></span>
+        <span class="sg-icon"><svg aria-hidden="true"><use href="#i-rocket"/></svg><code>#i-rocket</code></span>
+        <span class="sg-icon"><svg aria-hidden="true"><use href="#i-shield"/></svg><code>#i-shield</code></span>
+        <span class="sg-icon"><svg aria-hidden="true"><use href="#i-chart"/></svg><code>#i-chart</code></span>
+        <span class="sg-icon"><svg aria-hidden="true"><use href="#i-clock"/></svg><code>#i-clock</code></span>
+        <span class="sg-icon"><svg aria-hidden="true"><use href="#i-mail"/></svg><code>#i-mail</code></span>
+        <span class="sg-icon"><svg aria-hidden="true"><use href="#i-pin"/></svg><code>#i-pin</code></span>
+        <span class="sg-icon"><svg aria-hidden="true"><use href="#i-phone"/></svg><code>#i-phone</code></span>
+        <span class="sg-icon"><svg aria-hidden="true"><use href="#i-star"/></svg><code>#i-star</code></span>
+        <span class="sg-icon"><svg aria-hidden="true"><use href="#i-menu"/></svg><code>#i-menu</code></span>
+        <span class="sg-icon"><svg aria-hidden="true"><use href="#i-close"/></svg><code>#i-close</code></span>
+        <span class="sg-icon"><svg aria-hidden="true"><use href="#i-linkedin"/></svg><code>#i-linkedin</code></span>
+        <span class="sg-icon"><svg aria-hidden="true"><use href="#i-instagram"/></svg><code>#i-instagram</code></span>
+        <span class="sg-icon"><svg aria-hidden="true"><use href="#i-github"/></svg><code>#i-github</code></span>
+        <span class="sg-icon"><svg aria-hidden="true"><use href="#i-globe"/></svg><code>#i-globe</code></span>
+        <span class="sg-icon"><svg aria-hidden="true"><use href="#i-users"/></svg><code>#i-users</code></span>
+        <span class="sg-icon"><svg aria-hidden="true"><use href="#i-layers"/></svg><code>#i-layers</code></span>
+        <span class="sg-icon"><svg aria-hidden="true"><use href="#i-puzzle"/></svg><code>#i-puzzle</code></span>
+        <span class="sg-icon"><svg aria-hidden="true"><use href="#i-heart"/></svg><code>#i-heart</code></span>
+      </div>
+      <pre class="sg-code"><code>&lt;svg aria-hidden="true"&gt;&lt;use href="#i-arrow"/&gt;&lt;/svg&gt;
+
+/* Size and colour come from the parent */
+.btn svg { width: 18px; height: 18px }
+.icon-tile svg { width: 26px; height: 26px; color: var(--sapphire) }</code></pre>
+    </section>
+
+    <!-- ============================== ACCESSIBILITY ============================== -->
+    <section class="sg-section" id="accessibility">
+      <h2>Accessibility</h2>
+      <p class="sg-lede">The site targets WCAG 2.1 AA. These rules are part of the component contract, not an afterthought.</p>
+      <ul class="sg-check">
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><strong>Focus visibility.</strong> Never remove <code>:focus-visible</code>. The global 3px sapphire ring and 3px offset must remain intact.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><strong>Contrast.</strong> Body text uses <code>--body</code> (≈7:1 on white). Muted text is only used for secondary labels and metadata.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><strong>Motion.</strong> All entrance and hover motion is disabled with <code>prefers-reduced-motion</code>; no information relies on animation.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><strong>Semantics.</strong> One <code>h1</code> per page, sections labelled with <code>aria-labelledby</code>, buttons for actions and links for navigation.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><strong>Targets.</strong> Buttons and nav items are at least 44–48px tall. Mobile menu items are 48px.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><strong>Forms.</strong> Every input has a visible <code>&lt;label&gt;</code>; errors are paired with text, never colour alone.</span></li>
+      </ul>
+    </section>
+
+    <!-- ============================== FILES ============================== -->
+    <section class="sg-section" id="files">
+      <h2>File map</h2>
+      <p class="sg-lede">The site is generated from <code>src/</code> by Eleventy and deployed from <code>public/</code>. Styles are shared, so this guide and the live site cannot drift apart.</p>
+      <table class="sg-table">
+        <thead><tr><th>Path</th><th>Purpose</th></tr></thead>
+        <tbody>
+          <tr><td><code>src/</code></td><td>Source of truth: page templates (<code>*.njk</code>), includes, data and assets.</td></tr>
+          <tr><td><code>src/index.njk</code></td><td>Home page content, rendered through <code>src/_includes/base.njk</code>.</td></tr>
+          <tr><td><code>src/work.njk</code> · <code>work-foxtail-cafe.njk</code></td><td>Portfolio index and case-study pages (draft, <code>noindex</code>).</td></tr>
+          <tr><td><code>src/journal.njk</code> · <code>journal-website-cost.njk</code> · <code>journal-design-decisions.njk</code></td><td>Journal index and articles.</td></tr>
+          <tr><td><code>src/services-*.njk</code> · <code>about.njk</code></td><td>Six service pages and the founder profile.</td></tr>
+          <tr><td><code>src/_includes/sprite.njk</code></td><td>Single source for the inline SVG icon sheet.</td></tr>
+          <tr><td><code>src/assets/css/base.css</code> · <code>main.css</code> · <code>legal.css</code></td><td>Tokens/reset, components and legal-page styles. Copied to <code>public/assets/css/</code> by the build.</td></tr>
+          <tr><td><code>src/assets/js/site.js</code> · <code>consent.js</code></td><td>Shared page behaviour and the cookie banner / Consent Mode v2.</td></tr>
+          <tr><td><code>src/assets/img/</code> · <code>src/assets/svg/</code></td><td>Photography, logos and brand marks used by the site.</td></tr>
+          <tr><td><code>public/</code></td><td>Generated output: HTML pages, assets, <code>_headers</code>, robots, sitemap and manifest. Never edit by hand.</td></tr>
+          <tr><td><code>docs/styleguide.html</code></td><td>This reference page. Not deployed, not indexed.</td></tr>
+          <tr><td><code>docs/DESIGN_SPEC.md</code></td><td>Rules, templates, motion, accessibility and contributor workflow.</td></tr>
+          <tr><td><code>docs/ARCHITECTURE.md</code></td><td>Source/output structure, build pipeline and hosting.</td></tr>
+          <tr><td><code>brand/</code></td><td>Source logo exports that are not deployed.</td></tr>
+        </tbody>
+      </table>
+
+      <div class="sg-note"><strong>Conventions.</strong> Use the shared tokens rather than new hex values. Add new components to <code>src/assets/css/main.css</code> with a comment banner and document them here in the same pull request. Keep class names semantic and flat (<code>.price-card</code>, <code>.service-stage</code>) and use state classes (<code>.is-active</code>, <code>.is-open</code>, <code>.is-visible</code>) for behaviour.</div>
+    </section>
+
+  </main>
+</div>
+
+<button class="to-top" id="to-top" type="button" aria-label="Back to top">
+  <svg aria-hidden="true"><use href="#i-arrow"/></svg>
+</button>
+
+<script>
+/* Style guide demo only: make the service selector preview interactive. */
+(function () {
+  var demo = document.querySelector('.sg-services');
+  if (!demo) return;
+  var cards = demo.querySelectorAll('.service');
+  var slides = demo.querySelectorAll('.stage-slide');
+  function select(card) {
+    var val = card.getAttribute('data-service');
+    cards.forEach(function (c) { c.classList.toggle('is-active', c === card); });
+    slides.forEach(function (s) { s.classList.toggle('is-active', s.getAttribute('data-panel') === val); });
+    cards.forEach(function (c) {
+      var b = c.querySelector('.service-head');
+      if (b) b.setAttribute('aria-pressed', c === card ? 'true' : 'false');
+    });
+  }
+  cards.forEach(function (card) { card.addEventListener('click', function () { select(card); }); });
+})();
+
+/* Back-to-top demonstration */
+(function () {
+  var btn = document.getElementById('to-top');
+  if (!btn) return;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function sync() { btn.classList.toggle('is-visible', window.scrollY > 480); }
+  window.addEventListener('scroll', sync, { passive: true });
+  sync();
+  btn.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+    var main = document.getElementById('main');
+    if (main) main.focus({ preventScroll: true });
+  });
+})();
+</script>
+</body>
+</html>

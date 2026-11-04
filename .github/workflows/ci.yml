@@ -2,59 +2,166 @@ name: CI
 
 on:
   push:
-    branches: [v1]
+    branches: [main, v1, v2, stage]
   pull_request:
-    branches: [main]
+    branches: [main, v2, stage]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  # A newer pull-request commit supersedes an in-flight run. Push builds are
+  # left alone so a deploy on main cannot be cancelled halfway through.
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
-  CI:
+  build:
+    name: Build and validate
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v4
-      - name: Run comprehensive website test
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Set up Python 3
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build site
+        run: npm run build
+
+      - name: Check internal links
+        run: npm run check
+
+      - name: Check structural accessibility
+        run: npm run check:a11y
+
+      - name: Lint HTML
+        run: npm run lint:html
+
+      - name: Lint CSS
+        run: npm run lint:css
+
+      - name: Lint JavaScript
+        run: npm run lint:js
+
+      - name: Run worker tests
+        run: npm test
+
+      # Contract for scripts/check_indexing.py:
+      #   - fail if a page without noindex intent is missing from sitemap.xml
+      #   - fail if a page marked noindex appears in sitemap.xml
+      #   - allow work.html, work-foxtail-cafe.html and 404.html as drafts
+      - name: Verify sitemap and noindex consistency
+        run: python3 scripts/check_indexing.py
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-build
+          path: public/
+          retention-days: 7
+          if-no-files-found: error
+          include-hidden-files: true
+
+  # `secrets` cannot be referenced from a job-level `if:` expression, so a
+  # small preflight job exposes whether the Cloudflare credentials exist.
+  credentials:
+    name: Check deploy credentials
+    needs: build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    outputs:
+      cloudflare: ${{ steps.check.outputs.cloudflare }}
+    steps:
+      - name: Check Cloudflare secrets
+        id: check
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: |
-          echo "Checking index.html exists..."
-          ls -la index.html
-          echo "=== Basic HTML structure ==="
-          grep -i "<html" index.html || echo "No <html tag found"
-          grep -i "</html>" index.html || echo "No </html> closing tag found"
-          grep -i "<head>" index.html || echo "No <head> tag found"
-          grep -i "</head>" index.html || echo "No </head> closing tag found"
-          grep -i "<body>" index.html || echo "No <body> tag found"
-          grep -i "</body>" index.html || echo "No </body> closing tag found"
-          echo "=== SEO checks ==="
-          echo "- Checking meta description..."
-          grep -i 'name="description"' index.html && echo "  PASS: meta description found" || echo "  FAIL: meta description missing"
-          echo "- Checking viewport meta tag..."
-          grep -i "viewport" index.html && echo "  PASS: viewport tag found" || echo "  FAIL: viewport tag missing"
-          echo "- Checking og:title..."
-          grep -i "og:title" index.html && echo "  PASS: og:title found" || echo "  FAIL: og:title missing"
-          echo "- Checking og:description..."
-          grep -i "og:description" index.html && echo "  PASS: og:description found" || echo "  FAIL: og:description missing"
-          echo "- Checking twitter:card..."
-          grep -i "twitter:card" index.html && echo "  PASS: twitter:card found" || echo "  FAIL: twitter:card missing"
-          echo "=== HTML validity checks ==="
-          echo "- Checking doctype declaration..."
-          grep -i "<!DOCTYPE" index.html && echo "  PASS: doctype found" || echo "  FAIL: doctype missing"
-          echo "- Checking html lang attribute..."
-          grep -i '<html lang=' index.html && echo "  PASS: html lang attribute found" || echo "  FAIL: html lang attribute missing"
-          echo "- Checking link tag for stylesheet..."
-          grep -i 'rel="stylesheet"' index.html && echo "  PASS: stylesheet link found" || echo "  FAIL: stylesheet link missing"
-          echo "- Checking script tag for JavaScript..."
-          grep -i '<script' index.html && echo "  PASS: script tag found" || echo "  FAIL: script tag missing"
-          echo "=== Legal pages check ==="
-          for f in privacy-policy.html terms-of-service.html cookie-policy.html; do
-            if [ -f "$f" ]; then
-              echo "  PASS: $f exists"
-            else
-              echo "  FAIL: $f missing"
-            fi
-          done
-          echo "=== Sitemap check ==="
-          if grep -q "<loc>" sitemap.xml; then
-            echo "  PASS: sitemap.xml has URL entries"
+          if [ -n "$CLOUDFLARE_API_TOKEN" ] && [ -n "$CLOUDFLARE_ACCOUNT_ID" ]; then
+            echo "cloudflare=true" >> "$GITHUB_OUTPUT"
           else
-            echo "  FAIL: sitemap.xml has no URL entries"
+            echo "cloudflare=false" >> "$GITHUB_OUTPUT"
+            echo "::notice title=Deploy skipped::CLOUDFLARE_API_TOKEN or CLOUDFLARE_ACCOUNT_ID is not configured."
           fi
-          echo "=== Summary ==="
-          echo "Basic website structure and SEO meta tags validated."
+
+  deploy:
+    name: Deploy production
+    needs: [build, credentials]
+    if: needs.credentials.outputs.cloudflare == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: production
+      url: https://ancyatech.com
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      # The checked-out public/ directory is stale source; replace it with the
+      # validated artifact so only built output is deployed.
+      - name: Prepare public directory
+        run: rm -rf public
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: site-build
+          path: public
+
+      - name: Deploy with Wrangler
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: deploy
+
+  # ---------------------------------------------------------------------------
+  # Single required check for the `main-protection` ruleset, so adding or
+  # renaming build jobs never means reconfiguring the protected branch.
+  # The ruleset requires the exact context name "CI Success".
+  # ---------------------------------------------------------------------------
+  ci-success:
+    name: CI Success
+    if: always()
+    needs: [build, credentials, deploy]
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Verify all jobs succeeded or were skipped
+        env:
+          RESULTS: ${{ join(needs.*.result, ' ') }}
+        run: |
+          echo "Job results: $RESULTS"
+          for result in $RESULTS; do
+            case "$result" in
+              failure|cancelled)
+                echo "::error::A required CI job did not succeed."
+                exit 1
+                ;;
+            esac
+          done
+          echo "All required jobs passed."

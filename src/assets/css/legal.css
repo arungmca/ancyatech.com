@@ -1,0 +1,75 @@
+/* ==========================================================================
+   ANCYA — legal pages stylesheet
+   Load order: base.css -> legal.css
+   Only legal-specific layout belongs here; tokens, reset, buttons, footer,
+   cookie banner and shared chrome are provided by base.css.
+   ========================================================================== */
+
+/* ---------- Page typography scale ---------- */
+h1 { font-size: clamp(2.2rem, 4.5vw, 3.2rem); font-weight: 800; letter-spacing: -.035em }
+h2 { font-size: clamp(1.4rem, 2.2vw, 1.8rem); letter-spacing: -.03em; margin-top: 2.5em }
+h3 { font-size: 1.15rem; font-weight: 600; margin-top: 2em }
+
+/* ---------- Header ---------- */
+.site-header {
+  position: sticky; top: 0; z-index: 70;
+  background: rgba(248,250,252,.85);
+  -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border-subtle);
+}
+.brand { display: flex; align-items: center; gap: .5rem; margin-right: auto; text-decoration: none; }
+.brand img { height: 36px; width: auto; flex: none; }
+.legal-back {
+  display: inline-flex; align-items: center; gap: .4rem;
+  font-weight: 600; font-size: .9rem; color: var(--sapphire); text-decoration: none;
+}
+.legal-back svg { width: 16px; height: 16px; flex: none; pointer-events: none; transition: transform .2s var(--ease) }
+.legal-back:hover svg { transform: translateX(-3px) }
+
+/* ---------- Legal page content ---------- */
+.legal-page { padding-block: var(--section-y) }
+.legal-head { margin-bottom: clamp(32px, 4vw, 48px); max-width: 720px }
+.legal-head h1 { margin-bottom: .4em }
+.legal-meta {
+  font-size: .85rem; color: var(--body);
+  display: flex; align-items: center; gap: .5rem; flex-wrap: wrap;
+}
+.legal-content { max-width: 720px; }
+.legal-content h2 { border-top: 1px solid var(--border-subtle); padding-top: 1.5em; }
+.legal-content h2:first-of-type { border-top: none; padding-top: 0; }
+.legal-content > h2:first-of-type { margin-top: 1.5em; }
+.legal-content p, .legal-content li { color: var(--body); }
+.legal-content ul { list-style: none; padding: 0; margin-bottom: 1.2em; }
+.legal-content ul li { position: relative; padding-left: 1.8em; margin-bottom: .55em; }
+.legal-content ul li::before {
+  content: ""; position: absolute; left: 0; top: .55em;
+  width: 6px; height: 6px; border-radius: 50%; background: var(--gradient-swoop);
+}
+.legal-content a { font-weight: 500; }
+.legal-content table {
+  width: 100%; border-collapse: collapse; margin-bottom: 1.5em; font-size: .9rem;
+}
+.legal-content th, .legal-content td {
+  text-align: left; padding: .7rem .9rem; border-bottom: 1px solid var(--border-subtle);
+}
+.legal-content th { font-weight: 700; color: var(--ink); background: var(--surface-elev); }
+.legal-content code { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: .85em; background: var(--surface-elev); padding: .15em .35em; border-radius: 6px; color: var(--ink) }
+.callout {
+  padding: 1.2rem 1.4rem; margin-bottom: 1.5em;
+  background: var(--sapphire-50); border: 1px solid var(--sapphire-100);
+  border-left: 4px solid var(--sapphire); border-radius: var(--r-sm);
+}
+.callout p:last-child { margin-bottom: 0 }
+.callout strong { color: var(--sapphire) }
+
+/* ---------- Footer (legal-only active link) ---------- */
+.footer-legal a[aria-current="page"] { color: #fff; font-weight: 600 }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .footer-top { grid-template-columns: 1fr 1fr }
+  .footer-top > div:first-child { grid-column: 1 / -1 }
+}
+@media (max-width: 640px) {
+  .footer-top { grid-template-columns: 1fr 1fr }
+}

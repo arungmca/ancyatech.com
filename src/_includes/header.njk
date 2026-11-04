@@ -1,0 +1,23 @@
+<header class="site-header" id="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="/" aria-label="Ancya — home">
+      <img src="/assets/svg/ancya-logo-color.svg" alt="Ancya" width="124" height="34" style="height:34px;width:auto">
+    </a>
+    <nav class="primary-nav" id="primary-nav" aria-label="Primary">
+      <ul class="nav-list">
+        <li><a href="/"{% if section == "home" %} aria-current="page"{% endif %}>Home</a></li>
+        <li><a href="/#services"{% if section == "services" %} aria-current="page"{% endif %}>Services</a></li>
+        <li><a href="/work"{% if section == "work" %} aria-current="page"{% endif %}>Work</a></li>
+        <li><a href="/#pricing">Pricing</a></li>
+        <li><a href="/about"{% if section == "about" %} aria-current="page"{% endif %}>About</a></li>
+        <li><a href="/journal"{% if section == "journal" %} aria-current="page"{% endif %}>Journal</a></li>
+        <li><a href="/#contact">Contact</a></li>
+        <li class="nav-cta"><a class="btn btn-primary btn-sm" href="/#contact">Start a project <svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+      </ul>
+    </nav>
+    <button class="nav-toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="Open navigation menu">
+      <svg class="icon-menu" aria-hidden="true"><use href="#i-menu"/></svg>
+      <svg class="icon-close" aria-hidden="true"><use href="#i-close"/></svg>
+    </button>
+  </div>
+</header>

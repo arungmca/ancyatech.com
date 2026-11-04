@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{% include "head.njk" %}
+</head>
+<body>
+<a class="skip-link" href="#main" data-scroll>Skip to content</a>
+{% include "sprite.njk" %}
+{% include "header-legal.njk" %}
+{{ content | safe }}
+{% include "footer.njk" %}
+{% if analytics %}{% include "cookie.njk" %}{% endif %}
+{{ pageScripts | safe }}
+</body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "name": "ancya-agent-runner",
+  "private": true,
+  "type": "module",
+  "version": "1.0.0",
+  "description": "HTTP worker that runs one Claude Code / Aider agent against the Ancya repository.",
+  "scripts": {
+    "start": "node server.mjs",
+    "check": "node --check server.mjs && node --check run-agent.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
