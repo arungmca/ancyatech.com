@@ -1,0 +1,32 @@
+{
+  "target_domain": "https://ancyatech.com",
+  "competitors": [],
+  "keyword_targets": {
+    "primary": [
+      "AI web design services Belgium",
+      "Webflow WordPress web designer Kortenberg",
+      "AI SEO GEO Belgium"
+    ],
+    "secondary": [
+      "affordable business website Belgium",
+      "local web designer Kortenberg",
+      "AI automation for SMB Belgium",
+      "high performance website agency"
+    ]
+  },
+  "business": {
+    "name": "Ancya Tech",
+    "address": "Stroeykensstraat 37, 3071 Kortenberg, Belgium",
+    "email": "antony@ancyatech.com"
+  },
+  "technical_seo": {
+    "crawl_depth": 3,
+    "check_vitals": true,
+    "lighthouse_threshold": 95
+  },
+  "content_audit": {
+    "min_word_count": 500,
+    "check_duplicates": true,
+    "quality_threshold": 70
+  }
+}
