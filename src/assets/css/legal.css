@@ -31,7 +31,7 @@ h3 { font-size: 1.15rem; font-weight: 600; margin-top: 2em }
 .legal-head { margin-bottom: clamp(32px, 4vw, 48px); max-width: 720px }
 .legal-head h1 { margin-bottom: .4em }
 .legal-meta {
-  font-size: .85rem; color: var(--muted);
+  font-size: .85rem; color: var(--body);
   display: flex; align-items: center; gap: .5rem; flex-wrap: wrap;
 }
 .legal-content { max-width: 720px; }
