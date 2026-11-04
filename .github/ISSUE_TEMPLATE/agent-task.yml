@@ -1,0 +1,109 @@
+name: Agent task
+description: A scoped task for one agent, with acceptance criteria and review requirements.
+title: "[agent] "
+labels: ["agent:pm"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form for every agent task. One issue = one deliverable = one agent.
+        The assigned agent reads this issue and the latest comments; add review notes as comments.
+
+  - type: input
+    id: goal
+    attributes:
+      label: Goal
+      description: One sentence describing the outcome.
+      placeholder: "Rewrite the six service page H1s so each contains its target term."
+    validations:
+      required: true
+
+  - type: dropdown
+    id: agent
+    attributes:
+      label: Assigned agent
+      options:
+        - Project Manager
+        - Frontend Designer
+        - Content Writer
+        - Content Reviewer
+        - SEO/GEO Specialist
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options:
+        - P1
+        - P2
+        - P3
+    validations:
+      required: true
+
+  - type: dropdown
+    id: workstream
+    attributes:
+      label: Workstream
+      options:
+        - Design
+        - Content
+        - SEO
+        - Schema
+        - Ops
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: Why this matters, current state, audit evidence or screenshots.
+    validations:
+      required: true
+
+  - type: textarea
+    id: files
+    attributes:
+      label: Files and pages
+      description: Exact templates/files the agent may change. Anything else needs PM approval.
+      placeholder: |
+        - src/services-ai-seo.njk
+        - src/services-branding.njk
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: Checkable statements. The issue is not done until every box is true.
+      value: |
+        - [ ]
+        - [ ]
+        - [ ] npm run build passes
+        - [ ] npm run check passes
+        - [ ] npm run check:a11y passes
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence required
+      description: What the agent must attach to the PR or comment.
+      value: |
+        - [ ] Before/after screenshots (design work)
+        - [ ] Before/after word count or outline (content work)
+        - [ ] Metadata/schema validation output (SEO work)
+        - [ ] Test/lint output
+    validations:
+      required: true
+
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies and decisions
+      description: Blocking issues, owner decisions, content inputs.
+      placeholder: "Needs approved pricing before copy can be written. Blocked by #18."

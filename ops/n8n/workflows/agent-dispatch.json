@@ -1,0 +1,176 @@
+{
+  "name": "Ancya — agent dispatch",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "agent-dispatch",
+        "responseMode": "onReceived",
+        "options": {}
+      },
+      "id": "a1000000-0000-4000-8000-000000000001",
+      "name": "GitHub webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "webhookId": "ancya-agent-dispatch"
+    },
+    {
+      "parameters": {
+        "jsCode": "const b = $json.body || $json;\nif (b.action !== 'created' || !b.issue || !b.comment) return [];\nconst text = (b.comment.body || '').trim();\nconst match = text.match(/^\\/agent\\s+(run|revise|status)\\b([\\s\\S]*)/i);\nif (!match) return [];\nconst association = b.comment.author_association;\nif (!['OWNER', 'MEMBER', 'COLLABORATOR'].includes(association)) return [];\nconst labels = (b.issue.labels || []).map((label) => label.name || label);\nconst routes = {\n  'agent:pm': 'project-manager',\n  'agent:frontend': 'frontend-designer',\n  'agent:content': 'content-writer',\n  'agent:review': 'content-reviewer',\n  'agent:seo': 'seo-geo-specialist',\n};\nconst agent = Object.entries(routes).find(([label]) => labels.includes(label))?.[1] || 'project-manager';\nreturn [{ json: {\n  repo: b.repository.full_name,\n  issue: b.issue.number,\n  agent,\n  command: match[1].toLowerCase(),\n  notes: (match[2] || '').trim() || text,\n  commentId: b.comment.id,\n  issueUrl: b.issue.html_url,\n} }];"
+      },
+      "id": "a1000000-0000-4000-8000-000000000002",
+      "name": "Validate command",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        220,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ ($env.WORKER_URL || \"http://agent-runner:8788\") }}/run?wait=1",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{$env.WORKER_TOKEN}}"
+            },
+            {
+              "name": "content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ agent: $json.agent, issue: $json.issue, repo: $json.repo, baseBranch: 'v2', instructions: $json.notes }) }}",
+        "options": {
+          "timeout": 900000
+        }
+      },
+      "id": "a1000000-0000-4000-8000-000000000003",
+      "name": "Run agent",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        440,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const data = $json;\nconst result = data.result || {};\nconst source = $('Validate command').item.json;\nlet body;\nif (result.ok && result.comment) {\n  body = result.comment;\n} else if (result.ok && result.prUrl) {\n  const checks = (result.checks || []).map((check) => '- ' + check.command + ' (exit ' + check.code + ')').join('\\n');\n  body = 'Draft PR opened: ' + result.prUrl + '\\n\\nChecks run before push:\\n' + checks;\n} else {\n  const logs = result.logs ? String(result.logs).slice(-6000) : '';\n  body = 'Agent run for **' + source.agent + '** failed' + (result.phase ? ' at **' + result.phase + '**' : '') + '.\\n\\n' + (result.error || '') + (logs ? '\\n\\n```\\n' + logs + '\\n```' : '');\n}\nreturn [{ json: { body, agent: source.agent, issue: source.issue, repo: source.repo } }];"
+      },
+      "id": "a1000000-0000-4000-8000-000000000004",
+      "name": "Format result",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        660,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.github.com/repos/{{$json.repo}}/issues/{{$json.issue}}/comments",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{$env.GITHUB_TOKEN}}"
+            },
+            {
+              "name": "Accept",
+              "value": "application/vnd.github+json"
+            },
+            {
+              "name": "X-GitHub-Api-Version",
+              "value": "2022-11-28"
+            },
+            {
+              "name": "content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ body: '### ' + $json.agent + ' agent\\n\\n' + $json.body }) }}",
+        "options": {}
+      },
+      "id": "a1000000-0000-4000-8000-000000000005",
+      "name": "Post result",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        880,
+        0
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "GitHub webhook": {
+      "main": [
+        [
+          {
+            "node": "Validate command",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate command": {
+      "main": [
+        [
+          {
+            "node": "Run agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run agent": {
+      "main": [
+        [
+          {
+            "node": "Format result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format result": {
+      "main": [
+        [
+          {
+            "node": "Post result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "a1000000-0000-4000-8000-000000000010",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "tags": []
+}

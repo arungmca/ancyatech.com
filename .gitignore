@@ -31,5 +31,7 @@ _site/
 
 # AI tooling state
 .omp
-.claude
 .kiro
+.claude/*
+!.claude/agents/
+!.claude/agents/**
