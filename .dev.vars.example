@@ -1,0 +1,4 @@
+# Copy to .dev.vars for local development. Do not commit .dev.vars.
+RESEND_API_KEY=
+RESEND_TO=antony@ancyatech.com
+RESEND_FROM=Ancya Enquiry <noreply@ancyatech.com>

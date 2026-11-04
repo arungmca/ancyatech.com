@@ -18,7 +18,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Ancya">
 <meta property="og:title" content="Ancya — Lightning-fast websites &amp; AI automation for ambitious SMBs">
-<meta property="og:description" content="A digital agency building hand-crafted, high-performing websites, AI SEO/GEO, and custom AI automation for small and medium-sized businesses.">
+<meta property="og:description" content="AI-built, reviewed by hand: fast marketing websites, AI SEO/GEO, and custom AI automation for small and medium-sized businesses.">
 <meta property="og:url" content="https://ancyatech.com/">
 <meta property="og:image" content="https://ancyatech.com/assets/social/twitter-header-1500x500.png">
 <meta property="og:image:width" content="1500">
@@ -27,13 +27,13 @@
 <meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Ancya — Lightning-fast websites &amp; AI automation for ambitious SMBs">
-<meta name="twitter:description" content="A digital agency building hand-crafted, high-performing websites, AI SEO/GEO, and custom AI automation for small and medium-sized businesses.">
+<meta name="twitter:description" content="AI-built, reviewed by hand: fast marketing websites, AI SEO/GEO, and custom AI automation for small and medium-sized businesses.">
 <meta name="twitter:image" content="https://ancyatech.com/assets/social/twitter-header-1500x500.png">
 
 <!-- Fonts: Plus Jakarta Sans — the only external asset -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <!-- Structured data -->
 <script type="application/ld+json">
@@ -57,8 +57,8 @@
         "addressCountry": "BE"
       },
       "sameAs": [
-        "https://www.instagram.com/",
-        "https://www.linkedin.com/",
+        "https://www.instagram.com/ancya_tech/",
+        "https://www.linkedin.com/company/ancya-technologies/",
         "https://github.com/"
       ]
     },
@@ -73,7 +73,7 @@
     {
       "@type": "Service",
       "name": "Web Design & Development",
-      "description": "Custom hand-crafted, high-performance marketing websites for small and medium-sized businesses. 95+ Google PageSpeed scores, sub-second load times.",
+      "description": "Custom high-performance marketing websites for small and medium-sized businesses. 95+ Google PageSpeed target scores and sub-second load times.",
       "provider": { "@id": "https://ancyatech.com/#organization" },
       "areaServed": "Worldwide",
       "serviceType": "Web design and development"
@@ -175,10 +175,10 @@
       <ul class="nav-list">
         <li><a href="#home" data-nav="home">Home</a></li>
         <li><a href="#services" data-nav="services">Services</a></li>
-        <li><a href="#work" data-nav="work">Work</a></li>
+        <li><a href="work.html" data-nav="work">Work</a></li>
         <li><a href="#pricing" data-nav="pricing">Pricing</a></li>
-        <li><a href="#about" data-nav="about">About</a></li>
-        <li><a href="#blog" data-nav="blog">Journal</a></li>
+        <li><a href="about.html" data-nav="about">About</a></li>
+        <li><a href="journal.html" data-nav="blog">Journal</a></li>
         <li><a href="#contact" data-nav="contact">Contact</a></li>
         <li class="nav-cta"><a class="btn btn-primary btn-sm" href="#contact">Start a project <svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
       </ul>
@@ -204,10 +204,10 @@
       <div class="hero-copy">
         <p class="eyebrow eyebrow--light"><span>Web design &amp; AI automation studio</span></p>
         <h1 id="home-title">Websites that load in a blink — and <span class="gradient-text hero-hook" id="hero-hook">work while you sleep.</span></h1>
-        <p class="lead lead--light">Ancya Tech builds lightning-fast, high-converting marketing websites and custom AI automation workflows for ambitious small and medium-sized businesses. Hand-crafted design, rigorous engineering, and 100% code ownership from day one.</p>
+        <p class="lead lead--light">Ancya Tech builds lightning-fast, high-converting marketing websites and custom AI automation workflows for ambitious small and medium-sized businesses. AI-built, reviewed by hand, with rigorous engineering and 100% code ownership from day one.</p>
         <div class="hero-actions">
           <a class="btn btn-primary btn-lg" href="#contact">Start a project <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
-          <a class="btn btn-ghost btn-lg" href="#work">See our work</a>
+          <a class="btn btn-ghost btn-lg" href="work.html">See our work</a>
         </div>
         <div class="hero-trust">
           <p class="hero-trust-label">Trusted by ambitious teams across Europe</p>
@@ -293,7 +293,7 @@
         <button class="service-head" type="button" aria-pressed="true" aria-controls="svc-design">
           <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3l11 11-3 3L6 6l3-3zM6 6L3 9M9 9l6 6M3 21c2-4 5-5 8-5"/></svg></span>
           <span class="service-title">Web Design (UI/UX)</span>
-          <span class="service-plus" aria-hidden="true">→</span>
+          <a class="service-plus service-open" href="services-web-design.html" aria-label="Open Web Design service page">→</a>
         </button>
         <p class="service-lede">Wireframes, interfaces, and a design system that does not look like a template.</p>
         <span class="service-tag">WIREFRAME → SYSTEM → PROTOTYPE</span>
@@ -348,6 +348,10 @@
         <p class="service-lede">Storefront, checkout, and payment flow that does not lose people at the last step.</p>
         <span class="service-tag">BROWSE → BUY</span>
       </article>
+      <!-- Baseline navigation for browsers without JavaScript -->
+      <noscript>
+        <p class="lead" style="margin:1rem 0 2rem">Service details need JavaScript to switch panels. Direct links: <a href="services-web-design.html">Web Design</a>, <a href="index.html#services">Web Development, AI SEO / GEO, AI Automation, Branding</a>.</p>
+      </noscript>
       <div class="service-stage" id="service-stage" aria-live="polite">
         <div class="service-stage-inner">
         <div class="stage-slide is-active" data-panel="design" id="svc-design">
@@ -369,7 +373,7 @@
             <span class="stage-kicker">WIREFRAME → SYSTEM → PROTOTYPE</span>
             <h3>Web Design (UI/UX)</h3>
             <p>We start with how your customer decides, not with a template. You get wireframes, a component library, and responsive states for every breakpoint — a system you can extend yourself.</p>
-            <a class="btn btn-secondary btn-sm" href="#contact">Discuss this service</a>
+            <a class="btn-link" href="services-web-design.html">Read more <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
           </div>
         </div>
 
@@ -643,7 +647,7 @@
           <p>Menu-first website with online ordering, multilingual content, and Google Business Profile sync.</p>
           <div class="case-result">
             <span class="case-metric">+34%</span>
-            <span class="case-metric-label">Online orders in first month</span>
+            <span class="case-metric-label">Online orders in first month (illustrative sample)</span>
             <span class="case-arrow"><svg aria-hidden="true"><use href="#i-arrow"/></svg></span>
           </div>
         </div>
@@ -673,7 +677,7 @@
           <p>Class booking system, AI-powered lead qualification, and automated reminder workflows.</p>
           <div class="case-result">
             <span class="case-metric">+212%</span>
-            <span class="case-metric-label">Lead conversion rate</span>
+            <span class="case-metric-label">Lead conversion rate (illustrative sample)</span>
             <span class="case-arrow"><svg aria-hidden="true"><use href="#i-arrow"/></svg></span>
           </div>
         </div>
@@ -708,7 +712,7 @@
           <p>Marketing site rebuild with AI SEO/GEO, conversion optimization, and analytics dashboard.</p>
           <div class="case-result">
             <span class="case-metric">3.2×</span>
-            <span class="case-metric-label">Organic traffic in 90 days</span>
+            <span class="case-metric-label">Organic traffic in 90 days (illustrative sample)</span>
             <span class="case-arrow"><svg aria-hidden="true"><use href="#i-arrow"/></svg></span>
           </div>
         </div>
@@ -725,7 +729,7 @@
   <div class="container">
     <div class="quote-card reveal-scale">
       <canvas class="quote-sky" id="quote-sky" aria-hidden="true"></canvas>
-      <p class="eyebrow eyebrow--light" id="testimonial-title" style="margin-bottom:1.5rem">Client story</p>
+      <p class="eyebrow eyebrow--light" id="testimonial-title" style="margin-bottom:1.5rem">Client story (illustrative sample)</p>
       <div class="quote-stars">
         <svg aria-hidden="true"><use href="#i-star"/></svg>
         <svg aria-hidden="true"><use href="#i-star"/></svg>
@@ -924,7 +928,7 @@
         </div>
         <div class="post-body">
           <span class="tag">Web Design</span>
-          <h3 style="margin-top:.6rem"><a href="#blog">How Much Does a Website Cost in 2026? A No-Nonsense Guide</a></h3>
+          <h3 style="margin-top:.6rem"><a href="journal-website-cost.html">How Much Does a Website Cost in 2026? A No-Nonsense Guide</a></h3>
           <p class="excerpt">A clear breakdown of what a business website really costs in 2026, from €790 brochure sites to custom builds.</p>
           <div class="meta"><span>Oct 14, 2026</span> <span>&middot;</span> <span>6 min read</span></div>
         </div>
@@ -945,7 +949,7 @@
         </div>
         <div class="post-body">
           <span class="tag">Conversion</span>
-          <h3 style="margin-top:.6rem"><a href="#blog">12 Signs Your Business Website Is Costing You Customers</a></h3>
+          <h3 style="margin-top:.6rem"><a href="journal.html">12 Signs Your Business Website Is Costing You Customers</a></h3>
           <p class="excerpt">Twelve practical warning signs that your website is quietly losing enquiries, and what to fix first.</p>
           <div class="meta"><span>Oct 2, 2026</span> <span>&middot;</span> <span>8 min read</span></div>
         </div>
@@ -972,7 +976,7 @@
         </div>
         <div class="post-body">
           <span class="tag tag--swoop">AI SEO</span>
-          <h3 style="margin-top:.6rem"><a href="#blog">Why AI Search Changes Everything for Small Businesses</a></h3>
+          <h3 style="margin-top:.6rem"><a href="journal.html">Why AI Search Changes Everything for Small Businesses</a></h3>
           <p class="excerpt">How generative AI search engines work and what you need to do to get cited — not just linked.</p>
           <div class="meta"><span>Sep 18, 2026</span> <span>&middot;</span> <span>7 min read</span></div>
         </div>
@@ -1003,7 +1007,7 @@
     </div>
     <div class="contact-grid">
       <div class="form-card reveal">
-        <form id="contact-form" novalidate>
+        <form id="contact-form" action="/api/contact" method="POST" novalidate>
           <div class="form-grid">
             <div class="field">
               <label for="cf-name">Name</label>
@@ -1037,15 +1041,18 @@
             <label for="cf-website">Website (leave blank)</label>
             <input id="cf-website" name="website" type="text" tabindex="-1" autocomplete="off">
           </div>
+          <div id="form-error" class="form-error" role="alert" hidden>
+            <p>Something went wrong. Your message has not been sent. Try again or email <a href="mailto:antony@ancyatech.com">antony@ancyatech.com</a>.</p>
+          </div>
           <p style="margin-top:1.2rem">
-            <button class="btn btn-primary btn-lg btn-block" type="submit">Send message <svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+            <button class="btn btn-primary btn-lg btn-block" type="submit" id="contact-submit">Send message <svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
           </p>
           <p class="form-note">We reply within one business day. Your data is never shared.</p>
         </form>
         <div class="form-success" id="form-success" hidden>
           <svg aria-hidden="true"><use href="#i-check"/></svg>
-          <h3>Message sent!</h3>
-          <p>Thanks for reaching out. Antony will get back to you within one business day.</p>
+          <h3>Message received</h3>
+          <p>Thanks — Antony reads every enquiry personally and replies within one business day, usually with a clear next step. Watch your inbox; if it’s urgent, email <a href="mailto:antony@ancyatech.com">antony@ancyatech.com</a>.</p>
         </div>
       </div>
 
@@ -1076,9 +1083,9 @@
           <div>
             <h3>Follow</h3>
             <div class="social-row">
-              <a class="social-btn" href="#" aria-label="LinkedIn"><svg aria-hidden="true"><use href="#i-linkedin"/></svg></a>
-              <a class="social-btn" href="#" aria-label="Instagram"><svg aria-hidden="true"><use href="#i-instagram"/></svg></a>
-              <a class="social-btn" href="#" aria-label="GitHub"><svg aria-hidden="true"><use href="#i-github"/></svg></a>
+              <a class="social-btn" href="https://www.linkedin.com/company/ancya-technologies/" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"><svg aria-hidden="true"><use href="#i-linkedin"/></svg></a>
+              <a class="social-btn" href="https://www.instagram.com/ancya_tech/" aria-label="Instagram" target="_blank" rel="noopener noreferrer"><svg aria-hidden="true"><use href="#i-instagram"/></svg></a>
+              <a class="social-btn" href="https://github.com/arungmca" aria-label="GitHub" target="_blank" rel="noopener noreferrer"><svg aria-hidden="true"><use href="#i-github"/></svg></a>
             </div>
           </div>
         </div>
@@ -1163,19 +1170,19 @@
       <div class="footer-col">
         <h3>Services</h3>
         <ul>
-          <li><a href="#services">Web Design</a></li>
-          <li><a href="#services">Web Development</a></li>
-          <li><a href="#services">AI SEO / GEO</a></li>
-          <li><a href="#services">AI Automation</a></li>
-          <li><a href="#services">Branding</a></li>
+          <li><a href="#services" data-select-service="design">Web Design</a></li>
+          <li><a href="#services" data-select-service="dev">Web Development</a></li>
+          <li><a href="#services" data-select-service="seo">AI SEO / GEO</a></li>
+          <li><a href="#services" data-select-service="auto">AI Automation</a></li>
+          <li><a href="#services" data-select-service="brand">Branding</a></li>
         </ul>
       </div>
       <div class="footer-col">
         <h3>Company</h3>
         <ul>
-          <li><a href="#about">About</a></li>
-          <li><a href="#work">Work</a></li>
-          <li><a href="#blog">Journal</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="work.html">Work</a></li>
+          <li><a href="journal.html">Journal</a></li>
           <li><a href="#pricing">Pricing</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
@@ -1188,9 +1195,9 @@
           <li>Kortenberg 3071, Belgium</li>
         </ul>
         <div class="social-row" style="margin-top:1rem">
-          <a class="social-btn" href="#" aria-label="LinkedIn"><svg aria-hidden="true"><use href="#i-linkedin"/></svg></a>
-          <a class="social-btn" href="#" aria-label="Instagram"><svg aria-hidden="true"><use href="#i-instagram"/></svg></a>
-          <a class="social-btn" href="#" aria-label="GitHub"><svg aria-hidden="true"><use href="#i-github"/></svg></a>
+          <a class="social-btn" href="https://www.linkedin.com/company/ancya-technologies/" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"><svg aria-hidden="true"><use href="#i-linkedin"/></svg></a>
+          <a class="social-btn" href="https://www.instagram.com/ancya_tech/" aria-label="Instagram" target="_blank" rel="noopener noreferrer"><svg aria-hidden="true"><use href="#i-instagram"/></svg></a>
+          <a class="social-btn" href="https://github.com/arungmca" aria-label="GitHub" target="_blank" rel="noopener noreferrer"><svg aria-hidden="true"><use href="#i-github"/></svg></a>
         </div>
       </div>
     </div>
@@ -1322,6 +1329,8 @@
   // ---- Contact form ----
   var form = document.getElementById('contact-form');
   var success = document.getElementById('form-success');
+  var submitButton = document.getElementById('contact-submit');
+  var formError = document.getElementById('form-error');
   if (form) {
     form.addEventListener('submit', function(e) {
       e.preventDefault();
@@ -1332,6 +1341,8 @@
       var name = document.getElementById('cf-name');
       var email = document.getElementById('cf-email');
       var message = document.getElementById('cf-message');
+      var company = document.getElementById('cf-company');
+      var budget = document.getElementById('cf-budget');
       var valid = true;
       [name, email, message].forEach(function(field) {
         if (!field.value.trim()) {
@@ -1347,9 +1358,51 @@
       }
       if (!valid) return;
 
-      form.hidden = true;
-      success.hidden = false;
-      success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      if (formError) formError.hidden = true;
+      if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.setAttribute('aria-busy', 'true');
+        submitButton.textContent = 'Sending...';
+      }
+
+      var payload = {
+        name: name.value.trim(),
+        email: email.value.trim(),
+        company: company ? company.value.trim() : '',
+        budget: budget ? budget.value.trim() : '',
+        message: message.value.trim()
+      };
+
+      fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(function(response) {
+        return response.json().then(function(result) {
+          return { response: response, result: result };
+        });
+      })
+      .then(function(item) {
+        if (item.response.ok && item.result && item.result.ok) {
+          form.hidden = true;
+          success.hidden = false;
+          success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          return;
+        }
+
+        throw new Error((item.result && item.result.error) || 'Delivery failed');
+      })
+      .catch(function(error) {
+        if (formError) formError.hidden = false;
+        if (submitButton) {
+          submitButton.disabled = false;
+          submitButton.removeAttribute('aria-busy');
+          submitButton.textContent = 'Send message';
+        }
+        form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        if (window.console && console.warn) console.warn('Contact delivery failed:', error && error.message);
+      });
     });
   }
 
@@ -1606,10 +1659,49 @@
   }
 
   serviceCards.forEach(function (card) {
-    card.addEventListener('click', function () { selectService(card); });
+    card.addEventListener('click', function () {
+      var wasActive = card.classList.contains('is-active');
+      selectService(card);
+      if (wasActive && stage) {
+        stage.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
   });
 
-  if (serviceGrid && serviceCards.length) selectService(serviceCards[0]);
+  document.querySelectorAll('.service-open').forEach(function (link) {
+    link.addEventListener('click', function (event) {
+      event.stopPropagation();
+    });
+  });
+
+  // Footer and deep links can open the page with a specific service selected.
+  document.querySelectorAll('[data-select-service]').forEach(function (link) {
+    link.addEventListener('click', function () {
+      var target = document.querySelector('[data-service="' + link.getAttribute('data-select-service') + '"]');
+      if (target) selectService(target);
+    });
+  });
+
+  if (serviceGrid && serviceCards.length) {
+    var requested = null;
+    try { requested = new URLSearchParams(window.location.search).get('service'); } catch (e) {}
+    if (window.location.hash && window.location.hash.indexOf('#svc-') === 0) {
+      requested = window.location.hash.slice(5);
+    }
+
+    var initialCard = serviceCards[0];
+    if (requested) {
+      serviceCards.forEach(function (card) {
+        if (card.getAttribute('data-service') === requested) initialCard = card;
+      });
+    }
+    selectService(initialCard);
+
+    if (requested) {
+      var serviceSection = document.getElementById('services');
+      if (serviceSection) serviceSection.scrollIntoView({ block: 'start' });
+    }
+  }
 })();
 
 /* ---------- Rotating shape ribbons ---------- */

@@ -5,19 +5,75 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Web design — Ancya</title>
 <meta name="description" content="Web design and build for small businesses: wireframes, design systems, responsive states and handover, from €790.">
-<meta name="robots" content="noindex">
+
 <link rel="icon" href="assets/favicons/favicon.ico">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicons/favicon-32x32.png">
 <link rel="apple-touch-icon" sizes="180x180" href="assets/favicons/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/main.css?v=20261103">
+
 <script>document.documentElement.classList.add('js');</script>
+
+<!-- Google Analytics — Consent Mode v2 (GDPR / EU opt-in) -->
+<!-- Default consent is DENIED so no tracking cookies are set until the visitor accepts. -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {
+    'ad_storage':         'denied',
+    'analytics_storage':  'denied',
+    'ad_user_data':       'denied',
+    'ad_personalization': 'denied',
+    'wait_for_update':    500
+  });
+  gtag('js', new Date());
+  gtag('config', 'G-FLMXGH7WHJ', { 'anonymize_ip': true });
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FLMXGH7WHJ"></script>
+
+
+<link rel="canonical" href="https://ancyatech.com/services-web-design.html">
+<link rel="manifest" href="site.webmanifest">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ancya">
+<meta property="og:title" content="Web design — Ancya">
+<meta property="og:description" content="Web design and build for small businesses: wireframes, design systems, responsive states and handover, from €790.">
+<meta property="og:url" content="https://ancyatech.com/services-web-design.html">
+<meta property="og:image" content="https://ancyatech.com/assets/social/twitter-header-1500x500.png">
+<meta property="og:image:width" content="1500">
+<meta property="og:image:height" content="500">
+<meta property="og:image:alt" content="Ancya — lightning-fast websites &amp; AI automation for ambitious SMBs">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Web design — Ancya">
+<meta name="twitter:description" content="Web design and build for small businesses: wireframes, design systems, responsive states and handover, from €790.">
+<meta name="twitter:image" content="https://ancyatech.com/assets/social/twitter-header-1500x500.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Web Design (UI/UX)",
+  "description": "Web design and build for small businesses: wireframes, design systems, responsive states and handover.",
+  "provider": {
+    "@type": "LocalBusiness",
+    "name": "Ancya Tech",
+    "url": "https://ancyatech.com/",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Stroeykensstraat 37",
+      "addressLocality": "Kortenberg",
+      "postalCode": "3071",
+      "addressCountry": "BE"
+    }
+  },
+  "areaServed": "Belgium and EU"
+}
+</script>
 </head>
 <body>
-<!-- TEMPLATE FOR REVIEW — remove the noindex meta and add the production analytics/consent head block from index.html before launch. -->
-
+<a class="skip-link" href="#main" data-scroll>Skip to content</a>
 <svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute;overflow:hidden">
   <defs>
     <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
@@ -220,6 +276,16 @@
 
 </main>
 
+
+<!-- Cookie banner -->
+<div class="cookie-banner" id="cookie-banner" hidden>
+  <p><strong>We use cookies</strong> to improve your experience and analyze traffic. See our <a href="cookie-policy.html">Cookie Policy</a>.</p>
+  <div class="cookie-actions">
+    <button class="btn btn-outline btn-sm" id="cookie-decline" type="button">Decline</button>
+    <button class="btn btn-primary btn-sm" id="cookie-accept" type="button">Accept</button>
+  </div>
+</div>
+
 <footer class="site-footer">
   <div class="container">
     <div class="footer-top">
@@ -231,10 +297,10 @@
         <h3>Services</h3>
         <ul>
           <li><a href="services-web-design.html">Web Design</a></li>
-          <li><a href="index.html#services">Web Development</a></li>
-          <li><a href="index.html#services">AI SEO / GEO</a></li>
-          <li><a href="index.html#services">AI Automation</a></li>
-          <li><a href="index.html#services">Branding</a></li>
+          <li><a href="index.html?service=dev">Web Development</a></li>
+          <li><a href="index.html?service=seo">AI SEO / GEO</a></li>
+          <li><a href="index.html?service=auto">AI Automation</a></li>
+          <li><a href="index.html?service=brand">Branding</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -255,9 +321,9 @@
           <li>Kortenberg 3071, Belgium</li>
         </ul>
         <div class="social-row" style="margin-top:1rem">
-          <a class="social-btn" href="#" aria-label="LinkedIn"><svg aria-hidden="true"><use href="#i-linkedin"/></svg></a>
-          <a class="social-btn" href="#" aria-label="Instagram"><svg aria-hidden="true"><use href="#i-instagram"/></svg></a>
-          <a class="social-btn" href="#" aria-label="GitHub"><svg aria-hidden="true"><use href="#i-github"/></svg></a>
+          <a class="social-btn" href="https://www.linkedin.com/company/ancya-technologies/" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"><svg aria-hidden="true"><use href="#i-linkedin"/></svg></a>
+          <a class="social-btn" href="https://www.instagram.com/ancya_tech/" aria-label="Instagram" target="_blank" rel="noopener noreferrer"><svg aria-hidden="true"><use href="#i-instagram"/></svg></a>
+          <a class="social-btn" href="https://github.com/arungmca" aria-label="GitHub" target="_blank" rel="noopener noreferrer"><svg aria-hidden="true"><use href="#i-github"/></svg></a>
         </div>
       </div>
     </div>
@@ -276,6 +342,7 @@
   <svg aria-hidden="true"><use href="#i-arrow"/></svg>
 </button>
 
+<script src="assets/js/consent.js?v=20261103" defer></script>
 <script src="assets/js/site.js?v=20261103" defer></script>
 </body>
 </html>

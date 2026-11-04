@@ -15,6 +15,7 @@ public/                  deployed assets (Wrangler assets.directory)
 docs/
 ├─ DESIGN_SPEC.md        rules for contributors (source of truth)
 ├─ ARCHITECTURE.md       current structure + scaling plan
+├─ PRODUCTION_TODO.md    production-readiness plan (start 4 Nov)
 └─ styleguide.html       live component reference (not deployed)
 brand/                   source logo exports (not deployed)
 scripts/check_links.py   internal link validation used by CI
@@ -36,7 +37,7 @@ npm run deploy    # deploy to Cloudflare Workers
 - Templates (noindex until approved): `work.html`, `work-foxtail-cafe.html`, `journal.html`, `journal-website-cost.html`, `services-web-design.html`, `about.html`.
 - Not found: `public/404.html`, wired via `not_found_handling: "404-page"`.
 
-See [`docs/DESIGN_SPEC.md`](docs/DESIGN_SPEC.md) before changing anything, and [`docs/styleguide.html`](docs/styleguide.html) for component examples. The scaling plan lives in [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
+See [`docs/DESIGN_SPEC.md`](docs/DESIGN_SPEC.md) before changing anything, and [`docs/styleguide.html`](docs/styleguide.html) for component examples. The scaling plan lives in [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md), and the production-readiness plan in [`docs/PRODUCTION_TODO.md`](docs/PRODUCTION_TODO.md).
 
 ## Deployment
 
