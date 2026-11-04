@@ -5,13 +5,16 @@
     "dev": "wrangler dev",
     "preview": "python3 -m http.server 8080 --directory public",
     "check": "python3 scripts/check_links.py",
-  "check:a11y": "python3 scripts/check_a11y.py",
-  "test:a11y": "bash scripts/test_a11y.sh",
+    "check:a11y": "python3 scripts/check_a11y.py",
+    "test:a11y": "bash scripts/test_a11y.sh",
     "deploy": "wrangler deploy"
   },
   "devDependencies": {
     "@axe-core/cli": "^4.14.0",
     "chromedriver": "^140.0.0",
     "wrangler": "^4.154.0"
+  },
+  "allowScripts": {
+    "chromedriver@152.0.3": true
   }
 }
