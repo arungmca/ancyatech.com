@@ -1,4 +1,8 @@
 User-agent: *
 Allow: /
 
+# Favicons are fetched by Googlebot-Image when building search results.
+User-agent: Googlebot-Image
+Allow: /
+
 Sitemap: https://ancyatech.com/sitemap.xml
