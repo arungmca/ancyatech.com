@@ -99,6 +99,8 @@ The release is not ready to tag until every gate below passes.
 - [ ] Configure Cloudflare WAF rate limiting for `POST /api/contact`; the in-isolate
       limiter is best-effort only.
 - [ ] Optional: add Turnstile verification once the frontend can send a token.
+      *(Implemented — set `turnstileSiteKey` in `src/_data/site.json` and the
+      `TURNSTILE_SECRET_KEY` Worker secret, then verify on the preview URL.)*
 - [ ] Tighten the CSP by removing `'unsafe-inline'` and self-hosting GSAP.
 - [ ] Final design/content sign-off; confirm `DESIGN_SPEC.md` and `styleguide.html`
       match the shipped build.

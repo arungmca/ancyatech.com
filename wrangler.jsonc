@@ -12,7 +12,13 @@
   "observability": {
     "enabled": true
   },
-  "previews": {},
+  "previews": {
+    "vars": {
+      "EMAIL_TEMPLATE": "1",
+      "RESEND_FROM": "Ancya Enquiry <noreply-staging@ancyatech.com>",
+      "RESEND_TO": "antony@ancyatech.com"
+    },
+  },
   // Give each Preview its own URL:
   //   https://<preview-name>-<worker>.<subdomain>.workers.dev
   // Alternative: add "previews_enabled": true to a custom_domain route to get
@@ -35,7 +41,8 @@
     { "pattern": "www.ancyatech.com", "custom_domain": true }
   ],
   "vars": {
-    "RESEND_TO": "antony@ancyatech.com",
-    "RESEND_FROM": "Ancya Enquiry <noreply@ancyatech.com>"
-  }
+    "EMAIL_TEMPLATE": "2",
+    "RESEND_FROM": "Ancya Enquiry <noreply@ancyatech.com>",
+    "RESEND_TO": "antony@ancyatech.com"
+  },
 }

@@ -263,3 +263,32 @@ li { margin-bottom: .35em }
   .site-header, .cookie-banner, .site-footer { display: none !important }
   body { color: #000 }
 }
+
+/* ---------- WhatsApp chat bubble ---------- */
+.whatsapp-bubble {
+  position: fixed; right: clamp(16px,2.5vw,28px);
+  bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+  z-index: 60; display: inline-flex; align-items: center; justify-content: center;
+  width: 56px; height: 56px; border-radius: 50%; border: 0;
+  background: #25D366; color: #fff;
+  box-shadow: 0 14px 30px -12px rgba(37,211,102,.55), 0 6px 14px -8px rgba(11,19,43,.35);
+  text-decoration: none; cursor: pointer;
+  transition: transform .2s var(--ease), box-shadow .2s var(--ease), background-color .2s var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+.whatsapp-bubble:hover, .whatsapp-bubble:focus-visible {
+  background: #1ebe5d; color: #fff;
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 18px 36px -12px rgba(37,211,102,.65), 0 8px 16px -8px rgba(11,19,43,.4);
+}
+.whatsapp-bubble svg { width: 28px; height: 28px }
+.whatsapp-bubble:focus-visible { outline: 3px solid #fff; outline-offset: 3px }
+@media (max-width: 900px) {
+  body:has(.cookie-banner:not([hidden])) .whatsapp-bubble { bottom: calc(118px + env(safe-area-inset-bottom, 0px)) }
+}
+@media (max-width: 640px) {
+  body:has(.cookie-banner:not([hidden])) .whatsapp-bubble { bottom: calc(176px + env(safe-area-inset-bottom, 0px)) }
+}
+@media (prefers-reduced-motion: reduce) {
+  .whatsapp-bubble { transition: none }
+}

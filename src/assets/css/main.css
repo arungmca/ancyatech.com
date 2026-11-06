@@ -527,6 +527,10 @@ h1[tabindex="-1"]:focus, h2[tabindex="-1"]:focus, main:focus { outline: none }
   box-shadow: 0 0 0 3px rgba(11,81,156,.15);
 }
 .form-note { font-size: .8rem; color: var(--muted); margin-top: 1rem }
+.turnstile-field { margin-top: 1.1rem }
+.cf-turnstile { min-height: 65px }
+.form-error-inline { margin-top: .5rem; font-size: .82rem; color: #b91c1c }
+.form-error-inline a { color: inherit; text-decoration: underline }
 .form-success {
   padding: clamp(28px,3.5vw,40px); text-align: center;
   background: var(--sapphire-50); border: 1px solid var(--sapphire-200); border-radius: var(--r-card);
@@ -700,7 +704,7 @@ h1[tabindex="-1"]:focus, h2[tabindex="-1"]:focus, main:focus { outline: none }
 /* ---------- Back to top ---------- */
 .to-top {
   position: fixed; right: clamp(16px,2.5vw,28px);
-  bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+  bottom: calc(92px + env(safe-area-inset-bottom, 0px));
   z-index: 55; display: inline-flex; align-items: center; justify-content: center;
   width: 46px; height: 46px; padding: 0; cursor: pointer;
   border: 1px solid rgba(15,23,42,.12); border-radius: 50%;

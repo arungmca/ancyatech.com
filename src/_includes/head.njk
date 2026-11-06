@@ -41,6 +41,11 @@
 <!-- Fonts: Plus Jakarta Sans is self-hosted (see base.css @font-face) -->
 <link rel="preload" href="/assets/fonts/plus-jakarta-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
 
+{%- if site.turnstileSiteKey and section == "home" %}
+<!-- Cloudflare Turnstile — contact form bot protection -->
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+{%- endif %}
+
 {%- if jsonld %}
 <!-- Structured data -->
 {{ jsonld | safe }}

@@ -103,6 +103,15 @@
   var success = document.getElementById('form-success');
   var submitButton = document.getElementById('contact-submit');
   var formError = document.getElementById('form-error');
+  var turnstileWidget = document.getElementById('cf-turnstile');
+  var turnstileError = document.getElementById('turnstile-error');
+
+  function resetTurnstile() {
+    if (window.turnstile && turnstileWidget) {
+      try { window.turnstile.reset(turnstileWidget); } catch (err) { /* noop */ }
+    }
+  }
+
   if (form) {
     form.addEventListener('submit', function(e) {
       e.preventDefault();
@@ -130,6 +139,15 @@
       }
       if (!valid) return;
 
+      // Require a Turnstile token when the widget is configured. Tokens are
+      // single-use and expire, so check the live value at submit time.
+      var turnstileInput = form.querySelector('input[name="cf-turnstile-response"]');
+      if (turnstileWidget && (!turnstileInput || !turnstileInput.value)) {
+        if (turnstileError) turnstileError.hidden = false;
+        return;
+      }
+      if (turnstileError) turnstileError.hidden = true;
+
       if (formError) formError.hidden = true;
       if (submitButton) {
         submitButton.disabled = true;
@@ -144,6 +162,9 @@
         budget: budget ? budget.value.trim() : '',
         message: message.value.trim()
       };
+      if (turnstileInput && turnstileInput.value) {
+        payload['cf-turnstile-response'] = turnstileInput.value;
+      }
 
       fetch('/api/contact', {
         method: 'POST',
@@ -166,6 +187,7 @@
         throw new Error((item.result && item.result.error) || 'Delivery failed');
       })
       .catch(function(error) {
+        resetTurnstile();
         if (formError) formError.hidden = false;
         if (submitButton) {
           submitButton.disabled = false;
