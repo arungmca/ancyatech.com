@@ -61,10 +61,14 @@ The tests stub `fetch`; they do not send real email.
 
 ## Deployment
 
-1. Set the secret (first deploy or rotation):
+1. Set the secrets (first deploy or rotation):
    ```bash
    npx wrangler secret put RESEND_API_KEY
+   npx wrangler secret put TURNSTILE_SECRET_KEY
    ```
+   Then add the Turnstile widget's public site key to
+   `src/_data/site.json` → `turnstileSiteKey` and rebuild. Create the widget with
+   hostname `ancyatech.com` (and `www.ancyatech.com`) in the Cloudflare dashboard.
 2. Confirm in `wrangler.jsonc`:
    - `RESEND_TO` — inbox that receives enquiries
    - `RESEND_FROM` — sender name and address; production default is
@@ -83,8 +87,12 @@ domain is verified.
 - **Rate limiting is best-effort.** The limiter is an in-isolate `Map`; Cloudflare may
   create many isolates. Configure WAF rate limiting for `POST /api/contact` in production.
 - **No secrets in the repo.** `.dev.vars` is ignored; only `.dev.vars.example` is tracked.
-- **Spam.** The `website` honeypot returns a fake success to bots. Turnstile verification
-  is a possible follow-up once the frontend can send a token.
+- **Spam.** The `website` honeypot returns a fake success to bots. Cloudflare Turnstile
+  adds a second layer: the frontend widget sends a token as `cf-turnstile-response`,
+  and the Worker verifies it before delivery. For the check to run, both keys must be
+  set — the public `turnstileSiteKey` in `src/_data/site.json` and the
+  `TURNSTILE_SECRET_KEY` Worker secret. If either is empty, the widget is not rendered
+  and the Worker skips verification.
 - **Logging.** Delivery failures are logged with `console.error` and are visible in
   Worker observability.
 

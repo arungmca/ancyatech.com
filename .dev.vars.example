@@ -1,4 +1,12 @@
 # Copy to .dev.vars for local development. Do not commit .dev.vars.
 RESEND_API_KEY=
-RESEND_TO=antony@ancyatech.com
+RESEND_TO=santoarunprakash@gmail.com
 RESEND_FROM=Ancya Enquiry <noreply@ancyatech.com>
+# Cloudflare Turnstile (stops form spam). Create a widget at
+# https://dash.cloudflare.com/?to=/:account/turnstile and set BOTH values:
+#   TURNSTILE_SECRET_KEY -> secret key (below, also `wrangler secret put`)
+#   turnstileSiteKey     -> public site key in src/_data/site.json
+# Cloudflare's always-pass test keys work for local development:
+#   site key 1x00000000000000000000AA / secret 1x0000000000000000000000000000000AA
+# Leave both empty to disable the check.
+TURNSTILE_SECRET_KEY=

@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact email template preview — Ancya</title>
+<style>
+  :root { --ink:#1a1a1a; --muted:#5b5b5b; --paper:#ffffff; --line:#e6e6e6; --accent:#ff5a36; --soft:#f7f5f0; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background:#f2ede4; color:var(--ink); line-height:1.45; }
+  header { padding:32px 24px 12px; text-align:center; }
+  h1 { margin:0; font-size:28px; letter-spacing:-0.5px; }
+  p.lead { margin:8px 0 0; color:var(--muted); }
+  .wrap { max-width:1180px; margin:0 auto; padding:24px; display:grid; grid-template-columns:repeat(auto-fit, minmax(320px,1fr)); gap:24px; }
+  .card { background:#fff; border-radius:16px; overflow:hidden; box-shadow:0 12px 36px rgba(0,0,0,.08); }
+  .card-head { padding:18px 22px; border-bottom:1px solid var(--line); display:flex; align-items:center; justify-content:space-between; }
+  .card-head h2 { margin:0; font-size:17px; }
+  .tag { font-size:11px; text-transform:uppercase; letter-spacing:1.1px; font-weight:600; color:var(--muted); }
+  .preview { background:#fafafa; padding:24px; }
+  .email { max-width:600px; margin:0 auto; background:var(--paper); color:var(--ink); border-radius:10px; overflow:hidden; box-shadow:0 1px 4px rgba(0,0,0,.06); }
+  .email * { max-width:100%; }
+  .btn { display:inline-block; padding:10px 16px; border-radius:8px; text-decoration:none; font-weight:600; font-size:14px; }
+  .meta { font-size:12px; color:var(--muted); }
+  @media (max-width:480px) { .wrap { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+<header>
+  <h1>Contact form email template variants</h1>
+  <p class="lead">Preview only. Sample enquiry: Elena Marchetti, Marchetti Studio, budget €3,000–€6,000, Belgium.</p>
+</header>
+<div class="wrap">
+
+<!-- Variant 1: Minimal text-first -->
+<div class="card">
+  <div class="card-head"><h2>Variant 1 — Minimal plain text</h2><span class="tag">Classic inbox</span></div>
+  <div class="preview">
+    <div class="email" style="padding:28px;">
+      <h3 style="margin:0 0 4px;">New project enquiry</h3>
+      <p class="meta" style="margin:0 0 20px;">From contact form · Mar 14, 2026 · 09:42</p>
+      <table width="100%" cellpadding="0" cellspacing="0" style="font-size:14px;">
+        <tr><td style="padding:6px 0;color:#888;width:90px;">Name</td><td style="padding:6px 0;font-weight:600;">Elena Marchetti</td></tr>
+        <tr><td style="padding:6px 0;color:#888;">Email</td><td style="padding:6px 0;"><a href="mailto:elena@marchetti.studio" style="color:#ff5a36;">elena@marchetti.studio</a></td></tr>
+        <tr><td style="padding:6px 0;color:#888;">Company</td><td style="padding:6px 0;">Marchetti Studio</td></tr>
+        <tr><td style="padding:6px 0;color:#888;">Budget</td><td style="padding:6px 0;">€3,000 – €6,000</td></tr>
+      </table>
+      <hr style="border:none;border-top:1px solid #eee;margin:20px 0;">
+      <p style="font-size:12px;color:#888;text-transform:uppercase;letter-spacing:1px;margin:0 0 6px;">Project details</p>
+      <p style="margin:0;font-size:14px;">We need a new website to launch a branding studio. Looking for a clean, fast build with multilingual content and an AI-ready blog.</p>
+      <p style="margin-top:24px;"><a class="btn" href="mailto:elena@marchetti.studio" style="background:#ff5a36;color:#fff;">Reply to Elena</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- Variant 2: Branded header card -->
+<div class="card">
+  <div class="card-head"><h2>Variant 2 — Branded header</h2><span class="tag">Ancya orange</span></div>
+  <div class="preview">
+    <div class="email" style="padding:0;">
+      <div style="background:#0b132b;color:#fff;padding:24px;">
+        <p style="margin:0;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;opacity:.7;">Ancya Enquiry Desk</p>
+        <h3 style="margin:8px 0 0;font-size:22px;">New project enquiry</h3>
+      </div>
+      <div style="padding:24px;">
+        <div style="background:#fff5f1;border:1px solid #ffd6cb;border-radius:10px;padding:14px;margin-bottom:16px;">
+          <p style="margin:0;font-size:13px;font-weight:600;color:#b4421f;">Budget: €3,000 – €6,000</p>
+        </div>
+        <p style="margin:0 0 14px;font-size:14px;"><strong>Elena Marchetti</strong> · Marchetti Studio</p>
+        <p style="margin:0 0 18px;font-size:14px;">elena@marchetti.studio</p>
+        <p style="margin:0 0 6px;font-size:12px;color:#888;text-transform:uppercase;letter-spacing:1px;">Message</p>
+        <p style="margin:0 0 18px;font-size:14px;">We need a new website to launch a branding studio. Looking for a clean, fast build with multilingual content and an AI-ready blog.</p>
+        <a class="btn" href="mailto:elena@marchetti.studio" style="background:#ff5a36;color:#fff;">Reply now</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Variant 3: Executive summary -->
+<div class="card">
+  <div class="card-head"><h2>Variant 3 — Executive summary</h2><span class="tag">Scannable</span></div>
+  <div class="preview">
+    <div class="email" style="padding:24px;">
+      <p class="meta" style="margin:0 0 6px;">New enquiry · Ancya website</p>
+      <h3 style="margin:0 0 18px;font-size:20px;">Elena Marchetti — branding studio website</h3>
+      <table width="100%" cellpadding="0" cellspacing="0" style="font-size:14px;border-collapse:collapse;">
+        <tr><td style="padding:10px 0;border-top:1px solid #eee;color:#666;width:110px;">Name</td><td style="padding:10px 0;border-top:1px solid #eee;font-weight:600;">Elena Marchetti</td></tr>
+        <tr><td style="padding:10px 0;border-top:1px solid #eee;color:#666;">Email</td><td style="padding:10px 0;border-top:1px solid #eee;">elena@marchetti.studio</td></tr>
+        <tr><td style="padding:10px 0;border-top:1px solid #eee;color:#666;">Company</td><td style="padding:10px 0;border-top:1px solid #eee;">Marchetti Studio</td></tr>
+        <tr><td style="padding:10px 0;border-top:1px solid #eee;color:#666;">Budget</td><td style="padding:10px 0;border-top:1px solid #eee;font-weight:600;color:#0b519c;">€3,000 – €6,000</td></tr>
+        <tr><td style="padding:10px 0;border-top:1px solid #eee;color:#666;vertical-align:top;">Details</td><td style="padding:10px 0;border-top:1px solid #eee;">We need a new website to launch a branding studio. Looking for a clean, fast build with multilingual content and an AI-ready blog.</td></tr>
+      </table>
+      <p style="margin-top:18px;font-size:12px;color:#888;">Reply directly to this email to reach Elena.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Variant 4: Action card with CTA -->
+<div class="card">
+  <div class="card-head"><h2>Variant 4 — Action-first</h2><span class="tag">Client-ready</span></div>
+  <div class="preview">
+    <div class="email" style="padding:0;">
+      <div style="padding:24px;">
+        <h3 style="margin:0 0 4px;">Action required: new enquiry</h3>
+        <p class="meta" style="margin:0 0 18px;">Reply within 1 business day for best results.</p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px;">
+          <a class="btn" href="mailto:elena@marchetti.studio" style="background:#ff5a36;color:#fff;">Reply now</a>
+          <a class="btn" href="mailto:elena@marchetti.studio?subject=Project%20brief" style="background:#f1f1f1;color:#1a1a1a;">Request full brief</a>
+        </div>
+        <div style="background:#f7f5f0;border-radius:10px;padding:16px;font-size:14px;">
+          <strong>Elena Marchetti</strong> · Marchetti Studio<br>
+          elena@marchetti.studio<br>
+          Budget €3,000 – €6,000
+          <hr style="border:none;border-top:1px solid #e2e2e2;margin:12px 0;">
+          We need a new website to launch a branding studio. Looking for a clean, fast build with multilingual content and an AI-ready blog.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Variant 5: Editorial / report -->
+<div class="card">
+  <div class="card-head"><h2>Variant 5 — Editorial report</h2><span class="tag">Dashboard style</span></div>
+  <div class="preview">
+    <div class="email" style="padding:24px;">
+      <table width="100%" cellpadding="0" cellspacing="0">
+        <tr>
+          <td style="font-size:11px;text-transform:uppercase;letter-spacing:1.4px;color:#888;padding-bottom:10px;">Ancya · New enquiry</td>
+        </tr>
+        <tr>
+          <td style="font-size:24px;font-weight:700;letter-spacing:-0.5px;padding-bottom:18px;">Elena Marchetti</td>
+        </tr>
+      </table>
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:18px;">
+        <div style="background:#f7f5f0;padding:12px;border-radius:8px;font-size:13px;">
+          <p style="margin:0;color:#888;font-size:11px;">Company</p>
+          <p style="margin:4px 0 0;font-weight:600;">Marchetti Studio</p>
+        </div>
+        <div style="background:#f7f5f0;padding:12px;border-radius:8px;font-size:13px;">
+          <p style="margin:0;color:#888;font-size:11px;">Budget</p>
+          <p style="margin:4px 0 0;font-weight:600;">€3,000 – €6,000</p>
+        </div>
+      </div>
+      <p style="margin:0 0 6px;font-size:12px;color:#888;text-transform:uppercase;letter-spacing:1px;">Message</p>
+      <p style="margin:0 0 18px;font-size:14px;">We need a new website to launch a branding studio. Looking for a clean, fast build with multilingual content and an AI-ready blog.</p>
+      <a class="btn" href="mailto:elena@marchetti.studio" style="background:#0b132b;color:#fff;">Reply to sender</a>
+    </div>
+  </div>
+</div>
+
+</div>
+<footer style="text-align:center;padding:24px;color:#888;font-size:13px;">Select a variant number, then I can wire it into the Cloudflare Worker email template.</footer>
+</body>
+</html>

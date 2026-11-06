@@ -4,6 +4,7 @@ import assert from "node:assert/strict";
 import worker, {
   handleContact,
   validate,
+  verifyTurnstile,
   setSecurityHeaders,
   createRateLimiter,
   isSameOrigin,
@@ -307,8 +308,112 @@ test("setSecurityHeaders applies baseline headers and optional CSP", () => {
   assert.equal(withCsp.get("x-content-type-options"), "nosniff");
   assert.match(withCsp.get("content-security-policy") || "", /default-src 'self'/);
 
+  const csp = withCsp.get("content-security-policy") || "";
+  assert.match(csp, /script-src [^;]*https:\/\/challenges\.cloudflare\.com/);
+  assert.match(csp, /connect-src [^;]*https:\/\/challenges\.cloudflare\.com/);
+  assert.match(csp, /frame-src https:\/\/challenges\.cloudflare\.com/);
+
   const withoutCsp = new Headers();
   setSecurityHeaders(withoutCsp, false);
   assert.equal(withoutCsp.get("x-content-type-options"), "nosniff");
   assert.equal(withoutCsp.get("content-security-policy"), null);
+});
+
+const TURNSTILE_SECRET = "1x0000000000000000000000000000000AA";
+const TURNSTILE_ENV = { ...ENV, TURNSTILE_SECRET_KEY: TURNSTILE_SECRET };
+
+test("verifyTurnstile rejects a missing token or secret without calling out", async () => {
+  let called = false;
+  const fetchImpl = async () => {
+    called = true;
+    return new Response('{"success":true}');
+  };
+
+  assert.equal(await verifyTurnstile("", TURNSTILE_SECRET, "1.2.3.4", fetchImpl), false);
+  assert.equal(await verifyTurnstile("token", "", "1.2.3.4", fetchImpl), false);
+  assert.equal(called, false);
+});
+
+test("verifyTurnstile posts the token and remote IP to siteverify", async () => {
+  let captured;
+  const fetchImpl = async (input, init) => {
+    captured = { url: String(input), init };
+    return new Response('{"success":true}', { status: 200 });
+  };
+
+  const ok = await verifyTurnstile("token-123", TURNSTILE_SECRET, "1.2.3.4", fetchImpl);
+
+  assert.equal(ok, true);
+  assert.equal(captured.url, "https://challenges.cloudflare.com/turnstile/v0/siteverify");
+  assert.equal(captured.init.method, "POST");
+  const body = new URLSearchParams(captured.init.body);
+  assert.equal(body.get("secret"), TURNSTILE_SECRET);
+  assert.equal(body.get("response"), "token-123");
+  assert.equal(body.get("remoteip"), "1.2.3.4");
+});
+
+test("verifyTurnstile returns false when siteverify fails or the network errors", async () => {
+  const failing = async () => new Response('{"success":false}', { status: 200 });
+  assert.equal(await verifyTurnstile("token", TURNSTILE_SECRET, "", failing), false);
+
+  const serverError = async () => new Response("nope", { status: 500 });
+  assert.equal(await verifyTurnstile("token", TURNSTILE_SECRET, "", serverError), false);
+
+  const networkError = async () => {
+    throw new Error("offline");
+  };
+  assert.equal(await verifyTurnstile("token", TURNSTILE_SECRET, "", networkError), false);
+});
+
+test("missing Turnstile token is rejected when the secret is configured", async () => {
+  stubResend();
+  const response = await handleContact(postRequest({ ...VALID }), TURNSTILE_ENV, NO_LIMIT);
+
+  assert.equal(response.status, 403);
+  assert.equal(resendCalls.length, 0);
+});
+
+test("valid Turnstile token sends the email", async () => {
+  stubResend();
+  let verifiedBody;
+  globalThis.fetch = async (input, init) => {
+    if (String(input) === "https://challenges.cloudflare.com/turnstile/v0/siteverify") {
+      verifiedBody = new URLSearchParams(init.body);
+      return new Response('{"success":true}', { status: 200 });
+    }
+    resendCalls.push({ url: String(input), init });
+    return new Response('{"id":"email_123"}', { status: 200 });
+  };
+
+  const response = await handleContact(
+    postRequest({ ...VALID, "cf-turnstile-response": "valid-token" }),
+    TURNSTILE_ENV,
+    NO_LIMIT
+  );
+
+  assert.equal(response.status, 200);
+  assert.equal(verifiedBody.get("response"), "valid-token");
+  assert.equal(resendCalls.length, 1);
+});
+
+test("failed Turnstile verification returns 403 without sending email", async () => {
+  globalThis.fetch = async (input) => {
+    if (String(input) === "https://challenges.cloudflare.com/turnstile/v0/siteverify") {
+      return new Response('{"success":false}', { status: 200 });
+    }
+    throw new Error(`Unexpected fetch call to ${input}`);
+  };
+
+  const response = await handleContact(
+    postRequest({ ...VALID, "cf-turnstile-response": "bad-token" }),
+    TURNSTILE_ENV,
+    NO_LIMIT
+  );
+
+  assert.equal(response.status, 403);
+  assert.deepEqual(await response.json(), {
+    ok: false,
+    error: "Verification failed. Please try again.",
+  });
+  assert.equal(resendCalls.length, 0);
 });

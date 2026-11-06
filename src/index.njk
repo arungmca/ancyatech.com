@@ -18,7 +18,7 @@
   "twitterTitle": "Ancya — Lightning-fast websites & AI automation",
   "twitterDescription": "AI-built, reviewed by hand: fast marketing websites, AI SEO/GEO, and custom AI automation for small and medium-sized businesses.",
   "jsonld": "<script type=\"application/ld+json\">\n{\n  \"@context\": \"https://schema.org\",\n  \"@graph\": [\n    {\n      \"@type\": \"Organization\",\n      \"@id\": \"https://ancyatech.com/#organization\",\n      \"name\": \"Ancya Tech\",\n      \"alternateName\": \"Ancya\",\n      \"url\": \"https://ancyatech.com/\",\n      \"logo\": \"https://ancyatech.com/assets/svg/ancya-logo-color.svg\",\n      \"description\": \"A digital agency building lightning-fast, high-converting marketing websites, AI SEO/GEO, and custom AI automation workflows for small and medium-sized businesses.\",\n      \"email\": \"antony@ancyatech.com\",\n      \"address\": {\n        \"@type\": \"PostalAddress\",\n        \"streetAddress\": \"Stroeykensstraat 37\",\n        \"addressLocality\": \"Kortenberg\",\n        \"postalCode\": \"3071\",\n        \"addressCountry\": \"BE\"\n      },\n      \"sameAs\": [\n        \"https://www.instagram.com/ancya_tech/\",\n        \"https://www.linkedin.com/company/ancya-technologies/\",\n        \"https://github.com/arungmca\"\n      ]\n    },\n    {\n      \"@type\": \"WebSite\",\n      \"@id\": \"https://ancyatech.com/#website\",\n      \"url\": \"https://ancyatech.com/\",\n      \"name\": \"Ancya\",\n      \"publisher\": { \"@id\": \"https://ancyatech.com/#organization\" },\n      \"inLanguage\": \"en-US\"\n    },\n    {\n      \"@type\": \"Service\",\n      \"name\": \"Web Design & Development\",\n      \"description\": \"Custom high-performance marketing websites for small and medium-sized businesses. 95+ Google PageSpeed target scores and sub-second load times.\",\n      \"provider\": { \"@id\": \"https://ancyatech.com/#organization\" },\n      \"areaServed\": \"Worldwide\",\n      \"serviceType\": \"Web design and development\"\n    },\n    {\n      \"@type\": \"Service\",\n      \"name\": \"AI SEO / Generative Engine Optimization\",\n      \"description\": \"Optimized for ChatGPT Search, Perplexity, Google AI Overviews, and Apple Intelligence. Advanced local SEO and Google Business Profile citation synchronization.\",\n      \"provider\": { \"@id\": \"https://ancyatech.com/#organization\" },\n      \"areaServed\": \"Worldwide\",\n      \"serviceType\": \"Search engine optimization\"\n    },\n    {\n      \"@type\": \"Service\",\n      \"name\": \"AI Automation Workflows\",\n      \"description\": \"Custom AI automation workflows that handle lead qualification, appointment booking, email triage, invoice matching, and CRM sync — saving 10–20+ hours per week.\",\n      \"provider\": { \"@id\": \"https://ancyatech.com/#organization\" },\n      \"areaServed\": \"Worldwide\",\n      \"serviceType\": \"AI automation\"\n    },\n    {\n      \"@type\": \"Service\",\n      \"name\": \"Branding & Identity\",\n      \"description\": \"Logo, color, typography, brand guidelines, and full vector asset packs for growing businesses.\",\n      \"provider\": { \"@id\": \"https://ancyatech.com/#organization\" },\n      \"areaServed\": \"Worldwide\",\n      \"serviceType\": \"Brand identity\"\n    }\n  ]\n}\n</script>",
-  "pageScripts": "<script src=\"/assets/js/home.js?v=20261104\" defer></script>\n<script src=\"assets/js/consent.js?v=20261103\" defer></script>",
+  "pageScripts": "<script src=\"/assets/js/home.js?v=20261106\" defer></script>\n<script src=\"assets/js/consent.js?v=20261103\" defer></script>",
   "permalink": "/index.html"
 }
 ---
@@ -890,6 +890,12 @@
             <label for="cf-website">Website (leave blank)</label>
             <input id="cf-website" name="website" type="text" tabindex="-1" autocomplete="off">
           </div>
+          {%- if site.turnstileSiteKey %}
+          <div class="field field--full turnstile-field">
+            <div id="cf-turnstile" class="cf-turnstile" data-sitekey="{{ site.turnstileSiteKey }}" data-theme="light" data-action="contact"></div>
+            <p id="turnstile-error" class="form-error-inline" role="alert" hidden>Please complete the verification check. If it does not load, refresh the page or email <a href="mailto:antony@ancyatech.com">antony@ancyatech.com</a>.</p>
+          </div>
+          {%- endif %}
           <div id="form-error" class="form-error" role="alert" hidden>
             <p>Something went wrong. Your message has not been sent. Try again or email <a href="mailto:antony@ancyatech.com">antony@ancyatech.com</a>.</p>
           </div>
@@ -911,6 +917,13 @@
           <div>
             <h3>Email</h3>
             <p><a href="mailto:antony@ancyatech.com">antony@ancyatech.com</a></p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="icon-tile"><svg aria-hidden="true"><use href="#i-phone"/></svg></div>
+          <div>
+            <h3>WhatsApp</h3>
+            <p><a href="https://wa.me/{{ site.whatsappNumber }}?text={{ site.whatsappMessage | urlencode }}" target="_blank" rel="noopener noreferrer">Chat on WhatsApp</a></p>
           </div>
         </div>
         <div class="contact-item">

@@ -16,7 +16,9 @@
  *                                32 KB, otherwise 413.
  *       5. Parse + validate    — malformed JSON/form -> 400; field errors -> 422.
  *       6. Honeypot            — non-empty "website" field -> 200 ok, no email sent.
- *       7. Delivery            — Resend API; missing key -> 503, non-OK -> 502.
+ *       7. Turnstile           — when TURNSTILE_SECRET_KEY is set, the submitted token
+ *                                must verify, otherwise 403.
+ *       8. Delivery            — Resend API; missing key -> 503, non-OK -> 502.
  *
  *   Anything else is served by the ASSETS binding, falling back to 404.
  *
@@ -28,11 +30,10 @@
  * because isolates are created/disposed and each has its own Map.
  *
  * TODO(security): Configure Cloudflare WAF rate limiting for POST /api/contact.
- * TODO(security): Add server-side Turnstile verification once the frontend can
- *                 send a token (requires a frontend change).
  */
 
 import { MAX, MAX_BODY_BYTES, RATE_LIMIT } from "./config.js";
+import { renderContactEmail } from "./email-templates.js";
 
 const BODY_ENCODER = new TextEncoder();
 
@@ -75,7 +76,7 @@ export function setSecurityHeaders(headers, includeCsp = true) {
   if (includeCsp) {
     headers.set(
       "content-security-policy",
-      "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com; media-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'"
+      "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; media-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'"
     );
   }
 }
@@ -99,6 +100,91 @@ function clean(value) {
 function validEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
+
+const DISPOSABLE_EMAIL_DOMAINS = new Set([
+  "mailinator.com",
+  "guerrillamail.com",
+  "10minutemail.com",
+  "tempmail.com",
+  "trashmail.com",
+  "yopmail.com",
+  "sharklasers.com",
+]);
+
+const SPAM_KEYWORDS = [
+  "seo services",
+  "backlinks",
+  "casino",
+  "crypto investment",
+  "viagra",
+  "cialis",
+  "loan approval",
+  "make money fast",
+  "bulk email",
+  "guest post",
+];
+
+export function isLikelySpam(fields) {
+  if (!fields || typeof fields !== "object") return false;
+
+  const name = String(fields.name || "");
+  const email = String(fields.email || "");
+  const company = String(fields.company || "");
+  const message = String(fields.message || "");
+  const text = `${name} ${email} ${company} ${message}`.toLowerCase();
+
+  let score = 0;
+
+  const urlMatches = text.match(/https?:\/\/\S+|www\.\S+/g) || [];
+  if (urlMatches.length > 0) score += 2;
+  if (urlMatches.length >= 2) score += 2;
+
+  for (const keyword of SPAM_KEYWORDS) {
+    if (text.includes(keyword)) score += 2;
+  }
+
+  let emailDomain = "";
+  try {
+    emailDomain = (email.split("@")[1] || "").toLowerCase();
+  } catch {
+    emailDomain = "";
+  }
+  if (emailDomain && DISPOSABLE_EMAIL_DOMAINS.has(emailDomain)) score += 3;
+
+  if (/[A-Z]{8,}/.test(message)) score += 1;
+  if (/(.)\1{6,}/.test(message)) score += 1;
+  if (message.trim().length > 0 && message.trim().length < 20) score += 1;
+  if (/https?:\/\//.test(name) || /https?:\/\//.test(company)) score += 3;
+
+  return score >= 4;
+}
+
+export const isSpam = isLikelySpam;
+export const looksLikeSpam = isLikelySpam;
+
+export async function verifyTurnstile(token, secret, ip, fetchImpl = fetch) {
+  if (!token || !secret) return false;
+  try {
+    const body = new URLSearchParams();
+    body.set("secret", secret);
+    body.set("response", token);
+    if (ip) body.set("remoteip", ip);
+
+    const response = await fetchImpl("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+      method: "POST",
+      headers: { "content-type": "application/x-www-form-urlencoded" },
+      body: body.toString(),
+    });
+
+    if (!response || !response.ok) return false;
+    const data = await response.json();
+    return Boolean(data && data.success === true);
+  } catch {
+    return false;
+  }
+}
+
+export const verifyTurnstileToken = verifyTurnstile;
 
 /**
  * Simple fixed-window limiter held in module (isolate) memory.
@@ -172,6 +258,7 @@ export function validate(data) {
     budget: clean(source.budget),
     message: clean(source.message).replace(/\r?\n/g, "\n"),
     honeypot: clean(source.website),
+    turnstileToken: clean(source["cf-turnstile-response"] || source.turnstileToken || source.turnstile),
   };
 
   if (fields.honeypot) {
@@ -288,7 +375,20 @@ export async function handleContact(request, env = {}, options = {}) {
     return json({ ok: true });
   }
 
-  const { name, email, company, budget, message } = validation.fields;
+  const { name, email, company, budget, message, turnstileToken } = validation.fields;
+
+  // Silently accept obvious spam so automated clients do not learn or retry.
+  if (isLikelySpam(validation.fields)) {
+    return json({ ok: true });
+  }
+
+  if (env && env.TURNSTILE_SECRET_KEY) {
+    const ip = request.headers.get("cf-connecting-ip") || "";
+    const verified = await verifyTurnstile(turnstileToken, env.TURNSTILE_SECRET_KEY, ip);
+    if (!verified) {
+      return json({ ok: false, error: "Verification failed. Please try again." }, 403);
+    }
+  }
 
   if (!env.RESEND_API_KEY) {
     return json({ ok: false, error: "Email delivery is not configured yet." }, 503);
@@ -308,6 +408,8 @@ export async function handleContact(request, env = {}, options = {}) {
   ]
     .filter(Boolean)
     .join("\n");
+
+  const html = renderContactEmail({ name, email, company, budget, message }, env.EMAIL_TEMPLATE || "1");
 
   try {
     const resendResponse = await fetch("https://api.resend.com/emails", {
