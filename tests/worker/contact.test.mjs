@@ -1,5 +1,6 @@
 import { test, beforeEach, afterEach } from "node:test";
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 
 import worker, {
   handleContact,
@@ -184,6 +185,8 @@ test("successful send returns 200 and calls Resend correctly", async () => {
   assert.equal(payload.reply_to, VALID.email);
   assert.match(payload.subject, /£10k–£20k/);
   assert.match(payload.text, /We need a new website/);
+  assert.match(payload.html, /<html/i);
+  assert.match(payload.html, /Ada Lovelace/);
 });
 
 test("form-urlencoded submissions still work", async () => {
@@ -317,6 +320,16 @@ test("setSecurityHeaders applies baseline headers and optional CSP", () => {
   setSecurityHeaders(withoutCsp, false);
   assert.equal(withoutCsp.get("x-content-type-options"), "nosniff");
   assert.equal(withoutCsp.get("content-security-policy"), null);
+});
+
+test("static _headers CSP also allows Turnstile", () => {
+  // Cloudflare applies src/_headers to static-asset responses and it overrides
+  // the CSP set by the Worker at runtime, so both must list Turnstile.
+  const headers = readFileSync(new URL("../../src/_headers", import.meta.url), "utf8");
+
+  assert.match(headers, /script-src [^;\n]*https:\/\/challenges\.cloudflare\.com/);
+  assert.match(headers, /connect-src [^;\n]*https:\/\/challenges\.cloudflare\.com/);
+  assert.match(headers, /frame-src https:\/\/challenges\.cloudflare\.com/);
 });
 
 const TURNSTILE_SECRET = "1x0000000000000000000000000000000AA";
