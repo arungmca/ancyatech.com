@@ -1,6 +1,6 @@
 # ancyatech.com
 
-The Ancya Tech marketing site: a static site generated with **Eleventy (11ty)** from
+The Ancya Technologies marketing site: a static site generated with **Eleventy (11ty)** from
 `src/`, deployed to **Cloudflare Workers Static Assets**, with a small Worker handling
 `POST /api/contact` through Resend.
 

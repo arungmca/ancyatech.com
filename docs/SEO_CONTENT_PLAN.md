@@ -1,4 +1,4 @@
-# SEO & GEO Content Plan — Ancya Tech
+# SEO & GEO Content Plan — Ancya Technologies
 
 Built from the installed `seo-content-marketing-claude-code-skill-suite` rubric and current site pages.
 
@@ -8,7 +8,7 @@ Built from the installed `seo-content-marketing-claude-code-skill-suite` rubric 
 |---|---|---|
 | `/services-web-design` | AI Web Design Services Belgium \| Fast & Affordable Websites | AI web design for Belgian SMBs |
 | `/web-design-kortenberg` | Webflow & WordPress Web Designer Kortenberg \| AI Web Design | local Kortenberg web design |
-| `/services-ai-seo` | AI SEO & GEO — Ancya | technical SEO + GEO |
+| `/services-ai-seo` | AI SEO & GEO — Ancya Technologies | technical SEO + GEO |
 
 ## Keyword clusters
 
@@ -28,6 +28,6 @@ Built from the installed `seo-content-marketing-claude-code-skill-suite` rubric 
 ## Next recommended tasks
 
 - Run `/content-brief "AI web design services Belgium"` and add a Belgium-focused case study section.
-- Run `/local-seo --business-name "Ancya Tech" --location "Kortenberg, Belgium"`.
+- Run `/local-seo --business-name "Ancya Technologies" --location "Kortenberg, Belgium"`.
 - Publish one journal article per service (web design, AI SEO/GEO, automation) with evidence-based FAQs.
 - Add 3–5 client/project examples to `/work` with quantified outcomes when available.

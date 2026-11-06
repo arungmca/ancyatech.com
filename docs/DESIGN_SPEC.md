@@ -28,12 +28,12 @@ to `base.css` and document it in the style guide. `public/assets/` is generated;
 
 ## 2. Brand truths
 
-- **Studio:** Ancya Tech, a solo studio run by Antony S., Kortenberg, Belgium.
+- **Studio:** Ancya Technologies, a solo studio run by Antony S., Kortenberg, Belgium.
 - **Buyer:** ambitious small and medium businesses that have outgrown templates but do not want agency overhead.
 - **Offer:** fast marketing websites, AI SEO/GEO, and custom AI automation; fixed starting prices; 100% code and account ownership.
 - **Method:** built with modern AI tooling, reviewed and owned by a human. Say this plainly. Never imply a large team, a traditional hand-coding studio, or work that is not done.
 - **Honesty rule:** no fabricated claims, clients, metrics or credentials. Case-study numbers and quotes are sample content in the review templates and must be verified or replaced before launch.
-- **Domain & hosting:** excluded from project prices, billed separately and paid directly by the client. Ancya can register the domain in the client's name and manage domain + hosting. Starter Launchpad includes a free basic hosting server.
+- **Domain & hosting:** excluded from project prices, billed separately and paid directly by the client. Ancya Technologies can register the domain in the client's name and manage domain + hosting. Starter Launchpad includes a free basic hosting server.
 
 **Banned phrases:** “hand-crafted code”, “hand-written code”, “our team of designers”, “award-winning”, invented awards, “guaranteed #1 ranking”, “100% secure”. “AI-built, reviewed by hand” is the approved framing.
 

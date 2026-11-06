@@ -1,4 +1,4 @@
-# Routing and 404 behaviour — Ancya Tech
+# Routing and 404 behaviour — Ancya Technologies
 
 Static pages generated from `src/*.njk` into `public/`, served by Cloudflare Workers
 Static Assets. `worker/index.js` only handles `/api/contact`; every other path goes to

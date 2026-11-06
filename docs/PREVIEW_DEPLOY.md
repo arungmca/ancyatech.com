@@ -1,4 +1,4 @@
-# Preview and production deploy — Ancya Tech
+# Preview and production deploy — Ancya Technologies
 
 This repository deploys a Cloudflare Worker with static assets generated from `src/`.
 

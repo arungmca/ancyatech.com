@@ -1,5 +1,5 @@
 /**
- * Cloudflare Worker — Ancya contact endpoint.
+ * Cloudflare Worker — Ancya Technologies contact endpoint.
  *
  * Request flow:
  *   /api/contact
@@ -390,7 +390,7 @@ export async function handleContact(request, env = {}, options = {}) {
   }
 
   const to = env.RESEND_TO || "antony@ancyatech.com";
-  const from = env.RESEND_FROM || "Ancya Enquiry <onboarding@resend.dev>";
+  const from = env.RESEND_FROM || "Ancya Technologies Enquiry <onboarding@resend.dev>";
   const subject = `New project enquiry${budget ? `: ${budget}` : ""}`;
   const text = [
     `Name: ${name}`,

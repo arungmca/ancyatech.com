@@ -1,4 +1,4 @@
-# Journal article drafts — Ancya Tech
+# Journal article drafts — Ancya Technologies
 
 Draft journal articles for each service category. These are review materials only. They avoid unverified metrics, ranking promises, and fabricated client claims.
 

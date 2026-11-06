@@ -1,4 +1,4 @@
-# Launch SEO Checklist — Ancya Tech
+# Launch SEO Checklist — Ancya Technologies
 
 Skill: `/workflows:launch-seo https://staging.ancyatech.com`
 

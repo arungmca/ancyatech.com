@@ -1,12 +1,12 @@
-# Local SEO Audit — Ancya Tech (Kortenberg, Belgium)
+# Local SEO Audit — Ancya Technologies (Kortenberg, Belgium)
 
-Skill: `/local-seo --business-name "Ancya Tech" --location "Kortenberg, Belgium"`
+Skill: `/local-seo --business-name "Ancya Technologies" --location "Kortenberg, Belgium"`
 
 ## NAP snapshot
 
 | Field | Value in site | Status |
 |---|---|---|
-| Business name | Ancya Tech (`legalName`), Ancya (`site.name`) | Use "Ancya Tech" consistently on local profiles |
+| Business name | Ancya Technologies (`legalName`), Ancya (`site.name`) | Use "Ancya Technologies" consistently on local profiles |
 | Address | Stroeykensstraat 37, 3071 Kortenberg, Belgium | Present in Organization/Service schema |
 | Email | antony@ancyatech.com | Present in footer/contact |
 | Phone | Not yet published | Add a real local/business phone before GBP optimization |
@@ -24,7 +24,7 @@ Skill: `/local-seo --business-name "Ancya Tech" --location "Kortenberg, Belgium"
 
 ## Priority actions
 
-1. Create/verify Google Business Profile for Ancya Tech in Kortenberg.
+1. Create/verify Google Business Profile for Ancya Technologies in Kortenberg.
 2. Add one consistent business phone number to footer, contact section, and schema.
 3. Build citations on trusted Belgian/EU directories with identical NAP.
 4. Add a short FAQ and review section to `/web-design-kortenberg`.

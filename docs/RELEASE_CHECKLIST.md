@@ -1,4 +1,4 @@
-# Release checklist — Ancya Tech v2.0.0
+# Release checklist — Ancya Technologies v2.0.0
 
 Run this on the release commit. Every box must be ticked before tagging.
 
