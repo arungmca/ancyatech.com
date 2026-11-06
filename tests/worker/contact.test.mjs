@@ -185,6 +185,8 @@ test("successful send returns 200 and calls Resend correctly", async () => {
   assert.equal(payload.reply_to, VALID.email);
   assert.match(payload.subject, /£10k–£20k/);
   assert.match(payload.text, /We need a new website/);
+  assert.match(payload.html, /<html/i);
+  assert.match(payload.html, /Ada Lovelace/);
 });
 
 test("form-urlencoded submissions still work", async () => {

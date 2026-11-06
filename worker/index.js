@@ -143,12 +143,7 @@ export function isLikelySpam(fields) {
     if (text.includes(keyword)) score += 2;
   }
 
-  let emailDomain = "";
-  try {
-    emailDomain = (email.split("@")[1] || "").toLowerCase();
-  } catch {
-    emailDomain = "";
-  }
+  const emailDomain = (email.split("@")[1] || "").toLowerCase();
   if (emailDomain && DISPOSABLE_EMAIL_DOMAINS.has(emailDomain)) score += 3;
 
   if (/[A-Z]{8,}/.test(message)) score += 1;
@@ -424,6 +419,7 @@ export async function handleContact(request, env = {}, options = {}) {
         reply_to: email,
         subject,
         text,
+        html,
       }),
     });
 
