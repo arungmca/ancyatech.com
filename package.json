@@ -9,6 +9,7 @@
     "clean": "rm -rf public",
     "check": "python3 scripts/check_links.py",
     "check:a11y": "python3 scripts/check_a11y.py",
+    "check:favicons": "python3 scripts/check_favicons.py",
     "test:a11y": "bash scripts/test_a11y.sh",
     "test": "node --test tests/worker/*.test.mjs",
     "test:worker": "node --test tests/worker/*.test.mjs",

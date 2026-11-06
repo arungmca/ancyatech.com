@@ -7,6 +7,9 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy({ "src/robots.txt": "robots.txt" });
   eleventyConfig.addPassthroughCopy({ "src/site.webmanifest": "site.webmanifest" });
   eleventyConfig.addPassthroughCopy({ "src/.assetsignore": ".assetsignore" });
+  // Google probes /favicon.ico before parsing <link rel="icon"> tags, so the
+  // icon must also exist at the site root (a 404 there falls back to the globe).
+  eleventyConfig.addPassthroughCopy({ "src/assets/favicons/favicon.ico": "favicon.ico" });
 
   eleventyConfig.addWatchTarget("src/assets/");
 

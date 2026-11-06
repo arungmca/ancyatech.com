@@ -47,6 +47,9 @@ jobs:
       - name: Check structural accessibility
         run: npm run check:a11y
 
+      - name: Check favicon setup (Google Search)
+        run: npm run check:favicons
+
       - name: Lint HTML
         run: npm run lint:html
 
