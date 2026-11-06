@@ -1,4 +1,4 @@
-# Changelog — Ancya Tech
+# Changelog — Ancya Technologies
 
 ## [Unreleased] — 2026-11-04
 

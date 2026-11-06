@@ -1,4 +1,4 @@
-# Services draft — Ancya Tech
+# Services draft — Ancya Technologies
 
 These drafts are review material only. They are deliberately technical, practical, and free of unverified numbers, rankings guarantees, client quotations, or fabricated proof.
 

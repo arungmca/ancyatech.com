@@ -1,5 +1,5 @@
 /**
- * HTML email templates for the Ancya contact form notification.
+ * HTML email templates for the Ancya Technologies contact form notification.
  *
  * Each renderer takes the validated contact fields and returns a complete
  * HTML document. User input is escaped to prevent HTML injection.
@@ -52,7 +52,7 @@ function templateMinimal({ name, email, company, budget, message }) {
         <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:12px;padding:32px;">
           <tr><td>
             <h1 style="margin:0 0 4px;font-size:22px;">New project enquiry</h1>
-            <p style="margin:0 0 20px;color:#666;font-size:13px;">From the Ancya contact form</p>
+            <p style="margin:0 0 20px;color:#666;font-size:13px;">From the Ancya Technologies contact form</p>
             <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="font-size:14px;">
               <tr><td style="padding:6px 0;color:#888;width:90px;">Name</td><td style="padding:6px 0;font-weight:600;">${name}</td></tr>
               <tr><td style="padding:6px 0;color:#888;">Email</td><td style="padding:6px 0;"><a href="mailto:${email}" style="color:#ff5a36;">${email}</a></td></tr>
@@ -79,7 +79,7 @@ function templateBranded({ name, email, company, budget, message }) {
       <tr><td align="center">
         <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:12px;overflow:hidden;color:#1a1a1a;">
           <tr><td style="background:#0b132b;color:#ffffff;padding:24px;">
-            <p style="margin:0;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;opacity:.7;">Ancya Enquiry Desk</p>
+            <p style="margin:0;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;opacity:.7;">Ancya Technologies Enquiry Desk</p>
             <h1 style="margin:8px 0 0;font-size:22px;">New project enquiry</h1>
           </td></tr>
           <tr><td style="padding:24px;">
@@ -106,7 +106,7 @@ function templateSummary({ name, email, company, budget, message }) {
       <tr><td align="center">
         <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:12px;padding:24px;">
           <tr><td>
-            <p style="margin:0 0 6px;color:#888;font-size:12px;">New enquiry · Ancya website</p>
+            <p style="margin:0 0 6px;color:#888;font-size:12px;">New enquiry · Ancya Technologies website</p>
             <h1 style="margin:0 0 18px;font-size:20px;">${name}${company ? ` — ${company}` : ""}</h1>
             <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="font-size:14px;border-collapse:collapse;">
               <tr><td style="padding:10px 0;border-top:1px solid #eee;color:#666;width:110px;">Name</td><td style="padding:10px 0;border-top:1px solid #eee;font-weight:600;">${name}</td></tr>
